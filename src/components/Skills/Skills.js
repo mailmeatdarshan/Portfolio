@@ -45,6 +45,26 @@ const Skills = () => {
                   <p className="text-gray-400">Beautiful, user-centered interfaces</p>
                 </div>
               </div>
+
+              <div className="flex items-center space-x-4">
+                <div className="p-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl">
+                  <Palette className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-lg">DataBase Management</h3>
+                  <p className="text-gray-400">Beautiful, user-centered interfaces</p>
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-4">
+                <div className="p-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl">
+                  <Palette className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-lg">Problem Solving</h3>
+                  <p className="text-gray-400">Beautiful, user-centered interfaces</p>
+                </div>
+              </div>
             </div>
           </div>
 

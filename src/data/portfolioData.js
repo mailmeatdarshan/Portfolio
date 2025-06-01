@@ -17,7 +17,7 @@ export const personalInfo = {
 export const projects = [
   {
     id: 1,
-    title: "Tint & Orange",
+    title: "Comfy",
     description: "A revolutionary car modification platform with real-time inventory management, AR visualization, and seamless booking system.",
     tech: ["React", "Node.js", "MongoDB", "Express", "Socket.io"],
     image: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
@@ -25,7 +25,7 @@ export const projects = [
   },
   {
     id: 2,
-    title: "Sonic Waves",
+    title: "Gitters",
     description: "Next-generation music streaming platform with AI-powered recommendations, social features, and immersive audio experience.",
     tech: ["Next.js", "TypeScript", "Tailwind", "PostgreSQL"],
     image: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
@@ -33,7 +33,7 @@ export const projects = [
   },
   {
     id: 3,
-    title: "Isha Tattva",
+    title: "WikiExplorer",
     description: "Elegant interior design portfolio with 3D room visualization, mood boards, and client collaboration tools.",
     tech: ["React", "Firebase", "Three.js", "Material-UI"],
     image: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
@@ -41,7 +41,23 @@ export const projects = [
   },
   {
     id: 4,
-    title: "Granit Architecture",
+    title: "World-Weather-Web",
+    description: "Multilingual architectural platform with BIM integration, project management, and real-time collaboration features.",
+    tech: ["Next.js", "Tailwind", "Vercel", "Prisma"],
+    image: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+    featured: false
+  },
+  {
+    id: 5,
+    title: "RazorpayClone(Frontend)",
+    description: "Multilingual architectural platform with BIM integration, project management, and real-time collaboration features.",
+    tech: ["Next.js", "Tailwind", "Vercel", "Prisma"],
+    image: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+    featured: false
+  },
+  {
+    id: 6,
+    title: "DiscordClone(Frontend)",
     description: "Multilingual architectural platform with BIM integration, project management, and real-time collaboration features.",
     tech: ["Next.js", "Tailwind", "Vercel", "Prisma"],
     image: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
@@ -53,11 +69,15 @@ export const skills = [
   { name: "React", icon: "⚛️", level: 95, color: "from-blue-400 to-blue-600" },
   { name: "JavaScript", icon: "🟨", level: 90, color: "from-yellow-400 to-yellow-600" },
   { name: "Node.js", icon: "🟢", level: 85, color: "from-green-400 to-green-600" },
-  { name: "TypeScript", icon: "🔷", level: 80, color: "from-blue-500 to-indigo-600" },
+  { name: "TailwindCSS", icon: "🔷", level: 80, color: "from-blue-500 to-indigo-600" },
+  { name: "Angular", icon: "🔷", level: 80, color: "from-blue-500 to-indigo-600" },
   { name: "Next.js", icon: "▲", level: 88, color: "from-gray-700 to-gray-900" },
   { name: "MongoDB", icon: "🍃", level: 75, color: "from-green-500 to-green-700" },
   { name: "Python", icon: "🐍", level: 70, color: "from-purple-400 to-purple-600" },
-  { name: "AWS", icon: "☁️", level: 65, color: "from-orange-400 to-orange-600" }
+  { name: "Oracle", icon: "☁️", level: 65, color: "from-orange-400 to-orange-600" },
+  { name: "C++", icon: "☁️", level: 65, color: "from-green-400 to-orange-600" },
+  { name: "Java", icon: "☁️", level: 65, color: "from-blue-400 to-orange-600" },
+  { name: "Linux", icon: "☁️", level: 65, color: "from-burgundy-400 to-orange-600" },
 ];
 
 export const socialLinks = [
