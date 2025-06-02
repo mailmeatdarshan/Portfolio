@@ -7,6 +7,7 @@ export const personalInfo = {
   bio: "I craft digital experiences that push boundaries. Specializing in modern web technologies, I transform ideas into stunning, interactive applications that users love.",
   typewriterStrings: [
     "Full Stack Developer",
+    "Open Source Contributer",
     "React Specialist", 
     "UI/UX Designer",
     "Problem Solver",
@@ -19,7 +20,7 @@ export const projects = [
     id: 1,
     title: "Comfy",
     description: "A revolutionary car modification platform with real-time inventory management, AR visualization, and seamless booking system.",
-    tech: ["React", "Node.js", "MongoDB", "Express", "Socket.io"],
+    tech: ["HTML", "CSS", "JavaScript", "APIs"],
     image: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
     featured: true
   },
@@ -27,7 +28,7 @@ export const projects = [
     id: 2,
     title: "Gitters",
     description: "Next-generation music streaming platform with AI-powered recommendations, social features, and immersive audio experience.",
-    tech: ["Next.js", "TypeScript", "Tailwind", "PostgreSQL"],
+    tech: ["HTML", "CSS", "JavaScript", "APIs"],
     image: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
     featured: true
   },
@@ -35,7 +36,7 @@ export const projects = [
     id: 3,
     title: "WikiExplorer",
     description: "Elegant interior design portfolio with 3D room visualization, mood boards, and client collaboration tools.",
-    tech: ["React", "Firebase", "Three.js", "Material-UI"],
+    tech: ["HTML", "CSS", "JavaScript", "APIs"],
     image: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
     featured: false
   },
@@ -43,15 +44,15 @@ export const projects = [
     id: 4,
     title: "World-Weather-Web",
     description: "Multilingual architectural platform with BIM integration, project management, and real-time collaboration features.",
-    tech: ["Next.js", "Tailwind", "Vercel", "Prisma"],
+    tech: ["HTML", "CSS", "JavaScript", "APIs"],
     image: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
     featured: false
   },
   {
     id: 5,
     title: "RazorpayClone(Frontend)",
-    description: "Multilingual architectural platform with BIM integration, project management, and real-time collaboration features.",
-    tech: ["Next.js", "Tailwind", "Vercel", "Prisma"],
+    description: "Razorpay is a finance platform that primarily provides businesses with tools to accept, process, and disburse payments online. This project replicates the sleek and user-friendly design of Razorpays payment system",
+    tech: ["HTML", "CSS", "JavaScript"],
     image: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
     featured: false
   },
@@ -59,7 +60,7 @@ export const projects = [
     id: 6,
     title: "DiscordClone(Frontend)",
     description: "Multilingual architectural platform with BIM integration, project management, and real-time collaboration features.",
-    tech: ["Next.js", "Tailwind", "Vercel", "Prisma"],
+    tech: ["HTML", "CSS", "JavaScript"],
     image: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
     featured: false
   }

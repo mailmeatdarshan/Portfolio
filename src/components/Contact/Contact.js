@@ -35,8 +35,11 @@ const Contact = () => {
           </a>
 
           <a
-            href="#"
+            href="https://www.linkedin.com/in/darshandubey25/"
+            target="_blank" 
+            rel="noopener noreferrer"
             className="group p-8 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-2xl border border-blue-500/30 hover:border-blue-400/50 transition-all duration-300 hover:scale-105"
+            aria-label="Visit my LinkedIn profile"
           >
             <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
               <Linkedin className="w-8 h-8" />
@@ -45,7 +48,7 @@ const Contact = () => {
             <p className="text-gray-400">Connect with me</p>
           </a>
 
-          <a
+          {/* <a
             href="#"
             className="group p-8 bg-gradient-to-br from-gray-500/20 to-slate-500/20 rounded-2xl border border-gray-500/30 hover:border-gray-400/50 transition-all duration-300 hover:scale-105"
           >
@@ -54,9 +57,9 @@ const Contact = () => {
             </div>
             <h3 className="text-xl font-semibold mb-2">GitHub</h3>
             <p className="text-gray-400">View my code</p>
-          </a>
+          </a> */}
 
-          <a
+          {/* <a
             href="#"
             className="group p-8 bg-gradient-to-br from-green-500/20 to-yellow-500/20 rounded-2xl border border-green-500/30 hover:border-yellow-400/50 transition-all duration-300 hover:scale-105"
           >
@@ -65,9 +68,9 @@ const Contact = () => {
             </div>
             <h3 className="text-xl font-semibold mb-2">LeetCode</h3>
             <p className="text-gray-400">Check my profile</p>
-          </a>
+          </a> */}
 
-          <a
+          {/* <a
             href="#"
             className="group p-8 bg-gradient-to-br from-gray-500/20 to-slate-500/20 rounded-2xl border border-gray-500/30 hover:border-gray-400/50 transition-all duration-300 hover:scale-105"
           >
@@ -76,11 +79,14 @@ const Contact = () => {
             </div>
             <h3 className="text-xl font-semibold mb-2">Instagram</h3>
             <p className="text-gray-400">Follow me</p>
-          </a>
+          </a> */}
 
           <a
-            href="#"
+            href="https://x.com/Dubey____"
+            target="_blank"  // Opens in a new tab
+            rel="noopener noreferrer"  // Security best practice
             className="group p-8 bg-gradient-to-br from-gray-500/20 to-slate-500/20 rounded-2xl border border-gray-500/30 hover:border-gray-400/50 transition-all duration-300 hover:scale-105"
+            aria-label="Visit my X (formerly Twitter) profile"
           >
             <div className="w-16 h-16 bg-gradient-to-r from-gray-600 to-slate-600 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
               <Twitter className="w-8 h-8" />
