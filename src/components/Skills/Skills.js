@@ -52,7 +52,7 @@ const Skills = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg">DataBase Management</h3>
-                  <p className="text-gray-400">Beautiful, user-centered interfaces</p>
+                  <p className="text-gray-400">Ensuring data is organized, secure, and accessible</p>
                 </div>
               </div>
 
@@ -62,7 +62,7 @@ const Skills = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-lg">Problem Solving</h3>
-                  <p className="text-gray-400">Beautiful, user-centered interfaces</p>
+                  <p className="text-gray-400">Turning challenges into opportunities</p>
                 </div>
               </div>
             </div>
