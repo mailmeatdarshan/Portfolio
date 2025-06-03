@@ -97,7 +97,7 @@ const Contact = () => {
         </div>
 
         <div className="flex items-center justify-center space-x-2 text-gray-400">
-          <span>Made with</span>
+          <span>Made with </span>
           <Heart className="w-5 h-5 text-red-400 animate-pulse" />
           <span>by {personalInfo.name}</span>
         </div>

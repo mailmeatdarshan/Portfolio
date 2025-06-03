@@ -27,7 +27,7 @@ export const projects = [
   {
     id: 2,
     title: "Gitters",
-    description: "Next-generation music streaming platform with AI-powered recommendations, social features, and immersive audio experience.",
+    description: "Gitters is an interactive web app that allows users to seamlessly browse and explore GitHub profiles offering a visually engaging and user-friendly experience.",
     tech: ["HTML", "CSS", "JavaScript", "APIs"],
     image: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
     featured: true
@@ -35,7 +35,7 @@ export const projects = [
   {
     id: 3,
     title: "WikiExplorer",
-    description: "Elegant interior design portfolio with 3D room visualization, mood boards, and client collaboration tools.",
+    description: "Wikipedia is one of the largest and most popular sources of general knowledge on the internet. This is a simple, interactive web application that allows users to search Wikipedia",
     tech: ["HTML", "CSS", "JavaScript", "APIs"],
     image: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
     featured: false
@@ -43,7 +43,7 @@ export const projects = [
   {
     id: 4,
     title: "World-Weather-Web",
-    description: "Multilingual architectural platform with BIM integration, project management, and real-time collaboration features.",
+    description: "World Weather Web is a sleek, user-friendly application that provides instant access to real-time weather conditions worldwide.",
     tech: ["HTML", "CSS", "JavaScript", "APIs"],
     image: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
     featured: false
@@ -59,11 +59,44 @@ export const projects = [
   {
     id: 6,
     title: "DiscordClone(Frontend)",
-    description: "Multilingual architectural platform with BIM integration, project management, and real-time collaboration features.",
+    description: "Discord is an instant messaging and VoIP social platform which allows communication through voice calls, video calls, text messaging, and media.",
     tech: ["HTML", "CSS", "JavaScript"],
     image: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
     featured: false
+  },
+  {
+  id: 7,
+  title: "PasswordGen",
+  description: "This web-based random password generator creates secure passwords based on your preferences.",
+  tech: ["HTML", "CSS", "JavaScript"],
+  image: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+  featured: false
+  },
+  {
+  id: 8,
+  title: "YourMap",
+  description: "YourMap is a custom web-based mapping application powered by the MapTiler API. ",
+  tech: ["HTML", "CSS", "JavaScript"],
+  image: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+  featured: false
+  },
+  {
+    id: 9,
+    title: "Tic-Tac-Toe",
+    description: "Tic-Tac-Toe reimagines the classic paper-and-pencil game with modern design.",
+    tech: ["HTML", "CSS", "JavaScript"],
+    image: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+    featured: false
+  },
+  {
+  id: 10,
+  title: "GroceryList",
+  description: "YourGrocery is a simple, easy-to-use web application designed to streamline your grocery shopping experience.",
+  tech: ["HTML", "CSS", "JavaScript"],
+  image: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+  featured: false
   }
+
 ];
 
 export const skills = [
@@ -75,7 +108,7 @@ export const skills = [
   { name: "Next.js", icon: "▲", level: 88, color: "from-gray-700 to-gray-900" },
   { name: "MongoDB", icon: "🍃", level: 75, color: "from-green-500 to-green-700" },
   { name: "Python", icon: "🐍", level: 70, color: "from-purple-400 to-purple-600" },
-  { name: "Oracle", icon: "☁️", level: 65, color: "from-orange-400 to-orange-600" },
+  { name: "Oracle", icon: "⭕", level: 65, color: "from-orange-400 to-orange-600" },
   { name: "C++", icon: "☁️", level: 65, color: "from-green-400 to-orange-600" },
   { name: "Java", icon: "☁️", level: 65, color: "from-blue-400 to-orange-600" },
   { name: "Linux", icon: "☁️", level: 65, color: "from-burgundy-400 to-orange-600" },
