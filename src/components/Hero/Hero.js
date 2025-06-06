@@ -81,7 +81,14 @@ const Hero = () => {
           <div className="relative w-96 h-96 mx-auto">
             <div className="absolute inset-4 bg-gradient-to-br from-purple-400 via-pink-400 to-purple-600 rounded-full animate-spin-slow" />
             <div className="absolute inset-8 bg-gradient-to-br from-slate-900 to-purple-900 rounded-full flex items-center justify-center">
-              <div className="text-8xl animate-bounce">👨‍💻</div>
+              {/* <div className="text-8xl animate-bounce">👨‍💻</div> */}
+              <div className="absolute inset-8 bg-gradient-to-br from-slate-900 to-purple-900 rounded-full flex items-center justify-center overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-purple-800 to-transparent opacity-60 z-10"></div>
+                <img 
+                  src="/images/profile/avatar.jpg" 
+                  alt="Darshan Dubey" 
+                  className="w-full h-full object-cover transform transition-all duration-500 ease-in-out hover:scale-125 hover:-rotate-12 hover:shadow-2xl hover:shadow-purple-600 hover:brightness-110 hover:opacity-90 hover:translate-x-4 hover:translate-y-4"/>
+              </div>
             </div>
             {/* Floating tech icons */}
             <div className="absolute -top-4 -right-4 p-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl animate-pulse">
