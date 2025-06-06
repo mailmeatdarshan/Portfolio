@@ -79,14 +79,27 @@ const Projects = () => {
                 </div>
                 
                 <div className="flex space-x-4">
-                  <button className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl font-semibold hover:scale-105 transition-transform">
+                  {/* CHANGED: Convert button to link */}
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl font-semibold hover:scale-105 transition-transform"
+                  >
                     <Play className="w-4 h-4" />
                     <span>Live Demo</span>
-                  </button>
-                  <button className="flex items-center space-x-2 px-6 py-3 border border-white/30 rounded-xl font-semibold hover:bg-white/10 transition-colors">
+                  </a>
+                  
+                  {/* CHANGED: Convert button to link */}
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-2 px-6 py-3 border border-white/30 rounded-xl font-semibold hover:bg-white/10 transition-colors"
+                  >
                     <Github className="w-4 h-4" />
                     <span>Code</span>
-                  </button>
+                  </a>
                 </div>
               </div>
               

@@ -22,7 +22,9 @@ export const projects = [
     description: "A revolutionary car modification platform with real-time inventory management, AR visualization, and seamless booking system.",
     tech: ["HTML", "CSS", "JavaScript", "APIs"],
     image: "/images/projects/comfy2.png",
-    featured: true
+    featured: true,
+    // liveUrl: "https://gitters.netlify.app/",
+    githubUrl: "https://github.com/mailmeatdarshan/Comfy"
   },
   {
     id: 2,
@@ -30,7 +32,9 @@ export const projects = [
     description: "Gitters is an interactive web app that allows users to seamlessly browse and explore GitHub profiles offering a visually engaging and user-friendly experience.",
     tech: ["HTML", "CSS", "JavaScript", "APIs"],
     image: "/images/projects/gitters.png",
-    featured: true
+    featured: true,
+    liveUrl: "https://gitters.netlify.app/",
+    githubUrl: "https://github.com/mailmeatdarshan/Gitters"
   },
   {
     id: 3,
@@ -38,7 +42,9 @@ export const projects = [
     description: "Wikipedia is one of the largest and most popular sources of general knowledge on the internet. This is a simple, interactive web application that allows users to search Wikipedia",
     tech: ["HTML", "CSS", "JavaScript", "APIs"],
     image: "/images/projects/wikiexplorer.png",
-    featured: false
+    featured: false,
+    liveUrl: "https://wikiexplorer.netlify.app/",
+    githubUrl: "https://github.com/mailmeatdarshan/WikiExplorer"
   },
   {
     id: 4,
@@ -46,7 +52,9 @@ export const projects = [
     description: "World Weather Web is a sleek, user-friendly application that provides instant access to real-time weather conditions worldwide.",
     tech: ["HTML", "CSS", "JavaScript", "APIs"],
     image: "/images/projects/worldweatherweb.png",
-    featured: false
+    featured: false,
+    liveUrl: "https://world-weather-web-new.netlify.app/",
+    githubUrl: "https://github.com/mailmeatdarshan/WorldWeatherWeb"
   },
   {
     id: 5,
@@ -54,7 +62,9 @@ export const projects = [
     description: "Razorpay is a finance platform that primarily provides businesses with tools to accept, process, and disburse payments online. This project replicates the sleek and user-friendly design of Razorpays payment system",
     tech: ["HTML", "CSS", "JavaScript"],
     image: "/images/projects/razorpay.png",
-    featured: false
+    featured: false,
+    liveUrl: "https://razor-pay-clone-ten-flame.vercel.app/",
+    githubUrl: "https://github.com/mailmeatdarshan/RazorPayClone"
   },
   {
     id: 6,
@@ -62,7 +72,9 @@ export const projects = [
     description: "Discord is an instant messaging and VoIP social platform which allows communication through voice calls, video calls, text messaging, and media.",
     tech: ["HTML", "CSS", "JavaScript"],
     image: "/images/projects/discord.png",
-    featured: false
+    featured: false,
+    liveUrl: "https://discord-clone-ten-wheat.vercel.app/",
+    githubUrl: "https://github.com/mailmeatdarshan/DiscordClone"
   },
   {
   id: 7,
@@ -70,7 +82,9 @@ export const projects = [
   description: "This web-based random password generator creates secure passwords based on your preferences.",
   tech: ["HTML", "CSS", "JavaScript"],
   image: "/images/projects/passwordgen.png",
-  featured: false
+  featured: false,
+  liveUrl: "https://your-passwordgenerator.netlify.app/",
+  githubUrl: "https://github.com/mailmeatdarshan/PasswordGen"
   },
   {
   id: 8,
@@ -78,7 +92,9 @@ export const projects = [
   description: "YourMap is a custom web-based mapping application powered by the MapTiler API. ",
   tech: ["HTML", "CSS", "JavaScript"],
   image: "/images/projects/yourmap.png",
-  featured: false
+  featured: false,
+  liveUrl: "https://yourmap.netlify.app/",
+  githubUrl: "https://github.com/mailmeatdarshan/YourMap"
   },
   {
     id: 9,
@@ -86,7 +102,9 @@ export const projects = [
     description: "Tic-Tac-Toe reimagines the classic paper-and-pencil game with modern design.",
     tech: ["HTML", "CSS", "JavaScript"],
     image: "/images/projects/tictactoe.png",
-    featured: false
+    featured: false,
+    liveUrl: "https://mailmeatdarshan.github.io/Tic-Tac-Toe/",
+    githubUrl: "https://github.com/mailmeatdarshan/Tic-Tac-Toe"
   },
   {
   id: 10,
@@ -94,7 +112,9 @@ export const projects = [
   description: "YourGrocery is a simple, easy-to-use web application designed to streamline your grocery shopping experience.",
   tech: ["HTML", "CSS", "JavaScript"],
   image: "/images/projects/grocery.png",
-  featured: false
+  featured: false,
+  liveUrl: "https://your-groceries.netlify.app/",
+  githubUrl: "https://github.com/mailmeatdarshan/GroceryList"
   }
 
 ];
