@@ -10,9 +10,9 @@ const Contact = () => {
       
       <div className="max-w-4xl mx-auto px-6 text-center relative">
         <h2 className="text-6xl font-bold mb-8">
-          {/* <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
             Let's Create Something
-          </span> */}
+          </span>
           <br />
           <span className="text-white">Amazing Together</span>
         </h2>
@@ -83,8 +83,8 @@ const Contact = () => {
 
           <a
             href="https://x.com/Dubey____"
-            target="_blank"  // Opens in a new tab
-            rel="noopener noreferrer"  // Security best practice
+            target="_blank"
+            rel="noopener noreferrer"
             className="group p-8 bg-gradient-to-br from-gray-500/20 to-slate-500/20 rounded-2xl border border-gray-500/30 hover:border-gray-400/50 transition-all duration-300 hover:scale-105"
             aria-label="Visit my X (formerly Twitter) profile"
           >

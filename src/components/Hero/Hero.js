@@ -90,7 +90,7 @@ const Hero = () => {
                   className="w-full h-full object-cover transform transition-all duration-500 ease-in-out hover:scale-125 hover:-rotate-12 hover:shadow-2xl hover:shadow-purple-600 hover:brightness-110 hover:opacity-90 hover:translate-x-4 hover:translate-y-4"/>
               </div>
             </div>
-            {/* Floating tech icons */}
+
             <div className="absolute -top-4 -right-4 p-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl animate-pulse">
               <Code className="w-6 h-6" />
             </div>

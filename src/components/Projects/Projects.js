@@ -79,7 +79,7 @@ const Projects = () => {
                 </div>
                 
                 <div className="flex space-x-4">
-                  {/* CHANGED: Convert button to link */}
+
                   <a
                     href={project.liveUrl}
                     target="_blank"
@@ -90,7 +90,6 @@ const Projects = () => {
                     <span>Live Demo</span>
                   </a>
                   
-                  {/* CHANGED: Convert button to link */}
                   <a
                     href={project.githubUrl}
                     target="_blank"
