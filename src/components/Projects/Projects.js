@@ -29,6 +29,16 @@ const Projects = () => {
                   : 'h-80'
               }`}
             >
+              <div className="absolute inset-0">
+                <img 
+                  src={project.image} 
+                  alt={project.title}
+                  className="w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity duration-500"
+                />
+              </div>
+
+               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+                      
               <div 
                 className="absolute inset-0 opacity-20 group-hover:opacity-30 transition-opacity"
                 style={{ background: project.image }}

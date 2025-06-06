@@ -83,7 +83,7 @@ const Hero = () => {
             <div className="absolute inset-8 bg-gradient-to-br from-slate-900 to-purple-900 rounded-full flex items-center justify-center">
               {/* <div className="text-8xl animate-bounce">👨‍💻</div> */}
               <div className="absolute inset-8 bg-gradient-to-br from-slate-900 to-purple-900 rounded-full flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-600 via-purple-800 to-transparent opacity-60 z-10"></div>
+                 <div className="absolute inset-0 bg-gradient-to-br from-purple-400 via-purple-600 to-transparent opacity-60 z-10"></div>
                 <img 
                   src="/images/profile/avatar.jpg" 
                   alt="Darshan Dubey" 

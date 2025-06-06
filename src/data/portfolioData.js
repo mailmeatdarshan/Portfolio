@@ -21,7 +21,7 @@ export const projects = [
     title: "Comfy",
     description: "A revolutionary car modification platform with real-time inventory management, AR visualization, and seamless booking system.",
     tech: ["HTML", "CSS", "JavaScript", "APIs"],
-    image: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    image: "/images/projects/comfy2.png",
     featured: true
   },
   {
@@ -29,7 +29,7 @@ export const projects = [
     title: "Gitters",
     description: "Gitters is an interactive web app that allows users to seamlessly browse and explore GitHub profiles offering a visually engaging and user-friendly experience.",
     tech: ["HTML", "CSS", "JavaScript", "APIs"],
-    image: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
+    image: "/images/projects/gitters.png",
     featured: true
   },
   {
@@ -37,7 +37,7 @@ export const projects = [
     title: "WikiExplorer",
     description: "Wikipedia is one of the largest and most popular sources of general knowledge on the internet. This is a simple, interactive web application that allows users to search Wikipedia",
     tech: ["HTML", "CSS", "JavaScript", "APIs"],
-    image: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+    image: "/images/projects/wikiexplorer.png",
     featured: false
   },
   {
@@ -45,7 +45,7 @@ export const projects = [
     title: "World-Weather-Web",
     description: "World Weather Web is a sleek, user-friendly application that provides instant access to real-time weather conditions worldwide.",
     tech: ["HTML", "CSS", "JavaScript", "APIs"],
-    image: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+    image: "/images/projects/worldweatherweb.png",
     featured: false
   },
   {
@@ -53,7 +53,7 @@ export const projects = [
     title: "RazorpayClone(Frontend)",
     description: "Razorpay is a finance platform that primarily provides businesses with tools to accept, process, and disburse payments online. This project replicates the sleek and user-friendly design of Razorpays payment system",
     tech: ["HTML", "CSS", "JavaScript"],
-    image: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+    image: "/images/projects/razorpay.png",
     featured: false
   },
   {
@@ -61,7 +61,7 @@ export const projects = [
     title: "DiscordClone(Frontend)",
     description: "Discord is an instant messaging and VoIP social platform which allows communication through voice calls, video calls, text messaging, and media.",
     tech: ["HTML", "CSS", "JavaScript"],
-    image: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+    image: "/images/projects/discord.png",
     featured: false
   },
   {
@@ -69,7 +69,7 @@ export const projects = [
   title: "PasswordGen",
   description: "This web-based random password generator creates secure passwords based on your preferences.",
   tech: ["HTML", "CSS", "JavaScript"],
-  image: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+  image: "/images/projects/passwordgen.png",
   featured: false
   },
   {
@@ -77,7 +77,7 @@ export const projects = [
   title: "YourMap",
   description: "YourMap is a custom web-based mapping application powered by the MapTiler API. ",
   tech: ["HTML", "CSS", "JavaScript"],
-  image: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+  image: "/images/projects/yourmap.png",
   featured: false
   },
   {
@@ -85,7 +85,7 @@ export const projects = [
     title: "Tic-Tac-Toe",
     description: "Tic-Tac-Toe reimagines the classic paper-and-pencil game with modern design.",
     tech: ["HTML", "CSS", "JavaScript"],
-    image: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+    image: "/images/projects/tictactoe.png",
     featured: false
   },
   {
@@ -93,7 +93,7 @@ export const projects = [
   title: "GroceryList",
   description: "YourGrocery is a simple, easy-to-use web application designed to streamline your grocery shopping experience.",
   tech: ["HTML", "CSS", "JavaScript"],
-  image: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+  image: "/images/projects/grocery.png",
   featured: false
   }
 
