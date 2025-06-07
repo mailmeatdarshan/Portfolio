@@ -37,6 +37,27 @@ function App() {
     return () => sections.forEach((section) => observer.unobserve(section));
   }, []);
 
+    // Function to scroll to projects section
+    const scrollToProjects = () => {
+    const projectsSection = document.getElementById('projects');
+    if (projectsSection) {
+      projectsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  // Function to scroll to contact section
+  const scrollToContact = () => {
+  const contactSection = document.getElementById('contact');
+  if (contactSection) {
+    contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const openResume = () => {
+  const resumeUrl = "https://drive.google.com/file/d/1CqxxFs-iQY9rAezzsk7snqDjkM5pitK6/view?usp=drive_link";
+    window.open(resumeUrl, '_blank');
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white overflow-x-hidden cursor-none">
       <CustomCursor mousePosition={mousePosition} />
@@ -48,7 +69,12 @@ function App() {
         activeSection={activeSection}
       />
       
-      <Hero />
+      <Hero 
+        scrollToProjects={scrollToProjects}
+        scrollToContact={scrollToContact}
+        openResume={openResume}
+      />
+
       <Projects />
       <Skills />
       <Contact />

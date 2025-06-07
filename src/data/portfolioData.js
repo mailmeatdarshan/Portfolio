@@ -31,7 +31,7 @@ export const projects = [
     title: "Gitters",
     description: "Gitters is an interactive web app that allows users to seamlessly browse and explore GitHub profiles offering a visually engaging and user-friendly experience.",
     tech: ["HTML", "CSS", "JavaScript", "APIs"],
-    image: "/images/projects/gitters.png",
+    image: "/images/projects/gitters2.png",
     featured: true,
     liveUrl: "https://gitters.netlify.app/",
     githubUrl: "https://github.com/mailmeatdarshan/Gitters"

@@ -1,10 +1,10 @@
 // src/components/Hero/Hero.js
 import React from 'react';
-import { ArrowRight, Github, Linkedin, Mail, Sparkles, Code, Zap, Rocket } from 'lucide-react';
+import { ArrowRight, Github, Linkedin, Mail, Sparkles, Code, Zap, Rocket, ExternalLink } from 'lucide-react';
 import { personalInfo, socialLinks } from '../../data/portfolioData';
 import TypewriterText from '../common/TypewriterText';
 
-const Hero = () => {
+const Hero = ({ scrollToProjects, scrollToContact, openResume }) => {
   const getIcon = (iconName) => {
     const icons = { Github, Linkedin, Mail };
     return icons[iconName];
@@ -45,7 +45,9 @@ const Hero = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <button className="group relative px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/25">
+            <button
+            onClick={scrollToContact} 
+            className="group relative px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl font-semibold text-lg overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-purple-500/25">
               <span className="relative z-10 flex items-center space-x-2">
                 <span>Let's Work Together</span>
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -53,8 +55,18 @@ const Hero = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-purple-500 opacity-0 group-hover:opacity-100 transition-opacity" />
             </button>
             
-            <button className="px-8 py-4 border-2 border-purple-500/50 rounded-xl font-semibold text-lg hover:bg-purple-500/10 transition-all duration-300 hover:border-purple-400">
+            <button 
+            onClick={scrollToProjects}
+            className="px-8 py-4 border-2 border-purple-500/50 rounded-xl font-semibold text-lg hover:bg-purple-500/10 transition-all duration-300 hover:border-purple-400">
               View My Work
+            </button>
+
+              <button 
+              onClick={openResume}
+              className="flex items-center space-x-2 px-8 py-4 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl font-semibold text-lg hover:scale-105 transition-all duration-300 hover:shadow-2xl hover:shadow-green-500/25"
+            >
+              <ExternalLink className="w-5 h-5" />
+              <span>View Resume</span>
             </button>
           </div>
 
