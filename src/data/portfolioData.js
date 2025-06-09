@@ -23,7 +23,7 @@ export const projects = [
     tech: ["HTML", "CSS", "JavaScript", "APIs"],
     image: "/images/projects/comfy2.png",
     featured: true,
-    // liveUrl: "https://gitters.netlify.app/",
+    liveUrl: "https://comfy-neon.vercel.app/",
     githubUrl: "https://github.com/mailmeatdarshan/Comfy"
   },
   {
