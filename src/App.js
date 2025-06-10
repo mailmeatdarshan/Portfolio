@@ -54,7 +54,7 @@ function App() {
   };
 
   const openResume = () => {
-  const resumeUrl = "https://drive.google.com/file/d/1CqxxFs-iQY9rAezzsk7snqDjkM5pitK6/view?usp=drive_link";
+  const resumeUrl = "https://drive.google.com/file/d/11h3LdeTHy0xvmm4WQWYDspJMibkQm4RD/view?usp=sharing";
     window.open(resumeUrl, '_blank');
   };
 
