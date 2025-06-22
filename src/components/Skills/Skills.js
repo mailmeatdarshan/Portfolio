@@ -68,30 +68,56 @@ const Skills = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-6">
-            {skills.map((skill, index) => (
-              <div
-                key={skill.name}
-                className="group p-6 bg-white/5 rounded-2xl backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300 hover:scale-105"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <div className="flex items-center space-x-3 mb-4">
-                  <span className="text-3xl">{skill.icon}</span>
-                  <span className="font-semibold text-lg">{skill.name}</span>
-                </div>
-                
-                <div className="relative">
-                  <div className="w-full bg-gray-700 rounded-full h-2 mb-2">
-                    <div
-                      className={`h-2 rounded-full bg-gradient-to-r ${skill.color} transition-all duration-1000 group-hover:animate-pulse`}
-                      style={{ width: `${skill.level}%` }}
-                    />
-                  </div>
-                  <span className="text-sm text-gray-400">{skill.level}%</span>
-                </div>
-              </div>
-            ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+  {skills.map((skill, index) => (
+    <div
+      key={skill.name}
+      className="group p-6 bg-white/5 rounded-2xl backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300 hover:scale-105 cursor-pointer"
+      style={{ animationDelay: `${index * 100}ms` }}
+    >
+      {/* Header with icon, name, and category */}
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center space-x-3">
+          <span className="text-3xl group-hover:scale-110 transition-transform duration-300">
+            {skill.icon}
+          </span>
+          <div>
+            <span className="font-semibold text-lg">{skill.name}</span>
+            <span className="ml-2 px-2 py-1 text-xs bg-white/10 rounded-full text-gray-300">
+              {skill.category}
+            </span>
           </div>
+        </div>
+        <div className="text-right text-sm text-gray-400">
+          <div>{skill.experience}</div>
+          {/* <div className="text-xs">{skill.projects} projects</div> */}
+        </div>
+      </div>
+      
+      {/* Description */}
+      <p className="text-sm text-gray-300 mb-4 leading-relaxed">
+        {skill.description}
+      </p>
+      
+      {/* Progress bar */}
+      <div className="relative">
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-xs text-gray-400">Proficiency</span>
+          <span className="text-sm font-medium text-white">{skill.level}%</span>
+        </div>
+        <div className="w-full bg-gray-700 rounded-full h-2">
+          <div
+            className={`h-2 rounded-full bg-gradient-to-r ${skill.color} transition-all duration-1000 group-hover:animate-pulse`}
+            style={{ width: `${skill.level}%` }}
+          />
+        </div>
+      </div>
+      
+      {/* Hover overlay effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl pointer-events-none" />
+    </div>
+  ))}
+</div>
         </div>
       </div>
     </section>
