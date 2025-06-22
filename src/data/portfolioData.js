@@ -18,6 +18,16 @@ export const personalInfo = {
 export const projects = [
   {
     id: 1,
+    title: "Chitti-The Robot",
+    description: "Chitti-The Robot brings OpenAI, Anthropic Claude, Google Gemini, DeepSeek, and Grok AI into one sleek interface.",
+    tech: ["React", "Vite", "JavaScript", "APIs", "CSS3"],
+    image: "/images/projects/welcome.png",
+    featured: true,
+    liveUrl: "https://chitti-the-robot.vercel.app/",
+    githubUrl: "https://github.com/mailmeatdarshan/Chitti-the-Robot"
+  },
+  {
+    id: 2,
     title: "Comfy",
     description: "A revolutionary car modification platform with real-time inventory management, AR visualization, and seamless booking system.",
     tech: ["HTML", "CSS", "JavaScript", "APIs"],
@@ -27,17 +37,17 @@ export const projects = [
     githubUrl: "https://github.com/mailmeatdarshan/Comfy"
   },
   {
-    id: 2,
+    id: 3,
     title: "Gitters",
     description: "Gitters is an interactive web app that allows users to seamlessly browse and explore GitHub profiles offering a visually engaging and user-friendly experience.",
     tech: ["HTML", "CSS", "JavaScript", "APIs"],
     image: "/images/projects/gitters2.png",
-    featured: true,
+    featured: false,
     liveUrl: "https://gitters.netlify.app/",
     githubUrl: "https://github.com/mailmeatdarshan/Gitters"
   },
   {
-    id: 3,
+    id: 4,
     title: "WikiExplorer",
     description: "Wikipedia is one of the largest and most popular sources of general knowledge on the internet. This is a simple, interactive web application that allows users to search Wikipedia",
     tech: ["HTML", "CSS", "JavaScript", "APIs"],
@@ -47,7 +57,7 @@ export const projects = [
     githubUrl: "https://github.com/mailmeatdarshan/WikiExplorer"
   },
   {
-    id: 4,
+    id: 5,
     title: "World-Weather-Web",
     description: "World Weather Web is a sleek, user-friendly application that provides instant access to real-time weather conditions worldwide.",
     tech: ["HTML", "CSS", "JavaScript", "APIs"],
@@ -57,7 +67,7 @@ export const projects = [
     githubUrl: "https://github.com/mailmeatdarshan/WorldWeatherWeb"
   },
   {
-    id: 5,
+    id: 6,
     title: "RazorpayClone(Frontend)",
     description: "Razorpay is a finance platform that primarily provides businesses with tools to accept, process, and disburse payments online. This project replicates the sleek and user-friendly design of Razorpays payment system",
     tech: ["HTML", "CSS", "JavaScript"],
@@ -67,7 +77,7 @@ export const projects = [
     githubUrl: "https://github.com/mailmeatdarshan/RazorPayClone"
   },
   {
-    id: 6,
+    id: 7,
     title: "DiscordClone(Frontend)",
     description: "Discord is an instant messaging and VoIP social platform which allows communication through voice calls, video calls, text messaging, and media.",
     tech: ["HTML", "CSS", "JavaScript"],
@@ -77,7 +87,7 @@ export const projects = [
     githubUrl: "https://github.com/mailmeatdarshan/DiscordClone"
   },
   {
-  id: 7,
+  id: 8,
   title: "PasswordGen",
   description: "This web-based random password generator creates secure passwords based on your preferences.",
   tech: ["HTML", "CSS", "JavaScript"],
@@ -87,7 +97,7 @@ export const projects = [
   githubUrl: "https://github.com/mailmeatdarshan/PasswordGen"
   },
   {
-  id: 8,
+  id: 9,
   title: "YourMap",
   description: "YourMap is a custom web-based mapping application powered by the MapTiler API. ",
   tech: ["HTML", "CSS", "JavaScript"],
@@ -97,7 +107,7 @@ export const projects = [
   githubUrl: "https://github.com/mailmeatdarshan/YourMap"
   },
   {
-    id: 9,
+    id: 10,
     title: "Tic-Tac-Toe",
     description: "Tic-Tac-Toe reimagines the classic paper-and-pencil game with modern design.",
     tech: ["HTML", "CSS", "JavaScript"],
@@ -107,7 +117,7 @@ export const projects = [
     githubUrl: "https://github.com/mailmeatdarshan/Tic-Tac-Toe"
   },
   {
-  id: 10,
+  id: 11,
   title: "GroceryList",
   description: "YourGrocery is a simple, easy-to-use web application designed to streamline your grocery shopping experience.",
   tech: ["HTML", "CSS", "JavaScript"],
@@ -115,6 +125,16 @@ export const projects = [
   featured: false,
   liveUrl: "https://your-groceries.netlify.app/",
   githubUrl: "https://github.com/mailmeatdarshan/GroceryList"
+  },
+  {
+  id: 12,
+  title: "Dribble",
+  description: "Dribble The world's leading platform to discover top designers, their design work, and the services they offer. This is just the frontend of the original website using Html and CSS",
+  tech: ["HTML", "CSS"],
+  image: "/images/projects/dribble.png",
+  featured: false,
+  liveUrl: "https://mailmeatdarshan.github.io/Dribble-/",
+  githubUrl: "https://github.com/mailmeatdarshan/Dribble-"
   }
 
 ];
