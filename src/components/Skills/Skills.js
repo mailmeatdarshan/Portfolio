@@ -1,125 +1,212 @@
 // src/components/Skills/Skills.js
 import React from 'react';
-import { Target, Palette } from 'lucide-react';
+import { Target, Palette, Database, Lightbulb, Code, Brush, Server, Brain } from 'lucide-react';
 import { skills } from '../../data/portfolioData';
 
 const Skills = () => {
+  const expertiseAreas = [
+    {
+      icon: <Code className="w-7 h-7" />,
+      title: "Full Stack Development",
+      description: "End-to-end application development with modern frameworks",
+      gradient: "from-emerald-500 to-teal-500"
+    },
+    {
+      icon: <Brush className="w-7 h-7" />,
+      title: "UI/UX Design",
+      description: "Beautiful, user-centered interfaces that convert",
+      gradient: "from-blue-500 to-cyan-500"
+    },
+    {
+      icon: <Server className="w-7 h-7" />,
+      title: "Database Management",
+      description: "Ensuring data is organized, secure, and accessible",
+      gradient: "from-purple-500 to-indigo-500"
+    },
+    {
+      icon: <Brain className="w-7 h-7" />,
+      title: "Problem Solving",
+      description: "Turning complex challenges into elegant solutions",
+      gradient: "from-orange-500 to-red-500"
+    }
+  ];
+
   return (
-    <section id="skills" className="py-32 relative">
-      <div className="absolute inset-0 bg-gradient-to-r from-purple-900/20 to-pink-900/20" />
+    <section id="skills" className="py-32 relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900" />
+        <div className="absolute top-0 left-0 w-full h-full">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-pink-500/10 rounded-full blur-3xl animate-pulse delay-500" />
+        </div>
+      </div>
       
-      <div className="max-w-7xl mx-auto px-6 relative">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <div>
-            <h2 className="text-6xl font-bold mb-8">
-              <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Skills &
-              </span>
-              <br />
-              <span className="text-white">Expertise</span>
-            </h2>
-            
-            <p className="text-xl text-gray-400 mb-8 leading-relaxed">
-              With 3+ years of experience, I've mastered a diverse tech stack that enables me 
-              to build full-scale applications from concept to deployment. Currently working 
-              with a growing startup while maintaining freelance excellence.
-            </p>
-            
-            <div className="space-y-6">
-              <div className="flex items-center space-x-4">
-                <div className="p-3 bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl">
-                  <Target className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg">Full Stack Development</h3>
-                  <p className="text-gray-400">End-to-end application development</p>
-                </div>
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
+        {/* Header */}
+        <div className="text-center mb-20">
+          <div className="inline-flex items-center justify-center p-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full mb-6">
+            <Target className="w-6 h-6 text-purple-400 mr-2" />
+            <span className="text-purple-300 font-medium">Skills & Expertise</span>
+          </div>
+          
+          <h2 className="text-5xl md:text-7xl font-bold mb-6">
+            <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
+              Crafting Digital
+            </span>
+            <br />
+            <span className="text-white">Excellence</span>
+          </h2>
+          
+          <p className="text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+            With 3+ years of experience, I've mastered a diverse tech stack that enables me 
+            to build full-scale applications from concept to deployment. Currently working 
+            with a growing startup while maintaining freelance excellence.
+          </p>
+        </div>
+
+        {/* Expertise Areas */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+          {expertiseAreas.map((area, index) => (
+            <div
+              key={area.title}
+              className="group relative p-6 bg-white/5 rounded-2xl backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-500 hover:scale-105 hover:-translate-y-2"
+              style={{ animationDelay: `${index * 150}ms` }}
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-white/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              
+              <div className={`inline-flex p-4 bg-gradient-to-r ${area.gradient} rounded-xl mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                {area.icon}
               </div>
               
-              <div className="flex items-center space-x-4">
-                <div className="p-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl">
-                  <Palette className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg">UI/UX Design</h3>
-                  <p className="text-gray-400">Beautiful, user-centered interfaces</p>
-                </div>
-              </div>
-
-              <div className="flex items-center space-x-4">
-                <div className="p-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl">
-                  <Palette className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg">DataBase Management</h3>
-                  <p className="text-gray-400">Ensuring data is organized, secure, and accessible</p>
-                </div>
-              </div>
-
-              <div className="flex items-center space-x-4">
-                <div className="p-3 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-xl">
-                  <Palette className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg">Problem Solving</h3>
-                  <p className="text-gray-400">Turning challenges into opportunities</p>
+              <h3 className="font-bold text-xl mb-3 text-white group-hover:text-purple-300 transition-colors duration-300">
+                {area.title}
+              </h3>
+              
+              <p className="text-gray-400 text-sm leading-relaxed group-hover:text-gray-300 transition-colors duration-300">
+                {area.description}
+              </p>
+              
+              {/* Animated border */}
+              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-500 p-px">
+                  <div className="w-full h-full rounded-2xl bg-slate-900/90" />
                 </div>
               </div>
             </div>
-          </div>
+          ))}
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-  {skills.map((skill, index) => (
-    <div
-      key={skill.name}
-      className="group p-6 bg-white/5 rounded-2xl backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300 hover:scale-105 cursor-pointer"
-      style={{ animationDelay: `${index * 100}ms` }}
-    >
-      {/* Header with icon, name, and category */}
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center space-x-3">
-          <span className="text-3xl group-hover:scale-110 transition-transform duration-300">
-            {skill.icon}
-          </span>
-          <div>
-            <span className="font-semibold text-lg">{skill.name}</span>
-            <span className="ml-2 px-2 py-1 text-xs bg-white/10 rounded-full text-gray-300">
-              {skill.category}
-            </span>
+        {/* Skills Grid */}
+        <div className="mb-12">
+          <div className="text-center mb-12">
+            <h3 className="text-3xl font-bold text-white mb-4">Technical Arsenal</h3>
+            <p className="text-gray-400">Technologies and tools I work with daily</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {skills.map((skill, index) => (
+              <div
+                key={skill.name}
+                className="group relative p-6 bg-gradient-to-br from-white/5 to-white/[0.02] rounded-2xl backdrop-blur-sm border border-white/10 hover:border-purple-500/50 transition-all duration-500 hover:scale-105 hover:-translate-y-1"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                {/* Glowing effect on hover */}
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl" />
+                
+                {/* Content */}
+                <div className="relative">
+                  {/* Header */}
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center space-x-3">
+                      <div className="text-4xl group-hover:scale-110 transition-transform duration-300 filter drop-shadow-lg">
+                        {skill.icon}
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-lg text-white group-hover:text-purple-300 transition-colors duration-300">
+                          {skill.name}
+                        </h4>
+                        <span className="inline-block px-3 py-1 text-xs bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full text-purple-300 border border-purple-500/30">
+                          {skill.category}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-sm font-medium text-white">{skill.experience}</div>
+                    </div>
+                  </div>
+                  
+                  {/* Description */}
+                  <p className="text-sm text-gray-300 mb-4 leading-relaxed group-hover:text-gray-200 transition-colors duration-300">
+                    {skill.description}
+                  </p>
+                  
+                  {/* Progress Section */}
+                  <div className="space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-xs text-gray-400 font-medium">Proficiency Level</span>
+                      <span className="text-sm font-bold text-white bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                        {skill.level}%
+                      </span>
+                    </div>
+                    
+                    {/* Progress Bar Container */}
+                    <div className="relative">
+                      <div className="w-full bg-gray-800/50 rounded-full h-3 overflow-hidden">
+                        <div
+                          className={`h-3 rounded-full bg-gradient-to-r ${skill.color} transition-all duration-1000 ease-out relative overflow-hidden`}
+                          style={{ width: `${skill.level}%` }}
+                        >
+                          {/* Shimmer effect */}
+                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 group-hover:animate-shimmer" />
+                        </div>
+                      </div>
+                      
+                      {/* Glowing progress indicator */}
+                      <div
+                        className={`absolute top-0 h-3 rounded-full bg-gradient-to-r ${skill.color} opacity-50 blur-sm transition-all duration-1000`}
+                        style={{ width: `${skill.level}%` }}
+                      />
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Floating particles effect */}
+                <div className="absolute inset-0 overflow-hidden rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <div className="absolute top-2 right-2 w-2 h-2 bg-purple-400 rounded-full animate-ping" />
+                  <div className="absolute bottom-3 left-3 w-1 h-1 bg-pink-400 rounded-full animate-ping delay-300" />
+                  <div className="absolute top-1/2 right-4 w-1.5 h-1.5 bg-blue-400 rounded-full animate-ping delay-700" />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-        <div className="text-right text-sm text-gray-400">
-          <div>{skill.experience}</div>
-          {/* <div className="text-xs">{skill.projects} projects</div> */}
+
+        {/* Call to Action */}
+        <div className="text-center">
+          <div className="inline-flex items-center justify-center p-6 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-2xl border border-purple-500/20 backdrop-blur-sm">
+            <div className="text-center">
+              <h3 className="text-2xl font-bold text-white mb-2">Ready to Build Something Amazing?</h3>
+              <p className="text-gray-400 mb-4">Let's discuss how these skills can bring your project to life</p>
+              <button className="px-8 py-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl font-medium text-white hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-purple-500/25">
+                Get In Touch
+              </button>
+            </div>
+          </div>
         </div>
       </div>
       
-      {/* Description */}
-      <p className="text-sm text-gray-300 mb-4 leading-relaxed">
-        {skill.description}
-      </p>
-      
-      {/* Progress bar */}
-      <div className="relative">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-xs text-gray-400">Proficiency</span>
-          <span className="text-sm font-medium text-white">{skill.level}%</span>
-        </div>
-        <div className="w-full bg-gray-700 rounded-full h-2">
-          <div
-            className={`h-2 rounded-full bg-gradient-to-r ${skill.color} transition-all duration-1000 group-hover:animate-pulse`}
-            style={{ width: `${skill.level}%` }}
-          />
-        </div>
-      </div>
-      
-      {/* Hover overlay effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl pointer-events-none" />
-    </div>
-  ))}
-</div>
-        </div>
-      </div>
+      {/* Custom CSS for shimmer animation */}
+      <style jsx>{`
+        @keyframes shimmer {
+          0% { transform: translateX(-100%) skewX(-12deg); }
+          100% { transform: translateX(200%) skewX(-12deg); }
+        }
+        .animate-shimmer {
+          animation: shimmer 2s infinite;
+        }
+      `}</style>
     </section>
   );
 };
