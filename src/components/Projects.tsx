@@ -13,37 +13,61 @@ export default function Projects() {
             <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-10">Projects</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
                 {projects.map((project) => (
-                    <CardContainer key={project.id} className="inter-var w-full">
-                        <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-full h-auto rounded-xl p-6 border">
+                    <CardContainer key={project.id} className="inter-var w-full h-full">
+                        <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-full h-auto rounded-xl p-6 border flex flex-col">
                             <CardItem
                                 translateZ="50"
                                 className="text-xl font-bold text-neutral-600 dark:text-white"
                             >
                                 {project.title}
                             </CardItem>
+
+                            {project.role && (
+                                <CardItem
+                                    as="p"
+                                    translateZ="60"
+                                    className="text-blue-500 text-xs font-semibold mt-1"
+                                >
+                                    {project.role}
+                                </CardItem>
+                            )}
+
                             <CardItem
-                                as="p"
+                                as="div"
                                 translateZ="60"
-                                className="text-neutral-500 text-sm max-w-sm mt-2 dark:text-neutral-300"
+                                className="text-neutral-500 text-sm mt-2 dark:text-neutral-300 flex-grow h-24 overflow-y-auto"
                             >
-                                {project.description.slice(0, 100)}...
+                                {project.description}
                             </CardItem>
+
                             <CardItem translateZ="100" className="w-full mt-4">
-                                <div className="relative w-full h-60 rounded-xl group-hover/card:shadow-xl overflow-hidden">
-                                    <img /* Using img tag for generic URL, or next/image if configured */
+                                <div className="relative w-full h-48 rounded-xl group-hover/card:shadow-xl overflow-hidden">
+                                    <Image
                                         src={project.image}
                                         alt={project.title}
-                                        className="h-full w-full object-cover rounded-xl group-hover/card:shadow-xl"
+                                        fill
+                                        className="object-cover rounded-xl group-hover/card:shadow-xl"
                                     />
                                 </div>
                             </CardItem>
-                            <div className="flex justify-between items-center mt-20">
+
+                            <CardItem translateZ="80" className="w-full mt-4">
+                                <div className="flex flex-wrap gap-2">
+                                    {project.tech.map((t, i) => (
+                                        <span key={i} className="text-[10px] px-2 py-1 bg-neutral-900 rounded-lg text-neutral-400 border border-neutral-800">
+                                            {t}
+                                        </span>
+                                    ))}
+                                </div>
+                            </CardItem>
+
+                            <div className="flex justify-between items-center mt-8">
                                 <CardItem
                                     translateZ={20}
                                     as={Link}
                                     href={project.liveUrl}
-                                    target="__blank"
-                                    className="px-4 py-2 rounded-xl text-xs font-normal dark:text-white"
+                                    target="_blank"
+                                    className="px-4 py-2 rounded-xl text-xs font-normal dark:text-white hover:text-blue-400 transition-colors"
                                 >
                                     Visit Live →
                                 </CardItem>
@@ -51,8 +75,8 @@ export default function Projects() {
                                     translateZ={20}
                                     as={Link}
                                     href={project.githubUrl}
-                                    target="__blank"
-                                    className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold"
+                                    target="_blank"
+                                    className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold hover:bg-neutral-200 transition-colors"
                                 >
                                     GitHub
                                 </CardItem>

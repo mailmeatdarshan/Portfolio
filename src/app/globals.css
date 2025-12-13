@@ -41,6 +41,9 @@
   --color-sidebar-ring: var(--sidebar-ring);
 
   --animate-spotlight: spotlight 2s ease .75s 1 forwards;
+
+  --font-sans: var(--font-outfit);
+  --font-display: var(--font-space-grotesk);
 }
 
 @keyframes spotlight {
