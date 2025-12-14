@@ -46,11 +46,11 @@ export default function Contact() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <label className="text-sm font-medium text-neutral-300">Name</label>
-                                <Input placeholder="John Doe" className="bg-neutral-950 border-neutral-800 text-white placeholder:text-neutral-600" />
+                                <Input placeholder="Darshan Dubey" className="bg-neutral-950 border-neutral-800 text-white placeholder:text-neutral-600" />
                             </div>
                             <div className="space-y-2">
                                 <label className="text-sm font-medium text-neutral-300">Email</label>
-                                <Input type="email" placeholder="john@example.com" className="bg-neutral-950 border-neutral-800 text-white placeholder:text-neutral-600" />
+                                <Input type="email" placeholder="darshan@example.com" className="bg-neutral-950 border-neutral-800 text-white placeholder:text-neutral-600" />
                             </div>
                         </div>
                         <div className="space-y-2">
