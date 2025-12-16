@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
@@ -9,6 +9,40 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 export default function Contact() {
+
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [status, setStatus] = useState<null | "success" | "error">(null);
+
+    async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        setIsSubmitting(true);
+        setStatus(null);
+
+
+        const formData = new FormData(e.currentTarget);
+
+        try {
+            const response = await fetch("https://formspree.io/f/xrbnwggb", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                setStatus("success");
+                (e.target as HTMLFormElement).reset(); 
+            } else {
+                setStatus("error");
+            }
+        } catch (error) {
+            setStatus("error");
+        } finally {
+            setIsSubmitting(false);
+        }
+    }
+
     return (
         <div className="py-20 px-4 max-w-7xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-10">
@@ -42,28 +76,62 @@ export default function Contact() {
                 </div>
 
                 <div className="bg-neutral-900/50 p-8 rounded-2xl border border-neutral-800">
-                    <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+                    <form className="space-y-6" onSubmit={handleSubmit}>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="space-y-2">
                                 <label className="text-sm font-medium text-neutral-300">Name</label>
-                                <Input placeholder="Darshan Dubey" className="bg-neutral-950 border-neutral-800 text-white placeholder:text-neutral-600" />
+                                <Input 
+                                    name="name" 
+                                    required
+                                    placeholder="Darshan Dubey" 
+                                    className="bg-neutral-950 border-neutral-800 text-white placeholder:text-neutral-600" 
+                                />
                             </div>
                             <div className="space-y-2">
                                 <label className="text-sm font-medium text-neutral-300">Email</label>
-                                <Input type="email" placeholder="darshan@example.com" className="bg-neutral-950 border-neutral-800 text-white placeholder:text-neutral-600" />
+                                <Input 
+                                    name="email"
+                                    type="email" 
+                                    required
+                                    placeholder="darshan@example.com" 
+                                    className="bg-neutral-950 border-neutral-800 text-white placeholder:text-neutral-600" 
+                                />
                             </div>
                         </div>
                         <div className="space-y-2">
                             <label className="text-sm font-medium text-neutral-300">Subject</label>
-                            <Input placeholder="Project Inquiry" className="bg-neutral-950 border-neutral-800 text-white placeholder:text-neutral-600" />
+                            <Input 
+                                name="subject"
+                                required
+                                placeholder="Project Inquiry" 
+                                className="bg-neutral-950 border-neutral-800 text-white placeholder:text-neutral-600" 
+                            />
                         </div>
                         <div className="space-y-2">
                             <label className="text-sm font-medium text-neutral-300">Message</label>
-                            <Textarea placeholder="Tell me about your project..." className="min-h-[150px] bg-neutral-950 border-neutral-800 text-white placeholder:text-neutral-600" />
+                            <Textarea 
+                                name="message"
+                                required
+                                placeholder="Tell me about your project..." 
+                                className="min-h-[150px] bg-neutral-950 border-neutral-800 text-white placeholder:text-neutral-600" 
+                            />
                         </div>
-                        <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white" size="lg">
-                            Send Message <Send className="ml-2 h-4 w-4" />
+                        
+                        <Button 
+                            className="w-full bg-blue-600 hover:bg-blue-700 text-white" 
+                            size="lg"
+                            disabled={isSubmitting} 
+                        >
+                            {isSubmitting ? "Sending..." : "Send Message"} 
+                            {!isSubmitting && <Send className="ml-2 h-4 w-4" />}
                         </Button>
+
+                        {status === "success" && (
+                            <p className="text-green-500 text-center text-sm">Message sent successfully!</p>
+                        )}
+                        {status === "error" && (
+                            <p className="text-red-500 text-center text-sm">Something went wrong. Please try again.</p>
+                        )}
                     </form>
                 </div>
             </div>

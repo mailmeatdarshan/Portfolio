@@ -81,8 +81,8 @@ export const personalInfo = {
                 description: "Therapeutic. Kinda my spiritual outlet tbh."
             },
             {
-                title: "Living weirdly",
-                description: "Life’s a maze. I just code through it like it’s an ARG."
+                title: "Reading Masterpieces",
+                description: "Life’s a maze. Read Books And Chill"
             }
         ],
         masterplan: [

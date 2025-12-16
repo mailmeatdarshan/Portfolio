@@ -24,10 +24,10 @@ export default function About() {
                 >
                     <h3 className="text-2xl font-bold text-white mb-6">About Me</h3>
                     <p className="text-lg md:text-xl text-neutral-300 leading-relaxed mb-6 font-light">
-                        I’m a computer engineering graduate with a strong interest in <span className="text-blue-400 font-medium">cloud computing</span>, <span className="text-purple-400 font-medium">automation</span>, and <span className="text-green-400 font-medium">backend development</span>. I enjoy building efficient systems that solve real-world problems. I’m especially passionate about modern cloud technologies and scalable system design.
+                        I’m a computer science student with a strong interest in <span className="text-blue-400 font-medium">web development</span>, <span className="text-yellow-400 font-medium">cloud computing</span>, <span className="text-purple-400 font-medium">automation</span>, and <span className="text-green-400 font-medium">backend development</span>. I enjoy building efficient systems that solve real-world problems. I’m especially passionate about modern technologies and scalable system design.
                     </p>
                     <div className="flex flex-wrap justify-center gap-3">
-                        {["#Cloud Engineer", "#Backend Specialist", "#Automation Developer", "#GIS Engineer", "#Data Engineer"].map((tag, i) => (
+                        {["#Web Developer", "#Cloud Engineer", "#Backend Specialist", "#Automation Developer"].map((tag, i) => (
                             <span key={i} className="px-4 py-1.5 rounded-full bg-neutral-800 text-sm font-medium text-neutral-400 border border-neutral-700 hover:border-blue-500 hover:text-blue-400 transition-colors cursor-default">
                                 {tag}
                             </span>
