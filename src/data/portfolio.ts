@@ -253,24 +253,24 @@ export const projects: Project[] = [
 export const experience: ExperienceItem[] = [
     {
         id: 1,
-        title: "CS Research Collaborator",
-        company: "Bhavans College",
+        title: "Frontend Intern",
+        company: "TeachUS",
         location: "Mumbai, Maharashtra",
-        duration: "June 2024 – Present",
+        duration: "Sep. 2025 – Nov. 2025",
         description: [
-            "Built full-stack web applications using FastAPI, PostgreSQL, and React",
-            "Collaborated with faculty on complex backend APIs and database systems"
+            "During this remote internship, I served as a Frontend Designer within the IT Department, contributing to the design and user experience of the Teachus App",
+            "Collaborated with faculty to transform complex educational requirements into intuitive, user-friendly digital interfaces"
         ]
     },
     {
         id: 2,
-        title: "Tech Support Coordinator",
+        title: "Data Management Intern",
         company: "Bhavans College",
         location: "Mumbai, Maharashtra",
-        duration: "Sep. 2024 – Present",
+        duration: "Nov. 2025 – Dec. 2025",
         description: [
-            "Managed technical setup and troubleshooting for Code Crafter tech event",
-            "Maintained computer labs and coordinated event logistics"
+            "Working as a Data Management Intern at Bhavans College, assisting in organizing, maintaining, and updating academic and administrative data",
+            "Gained hands-on experience with data handling, record maintenance, digital management systems, and ERP operations."
         ]
     }
 ];
