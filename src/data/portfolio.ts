@@ -117,6 +117,17 @@ export const technicalArsenal: Skill[] = [
 
 export const projects: Project[] = [
     {
+        id: 13,
+        title: "HisabKitab",
+        description: "A comprehensive expense tracking application with real-time analytics, recurring expenses, and categorized spending insights. Built to help users manage their finances effectively.",
+        role: "Full Stack Developer - Architected the entire application, implemented secure authentication, and integrated Redis/RabbitMQ for background tasks.",
+        tech: ["React", "Node.js", "MongoDB", "Redis", "RabbitMQ", "Chart.js"],
+        image: "/images/projects/hisabkitab.png",
+        featured: true,
+        liveUrl: "https://hisab-kitab-sepia.vercel.app",
+        githubUrl: "https://github.com/mailmeatdarshan/HisabKitab"
+    },
+    {
         id: 1,
         title: "Chitti-The Robot",
         description: "Chitti-The Robot brings OpenAI, Anthropic Claude, Google Gemini, DeepSeek, and Grok AI into one sleek interface. It solves the problem of navigating multiple AI platforms by unifying them into a single, cohesive user experience.",

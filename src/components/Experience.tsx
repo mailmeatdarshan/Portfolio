@@ -88,7 +88,7 @@ export default function Experience() {
                     Actually, I'll match the Hero button style.
                  */}
                 <a
-                    href="https://drive.google.com/uc?export=download&id=1WPCzCoJktoxk5GtOdkbn1G22OCSyL0xL"
+                    href="https://drive.google.com/file/d/1XEGiTWm6KXF0pMVS5g3_uSQ5eBHedG6K/view?usp=drive_link"
                     download="Darshan_Dubey_Resume.pdf"
                     className="group relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
                 >
