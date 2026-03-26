@@ -117,6 +117,16 @@ export const technicalArsenal: Skill[] = [
 
 export const projects: Project[] = [
     {
+        id: 14,
+        title: "MyBhavans",
+        description: "A comprehensive college social media app built specifically for Bhavans College. It features a unified feed system, skill-swap marketplace, and student utilities, fostering a connected campus community.",
+        tech: ["Android", "Kotlin", "Jetpack Compose", "Firebase"],
+        image: "/images/projects/mybhavans.png",
+        featured: true,
+        liveUrl: "https://github.com/mailmeatdarshan/MyBhavans---Social/releases/download/v1.0/MyBhavans.apk",
+        githubUrl: "https://github.com/mailmeatdarshan/MyBhavans---Social"
+    },
+    {
         id: 13,
         title: "HisabKitab",
         description: "A comprehensive expense tracking application with real-time analytics, recurring expenses, and categorized spending insights. Built to help users manage their finances effectively.",
