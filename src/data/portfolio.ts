@@ -151,13 +151,22 @@ export const projects: Project[] = [
     {
         id: 2,
         title: "Comfy",
-        description: "A revolutionary car modification platform with real-time inventory management, AR visualization, and seamless booking system. It addresses the lack of digital tools in the custom car modification market.",
-        // role: "Full Stack Developer - Built the inventory system and integrated AR visualization features.",
+        description: "A sleek, fully responsive furniture e-commerce app built entirely with vanilla JavaScript. Experience seamless shopping, smart filters, and lightning-fast performance—no frameworks needed.",
         tech: ["HTML", "CSS", "JavaScript", "APIs"],
         image: "/images/projects/comfy2.png",
         featured: true,
         liveUrl: "https://comfy-neon.vercel.app/",
         githubUrl: "https://github.com/mailmeatdarshan/Comfy"
+    },
+    {
+        id: 15,
+        title: "UPSC-TestBook",
+        description: "A Testbook-style UPSC Civil Services Prelims mock test platform built for serious aspirants. Practice with real PYQs, get UPSC-accurate scoring, and track your preparation with rich analytics.",
+        tech: ["HTML", "CSS", "JavaScript", "APIs"],
+        image: "/images/projects/upsc.png",
+        featured: true,
+        liveUrl: "https://upsc-test-book.vercel.app/",
+        githubUrl: "https://github.com/mailmeatdarshan/UPSC---TestBook"
     },
     {
         id: 3,
@@ -246,17 +255,6 @@ export const projects: Project[] = [
         featured: false,
         liveUrl: "https://mailmeatdarshan.github.io/Tic-Tac-Toe/",
         githubUrl: "https://github.com/mailmeatdarshan/Tic-Tac-Toe"
-    },
-    {
-        id: 11,
-        title: "GroceryList",
-        description: "YourGrocery is a simple, easy-to-use web application designed to streamline your grocery shopping experience.",
-        // role: "Developer - Created the CRUD functionality for grocery items.",
-        tech: ["HTML", "CSS", "JavaScript"],
-        image: "/images/projects/grocery.png",
-        featured: false,
-        liveUrl: "https://your-groceries.netlify.app/",
-        githubUrl: "https://github.com/mailmeatdarshan/GroceryList"
     },
     {
         id: 12,
