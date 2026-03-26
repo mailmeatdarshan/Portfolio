@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Outfit, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-
+import BackToTop from "@/components/BackToTop";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -31,6 +31,7 @@ export default function RootLayout({
       >
         <Navbar />
         {children}
+        <BackToTop />
       </body>
     </html>
   );
