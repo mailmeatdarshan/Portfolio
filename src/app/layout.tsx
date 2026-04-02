@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Outfit, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import "./clippy-overrides.css";
 import Navbar from "@/components/Navbar";
 import BackToTop from "@/components/BackToTop";
+import ClippyAssistant from "@/components/ClippyAssistant";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -28,10 +30,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${outfit.variable} ${spaceGrotesk.variable} antialiased font-sans`}
+        suppressHydrationWarning
       >
         <Navbar />
         {children}
         <BackToTop />
+        <ClippyAssistant />
       </body>
     </html>
   );
