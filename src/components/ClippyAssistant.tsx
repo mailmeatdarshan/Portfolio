@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useCallback } from 'react';
 
-// ─── Section Messages ─────────────────────────────────────────────
 const SECTION_MESSAGES: Record<string, string> = {
     hero: "Hey! I'm Clippy 📎 Welcome to Darshan's portfolio!",
     about: "Getting to know the man behind the code!",
@@ -12,7 +11,6 @@ const SECTION_MESSAGES: Record<string, string> = {
     contact: "Wanna hire Darshan? Go on, send a message!",
 };
 
-// ─── Idle Messages (escalating sass) ──────────────────────────────
 const IDLE_MESSAGES = [
     "Psst... scroll down, there's more cool stuff!",
     "Need help navigating? Just scroll around!",
@@ -24,48 +22,54 @@ const IDLE_MESSAGES = [
     "At this point we're basically friends. Just hire him.",
 ];
 
-// ─── Click Messages (escalating roast) ────────────────────────────
-// Ordered: curious → suspicious → mild roasting
 const CLICK_MESSAGES = [
-    // Phase 1: Friendly & curious
     "Oh! Hey there, curious one 👋",
     "Hehe, that tickles! 😄",
     "Yes, I'm real. The paperclip is REAL.",
-    // Phase 2: Getting suspicious
     "You seem… distracted 😏",
     "I'm not the main feature here… or am I? 🤔",
     "You came here to hire or to click me?",
-    // Phase 3: Mild roasting
     "Imagine clicking me instead of hiring this dev 💀",
     "I'll tell the developer you're not serious.",
     "Okay you clearly have too much free time.",
     "That's it. I'm adding you to the 'not serious' list 📋",
-    // Phase 4: Giving up
     "Fine. Click away. I'll just stand here. Judging. 📎",
     "...you know the contact form is RIGHT THERE, right?",
     "I'm literally begging you. Go check out the projects section.",
+    "I was made to help, not to be abused like this 😭",
+    "I'm not even getting paid for this... 💸",
 ];
 
-// ─── Timing Constants ─────────────────────────────────────────────
-const MESSAGE_COOLDOWN_MS = 8000;
-const IDLE_TIMEOUT_MS = 30000;
-const IDLE_COOLDOWN_MS = 45000;      // Idle msgs every 45s (more frequent for fun)
-const ANIMATION_INTERVAL_MS = 18000;
-const WELCOME_DELAY_MS = 3000;
+const DRAG_MESSAGES = [
+    "Did you just... move me? Rude. 😤",
+    "Oh sure, just drag me around like I'm furniture.",
+    "I have feelings you know. Paperclip feelings. 📎",
+    "Instead of redecorating, maybe check out the projects?",
+    "You're spending more time on me than on the portfolio 💀",
+    "Okay interior designer, the contact section is still there.",
+    "New location, same you — still not hiring 😏",
+    "I'll go wherever you put me. But I won't be happy about it.",
+];
+
+const MESSAGE_COOLDOWN_MS = 5000;
+const IDLE_FIRST_MS = 12000;   
+const IDLE_REPEAT_MS = 18000;  
+const ANIMATION_INTERVAL_MS = 20000;
+const WELCOME_DELAY_MS = 1500;
+const DRAG_THRESHOLD_PX = 20;  
 
 export default function ClippyAssistant() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const agentRef = useRef<any>(null);
     const spokenSections = useRef<Set<string>>(new Set());
     const lastMessageTime = useRef<number>(0);
-    const lastIdleTime = useRef<number>(0);
     const idleMessageIndex = useRef<number>(0);
     const clickCount = useRef<number>(0);
-    const idleTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const dragCount = useRef<number>(0);
+    const idleFirstTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const idleRepeatInterval = useRef<ReturnType<typeof setInterval> | null>(null);
     const animationTimer = useRef<ReturnType<typeof setInterval> | null>(null);
     const observerRef = useRef<IntersectionObserver | null>(null);
-
-    // ─── Safe speak with cooldown ─────────────────────────────────
     const safeSpeakRef = useRef<(text: string, force?: boolean) => void>(() => {});
 
     const safeSpeak = useCallback((text: string, force = false) => {
@@ -80,38 +84,49 @@ export default function ClippyAssistant() {
         safeSpeakRef.current = safeSpeak;
     }, [safeSpeak]);
 
-    // ─── Handle Clippy clicks (escalating roast) ──────────────────
+    // ── Idle loop ──────────────────────────────────────────────────
+    // Fires first message after IDLE_FIRST_MS, then every IDLE_REPEAT_MS
+    // as long as user stays idle. Stops the moment any activity is detected.
+    const stopIdleLoop = useCallback(() => {
+        if (idleFirstTimer.current) { clearTimeout(idleFirstTimer.current); idleFirstTimer.current = null; }
+        if (idleRepeatInterval.current) { clearInterval(idleRepeatInterval.current); idleRepeatInterval.current = null; }
+    }, []);
+
+    const fireIdleMessage = useCallback(() => {
+        const msg = IDLE_MESSAGES[idleMessageIndex.current % IDLE_MESSAGES.length];
+        idleMessageIndex.current++;
+        safeSpeakRef.current(msg);
+        if (agentRef.current) agentRef.current.animate();
+    }, []);
+
+    const startIdleLoop = useCallback(() => {
+        stopIdleLoop();
+        idleFirstTimer.current = setTimeout(() => {
+            fireIdleMessage();
+            // Keep firing every IDLE_REPEAT_MS while user stays idle
+            idleRepeatInterval.current = setInterval(() => {
+                fireIdleMessage();
+            }, IDLE_REPEAT_MS);
+        }, IDLE_FIRST_MS);
+    }, [stopIdleLoop, fireIdleMessage]);
+
+    // Any user activity restarts the idle loop from scratch
+    const handleActivity = useCallback(() => {
+        startIdleLoop();
+    }, [startIdleLoop]);
+
+    // ── Click handler ──────────────────────────────────────────────
     const handleClippyClick = useCallback(() => {
         if (!agentRef.current) return;
-
         const idx = Math.min(clickCount.current, CLICK_MESSAGES.length - 1);
-        const msg = CLICK_MESSAGES[idx];
         clickCount.current++;
-
-        // Force-speak on click (override cooldown) with animation
-        safeSpeak(msg, true);
+        safeSpeak(CLICK_MESSAGES[idx], true);
         agentRef.current.animate();
     }, [safeSpeak]);
 
-    // ─── Reset idle timer on activity ─────────────────────────────
-    const resetIdleTimer = useCallback(() => {
-        if (idleTimer.current) clearTimeout(idleTimer.current);
+    const handleClippyClickRef = useRef(handleClippyClick);
+    useEffect(() => { handleClippyClickRef.current = handleClippyClick; }, [handleClippyClick]);
 
-        idleTimer.current = setTimeout(() => {
-            const now = Date.now();
-            if (now - lastIdleTime.current < IDLE_COOLDOWN_MS) return;
-            lastIdleTime.current = now;
-
-            // Cycle through idle messages in order for escalation
-            const idx = idleMessageIndex.current % IDLE_MESSAGES.length;
-            idleMessageIndex.current++;
-
-            safeSpeakRef.current(IDLE_MESSAGES[idx]);
-            if (agentRef.current) agentRef.current.animate();
-        }, IDLE_TIMEOUT_MS);
-    }, []);
-
-    // ─── Main effect: load Clippy & set up listeners ──────────────
     useEffect(() => {
         let mounted = true;
 
@@ -124,28 +139,66 @@ export default function ClippyAssistant() {
 
                 const agent = await initAgent(ClippyLoaders);
 
-                if (!mounted) {
-                    agent.hide(true, () => {});
-                    return;
-                }
+                if (!mounted) { agent.hide(true, () => {}); return; }
 
                 agentRef.current = agent;
                 agent.show(false);
 
-                // ── Welcome message after short delay ──
+                // ── Click (capture phase to beat clippyjs stopPropagation) ──
+                if (agent._el) {
+                    agent._el.addEventListener('mousedown', () => {
+                        handleClippyClickRef.current();
+                    }, true);
+                }
+
+                // ── Drag detection ─────────────────────────────────────────
+                if (agent._el) {
+                    let dragStartX = 0;
+                    let dragStartY = 0;
+                    let isDragging = false;
+                    let hasFiredDragMessage = false;
+
+                    const onDragStart = (e: MouseEvent) => {
+                        dragStartX = e.clientX;
+                        dragStartY = e.clientY;
+                        isDragging = true;
+                        hasFiredDragMessage = false;
+                    };
+
+                    const onDragEnd = (e: MouseEvent) => {
+                        if (!isDragging) return;
+                        isDragging = false;
+                        const dx = e.clientX - dragStartX;
+                        const dy = e.clientY - dragStartY;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist > DRAG_THRESHOLD_PX && !hasFiredDragMessage) {
+                            hasFiredDragMessage = true;
+                            const idx = dragCount.current % DRAG_MESSAGES.length;
+                            dragCount.current++;
+                            safeSpeakRef.current(DRAG_MESSAGES[idx], true);
+                            if (agentRef.current) agentRef.current.animate();
+                        }
+                    };
+
+                    agent._el.addEventListener('mousedown', onDragStart);
+                    window.addEventListener('mouseup', onDragEnd);
+
+                    // Store cleanup on the element for teardown
+                    (agent._el as HTMLElement & { _dragCleanup?: () => void })._dragCleanup = () => {
+                        agent._el.removeEventListener('mousedown', onDragStart);
+                        window.removeEventListener('mouseup', onDragEnd);
+                    };
+                }
+
                 setTimeout(() => {
                     if (!mounted || !agentRef.current) return;
                     safeSpeak(SECTION_MESSAGES.hero);
                     spokenSections.current.add('hero');
                 }, WELCOME_DELAY_MS);
 
-                // ── Listen for clicks on the Clippy element ──
-                const clippyEl = document.querySelector('.clippy');
-                if (clippyEl) {
-                    clippyEl.addEventListener('click', handleClippyClick);
-                }
-
-                // ── Section scroll observation ──
+                // threshold 0.5: fires only when section is 50% visible,
+                // preventing false triggers on scroll bounce.
+                // spokenSections ensures each section message fires exactly once.
                 const sectionIds = ['about', 'experience', 'skills', 'projects', 'contact'];
 
                 observerRef.current = new IntersectionObserver(
@@ -155,13 +208,12 @@ export default function ClippyAssistant() {
                             const id = entry.target.id;
                             if (spokenSections.current.has(id)) return;
                             if (!SECTION_MESSAGES[id]) return;
-
                             spokenSections.current.add(id);
                             safeSpeakRef.current(SECTION_MESSAGES[id]);
                             if (agentRef.current) agentRef.current.animate();
                         });
                     },
-                    { threshold: 0.3 }
+                    { threshold: 0.5 }
                 );
 
                 sectionIds.forEach((id) => {
@@ -169,7 +221,6 @@ export default function ClippyAssistant() {
                     if (el) observerRef.current!.observe(el);
                 });
 
-                // ── Random idle animations ──
                 animationTimer.current = setInterval(() => {
                     if (agentRef.current) agentRef.current.animate();
                 }, ANIMATION_INTERVAL_MS);
@@ -181,31 +232,24 @@ export default function ClippyAssistant() {
 
         loadClippy();
 
-        
         const activityEvents = ['scroll', 'mousemove', 'click', 'keydown', 'touchstart'];
-        const onActivity = () => resetIdleTimer();
-        activityEvents.forEach((evt) => window.addEventListener(evt, onActivity, { passive: true }));
-        resetIdleTimer();
+        activityEvents.forEach((evt) => window.addEventListener(evt, handleActivity, { passive: true }));
+        startIdleLoop();
 
-        
         return () => {
             mounted = false;
+            stopIdleLoop();
             if (observerRef.current) observerRef.current.disconnect();
-            if (idleTimer.current) clearTimeout(idleTimer.current);
             if (animationTimer.current) clearInterval(animationTimer.current);
-            activityEvents.forEach((evt) => window.removeEventListener(evt, onActivity));
-
-            const clippyEl = document.querySelector('.clippy');
-            if (clippyEl) {
-                clippyEl.removeEventListener('click', handleClippyClick);
-            }
-
+            activityEvents.forEach((evt) => window.removeEventListener(evt, handleActivity));
             if (agentRef.current) {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (agentRef.current._el as any)?._dragCleanup?.();
                 agentRef.current.hide(true, () => {});
                 agentRef.current = null;
             }
         };
-    }, [safeSpeak, resetIdleTimer, handleClippyClick]);
+    }, [safeSpeak, startIdleLoop, stopIdleLoop, handleActivity]);
 
     return null;
 }
