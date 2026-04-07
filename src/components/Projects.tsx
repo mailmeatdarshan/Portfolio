@@ -3,13 +3,14 @@
 import React from "react";
 import Image from "next/image";
 import { CardBody, CardContainer, CardItem } from "./ui/3d-card";
-import { projects } from "@/data/portfolio";
+import { projects, socialLinks } from "@/data/portfolio";
 import Link from "next/link";
-import { Button } from "./ui/button";
+import { Github } from "lucide-react";
 
 export default function Projects() {
     const featuredProjects = projects.slice(0, 2);
     const otherProjects = projects.slice(2);
+    const githubLink = socialLinks.find(link => link.name === "GitHub")?.url || "https://github.com/mailmeatdarshan";
 
     return (
         <div className="py-20 px-4">
@@ -42,16 +43,6 @@ export default function Projects() {
                                         {featuredProject.title}
                                     </CardItem>
     
-                                    {featuredProject.role && (
-                                        <CardItem
-                                            as="p"
-                                            translateZ="60"
-                                            className="text-blue-500 text-sm font-semibold mt-2"
-                                        >
-                                            {featuredProject.role}
-                                        </CardItem>
-                                    )}
-    
                                     <CardItem
                                         as="p"
                                         translateZ="60"
@@ -73,7 +64,7 @@ export default function Projects() {
                                     </CardItem>
     
                                     <div className="flex justify-between items-center gap-4">
-                                        {featuredProject.liveUrl ? (
+                                        {featuredProject.liveUrl && featuredProject.liveUrl !== "#" ? (
                                             <CardItem
                                                 translateZ={20}
                                                 as={Link}
@@ -84,7 +75,7 @@ export default function Projects() {
                                                 {featuredProject.liveUrl.endsWith(".apk") ? "Download App ↓" : "Visit Live →"}
                                             </CardItem>
                                         ) : (
-                                            <div className="flex-1 px-4 py-3 border border-transparent"></div>
+                                            <div className="flex-1 px-4 py-3 text-center text-sm text-neutral-500">Coming Soon</div>
                                         )}
                                         {featuredProject.githubUrl && (
                                             <CardItem
@@ -114,16 +105,6 @@ export default function Projects() {
                             >
                                 {project.title}
                             </CardItem>
-
-                            {project.role && (
-                                <CardItem
-                                    as="p"
-                                    translateZ="60"
-                                    className="text-blue-500 text-xs font-semibold mt-1"
-                                >
-                                    {project.role}
-                                </CardItem>
-                            )}
 
                             <CardItem
                                 as="div"
@@ -155,7 +136,7 @@ export default function Projects() {
                             </CardItem>
 
                             <div className="flex justify-between items-center mt-8">
-                                {project.liveUrl ? (
+                                {project.liveUrl && project.liveUrl !== "#" ? (
                                     <CardItem
                                         translateZ={20}
                                         as={Link}
@@ -166,7 +147,7 @@ export default function Projects() {
                                         {project.liveUrl.endsWith(".apk") ? "Download App ↓" : "Visit Live →"}
                                     </CardItem>
                                 ) : (
-                                    <div className="px-4 py-2 border border-transparent"></div>
+                                    <div className="px-4 py-2 text-xs text-neutral-500">Coming Soon</div>
                                 )}
                                 <CardItem
                                     translateZ={20}
@@ -181,6 +162,16 @@ export default function Projects() {
                         </CardBody>
                     </CardContainer>
                 ))}
+            </div>
+
+            <div className="mt-16 flex justify-center">
+                <Link 
+                    href={githubLink} 
+                    target="_blank"
+                    className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-white text-black font-bold hover:bg-neutral-200 transition-all transform hover:scale-105 active:scale-95 shadow-lg shadow-white/10"
+                >
+                    View all on GitHub <Github className="h-5 w-5" />
+                </Link>
             </div>
         </div>
     );
