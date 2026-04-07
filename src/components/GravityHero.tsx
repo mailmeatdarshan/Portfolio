@@ -22,6 +22,7 @@ const CATEGORY_BUTTONS = 0x0002;
 
 export default function GravityHero() {
     const sceneRef = useRef<HTMLDivElement>(null);
+    const interactionRef = useRef<HTMLDivElement>(null);
     const engineRef = useRef<Matter.Engine | null>(null);
     const requestRef = useRef<number | null>(null);
     const [isPhysicsEnabled, setIsPhysicsEnabled] = useState(false);
@@ -46,7 +47,21 @@ export default function GravityHero() {
         { text: "Reality.", className: "text-blue-500" },
     ];
 
-    const togglePhysics = () => {
+    useEffect(() => {
+        if (isPhysicsEnabled) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "";
+        }
+        return () => {
+            document.body.style.overflow = "";
+        };
+    }, [isPhysicsEnabled]);
+
+    const togglePhysics = (e?: React.MouseEvent | React.TouchEvent) => {
+        if (e) {
+            e.stopPropagation();
+        }
         if (!engineRef.current) return;
         
         if (isEnabledRef.current) {
@@ -86,7 +101,7 @@ export default function GravityHero() {
     };
 
     useEffect(() => {
-        if (!sceneRef.current) return;
+        if (!sceneRef.current || !interactionRef.current) return;
 
         const Engine = Matter.Engine,
             World = Matter.World,
@@ -111,7 +126,7 @@ export default function GravityHero() {
 
         World.add(engine.world, [ground, leftWall, rightWall, ceiling]);
 
-        const mouse = Mouse.create(sceneRef.current);
+        const mouse = Mouse.create(interactionRef.current);
         const mouseConstraint = MouseConstraint.create(engine, {
             mouse: mouse,
             collisionFilter: {
@@ -166,6 +181,12 @@ export default function GravityHero() {
                             window.dispatchEvent(new CustomEvent('clippy-physics-interaction'));
                         }
                     });
+                    // Touch support for interaction
+                    el.addEventListener('touchstart', () => {
+                        if (isEnabledRef.current) {
+                            window.dispatchEvent(new CustomEvent('clippy-physics-interaction'));
+                        }
+                    }, { passive: true });
                 }
 
                 bodiesRef.current.push({ body, element: el, initialX, initialY });
@@ -244,11 +265,21 @@ export default function GravityHero() {
                 className="-top-40 left-0 md:left-60 md:-top-20"
                 fill="white"
             />
+
+            {/* Interaction Layer for Matter.js */}
+            <div 
+                ref={interactionRef}
+                className={cn(
+                    "absolute inset-0 z-20",
+                    isPhysicsEnabled ? "pointer-events-auto touch-none" : "pointer-events-none"
+                )}
+            />
             
             {hasStarted && (
                 <button
-                    onClick={togglePhysics}
-                    className="absolute bottom-10 right-10 z-[60] p-4 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-full transition-all group flex items-center gap-2 text-white/70 hover:text-white pointer-events-auto shadow-xl"
+                    onClick={(e) => togglePhysics(e)}
+                    onPointerDown={(e) => e.stopPropagation()}
+                    className="absolute bottom-10 right-10 z-[70] p-4 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-full transition-all group flex items-center gap-2 text-white/70 hover:text-white pointer-events-auto shadow-xl"
                 >
                     {isPhysicsEnabled ? (
                         <>
@@ -266,8 +297,8 @@ export default function GravityHero() {
             
             <div 
                 className={cn(
-                    "p-4 max-w-7xl mx-auto relative z-10 w-full pt-0 flex flex-col items-center",
-                    isPhysicsEnabled ? "pointer-events-none" : "pointer-events-auto"
+                    "p-4 max-w-7xl mx-auto relative z-10 w-full pt-0 flex flex-col items-center transition-all duration-700",
+                    isPhysicsEnabled ? "opacity-100" : "opacity-100"
                 )}
             >
                 <h1 className="text-4xl md:text-7xl font-bold text-center pointer-events-none leading-tight">
