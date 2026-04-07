@@ -60,26 +60,44 @@
 
 /* ─── Mobile adjustments (< 768px) ─── */
 @media (max-width: 767px) {
-    /* Scale Clippy down and position to avoid BackToTop overlap */
+    /* Position from the left to ensure it doesn't get cut off on the right */
     .clippy {
-        transform: scale(0.75) !important;
-        transform-origin: bottom right !important;
-        bottom: 90px !important;
-        right: 15px !important;
+        transform: scale(0.6) !important;
+        transform-origin: bottom left !important;
+        bottom: 110px !important;
+        left: 20px !important; /* Fixed left position */
+        right: auto !important;
+        top: auto !important;
+        position: fixed !important;
+        width: 124px !important;
+        height: 124px !important;
+        display: block !important;
+        visibility: visible !important;
     }
 
     .clippy-balloon {
-        max-width: 180px !important;
-        font-size: 12px !important;
+        max-width: 150px !important;
+        font-size: 13px !important;
         padding: 8px 10px !important;
+        /* Position balloon relative to clippy */
+        left: 0 !important;
+        right: auto !important;
+        bottom: 100% !important;
+        top: auto !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6) !important;
     }
 }
 
 /* ─── Very small screens (< 480px) ─── */
 @media (max-width: 479px) {
     .clippy {
-        transform: scale(0.65) !important;
-        bottom: 85px !important;
-        right: 20px !important;
+        transform: scale(0.55) !important;
+        bottom: 100px !important;
+        left: 15px !important;
+    }
+    
+    .clippy-balloon {
+        max-width: 140px !important;
+        font-size: 12px !important;
     }
 }

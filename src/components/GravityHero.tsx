@@ -253,6 +253,18 @@ export default function GravityHero() {
         };
     }, []);
 
+    useEffect(() => {
+        const handleToggle = () => togglePhysics();
+        window.addEventListener('clippy-toggle-gravity', handleToggle);
+        return () => window.removeEventListener('clippy-toggle-gravity', handleToggle);
+    }, [togglePhysics]);
+
+    useEffect(() => {
+        window.dispatchEvent(new CustomEvent('clippy-gravity-state', { 
+            detail: { isEnabled: isPhysicsEnabled } 
+        }));
+    }, [isPhysicsEnabled]);
+
     const nameParts = personalInfo.name.split(" ");
 
     return (
@@ -279,7 +291,7 @@ export default function GravityHero() {
                 <button
                     onClick={(e) => togglePhysics(e)}
                     onPointerDown={(e) => e.stopPropagation()}
-                    className="absolute bottom-10 left-1/2 -translate-x-1/2 md:left-auto md:right-10 md:translate-x-0 z-[70] p-3 md:p-4 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-full transition-all group flex items-center gap-0 md:gap-2 text-white/70 hover:text-white pointer-events-auto shadow-xl"
+                    className="hidden md:flex absolute bottom-10 right-10 z-[70] p-4 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-full transition-all group items-center gap-2 text-white/70 hover:text-white pointer-events-auto shadow-xl"
                 >
                     {isPhysicsEnabled ? (
                         <>

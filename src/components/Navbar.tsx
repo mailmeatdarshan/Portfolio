@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { Menu, X, RotateCcw, Orbit } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
@@ -10,6 +10,19 @@ export default function Navbar() {
     const [isScrollingUp, setIsScrollingUp] = useState(false);
     const [lastScrollY, setLastScrollY] = useState(0);
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+    const [isPhysicsEnabled, setIsPhysicsEnabled] = useState(false);
+
+    useEffect(() => {
+        const handleGravityState = (e: any) => {
+            setIsPhysicsEnabled(e.detail.isEnabled);
+        };
+        window.addEventListener('clippy-gravity-state', handleGravityState as any);
+        return () => window.removeEventListener('clippy-gravity-state', handleGravityState as any);
+    }, []);
+
+    const togglePhysics = () => {
+        window.dispatchEvent(new CustomEvent('clippy-toggle-gravity'));
+    };
 
     useEffect(() => {
         const handleScroll = () => {
@@ -120,7 +133,18 @@ export default function Navbar() {
                 </div>
 
                 {/* Mobile Menu Button */}
-                <div className="md:hidden relative z-20">
+                <div className="md:hidden flex items-center gap-2 relative z-20">
+                    <button
+                        onClick={togglePhysics}
+                        className="p-2 rounded-xl text-gray-300 hover:text-white hover:bg-white/10 transition-all flex items-center justify-center"
+                        aria-label={isPhysicsEnabled ? "Reset Layout" : "Start Floating"}
+                    >
+                        {isPhysicsEnabled ? (
+                            <RotateCcw className="h-5 w-5" />
+                        ) : (
+                            <Orbit className="h-5 w-5" />
+                        )}
+                    </button>
                     <button
                         onClick={toggleMenu}
                         className="p-2 rounded-xl text-gray-300 hover:text-white hover:bg-white/10 transition-all"
