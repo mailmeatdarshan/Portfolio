@@ -1,4 +1,4 @@
-import Hero from "@/components/Hero";
+import GravityHero from "@/components/GravityHero";
 import Projects from "@/components/Projects";
 import TechnicalArsenal from "@/components/TechnicalArsenal";
 import About from "@/components/About";
@@ -8,7 +8,7 @@ import Contact from "@/components/Contact";
 export default function Home() {
   return (
     <main className="min-h-screen bg-black/[0.96] antialiased">
-      <Hero />
+      <GravityHero />
       <div id="about" className="bg-black/[0.96]">
         <About />
       </div>

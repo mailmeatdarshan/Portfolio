@@ -12,6 +12,8 @@ const SECTION_MESSAGES: Record<string, string> = {
 };
 
 const IDLE_MESSAGES = [
+    "Ohh look, everything’s floating! 🚀",
+    "I don’t bite. The UI might, though.",
     "Psst... scroll down, there's more cool stuff!",
     "Need help navigating? Just scroll around!",
     "You've been staring at this portfolio for a while 👀",
@@ -51,6 +53,35 @@ const DRAG_MESSAGES = [
     "I'll go wherever you put me. But I won't be happy about it.",
 ];
 
+const GRAVITY_MESSAGES = [
+    "Ohh look they all are in space or floating! 🚀",
+    "Wait, where did the gravity go?",
+    "Gravity has left the chat.",
+    "Wheee! Everything is weightless! 🎈",
+];
+
+const RESET_MESSAGES = [
+    "Took you long enough.",
+    "Oh good, reality is back. I was getting concerned.",
+    "Back to normal… like you were ever normal.",
+    "Nature is healing… from you.",
+];
+
+const INTERACTION_MESSAGES = [
+    "Careful! You'll break the laws of physics… oh wait. Bold of me to assume you studied them 💀",
+    "Stop throwing the developer around! 😤",
+    "This says a lot about you. I won’t say what.",
+    "Is this your way of 'moving' things forward? 😏",
+    "I knew this portfolio was out of this world, but this is excessive.",
+    "This is either delightful or deeply concerning.",
+    "You really enjoy throwing things, don't you? Therapy might help.",
+    "If you spent this much effort on your job, you'd be CEO by now.",
+    "Darshan worked hard on this, and you're just... tossing it. Rude.",
+    "He trusted you… and this is what you do?",
+    "This is either genius… or a bug. I’m choosing genius.",
+    "Does throwing 'Full Stack Developer' make you feel powerful? ⚡",
+];
+
 const MESSAGE_COOLDOWN_MS = 5000;
 const IDLE_FIRST_MS = 12000;   
 const IDLE_REPEAT_MS = 18000;  
@@ -66,6 +97,9 @@ export default function ClippyAssistant() {
     const idleMessageIndex = useRef<number>(0);
     const clickCount = useRef<number>(0);
     const dragCount = useRef<number>(0);
+    const gravityMsgIndex = useRef<number>(0);
+    const resetMsgIndex = useRef<number>(0);
+    
     const idleFirstTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
     const idleRepeatInterval = useRef<ReturnType<typeof setInterval> | null>(null);
     const animationTimer = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -85,8 +119,6 @@ export default function ClippyAssistant() {
     }, [safeSpeak]);
 
     // ── Idle loop ──────────────────────────────────────────────────
-    // Fires first message after IDLE_FIRST_MS, then every IDLE_REPEAT_MS
-    // as long as user stays idle. Stops the moment any activity is detected.
     const stopIdleLoop = useCallback(() => {
         if (idleFirstTimer.current) { clearTimeout(idleFirstTimer.current); idleFirstTimer.current = null; }
         if (idleRepeatInterval.current) { clearInterval(idleRepeatInterval.current); idleRepeatInterval.current = null; }
@@ -103,14 +135,12 @@ export default function ClippyAssistant() {
         stopIdleLoop();
         idleFirstTimer.current = setTimeout(() => {
             fireIdleMessage();
-            // Keep firing every IDLE_REPEAT_MS while user stays idle
             idleRepeatInterval.current = setInterval(() => {
                 fireIdleMessage();
             }, IDLE_REPEAT_MS);
         }, IDLE_FIRST_MS);
     }, [stopIdleLoop, fireIdleMessage]);
 
-    // Any user activity restarts the idle loop from scratch
     const handleActivity = useCallback(() => {
         startIdleLoop();
     }, [startIdleLoop]);
@@ -136,15 +166,12 @@ export default function ClippyAssistant() {
                 const ClippyLoaders = (await import('clippyjs/agents/clippy')).default;
 
                 if (!mounted) return;
-
                 const agent = await initAgent(ClippyLoaders);
-
                 if (!mounted) { agent.hide(true, () => {}); return; }
 
                 agentRef.current = agent;
                 agent.show(false);
 
-                // ── Click (capture phase to beat clippyjs stopPropagation) ──
                 if (agent._el) {
                     agent._el.addEventListener('mousedown', () => {
                         handleClippyClickRef.current();
@@ -183,12 +210,36 @@ export default function ClippyAssistant() {
                     agent._el.addEventListener('mousedown', onDragStart);
                     window.addEventListener('mouseup', onDragEnd);
 
-                    // Store cleanup on the element for teardown
                     (agent._el as HTMLElement & { _dragCleanup?: () => void })._dragCleanup = () => {
                         agent._el.removeEventListener('mousedown', onDragStart);
                         window.removeEventListener('mouseup', onDragEnd);
                     };
                 }
+
+                // ── Custom Events for Gravity ──────────────────────────────
+                const onZeroGravity = () => {
+                    const msg = GRAVITY_MESSAGES[gravityMsgIndex.current % GRAVITY_MESSAGES.length];
+                    gravityMsgIndex.current++;
+                    safeSpeakRef.current(msg, true);
+                    if (agentRef.current) agentRef.current.animate();
+                };
+
+                const onResetGravity = () => {
+                    const msg = RESET_MESSAGES[resetMsgIndex.current % RESET_MESSAGES.length];
+                    resetMsgIndex.current++;
+                    safeSpeakRef.current(msg, true);
+                    if (agentRef.current) agentRef.current.animate();
+                };
+
+                const onPhysicsInteraction = () => {
+                    const msg = INTERACTION_MESSAGES[Math.floor(Math.random() * INTERACTION_MESSAGES.length)];
+                    safeSpeakRef.current(msg);
+                    if (agentRef.current) agentRef.current.animate();
+                };
+
+                window.addEventListener('clippy-zero-gravity', onZeroGravity);
+                window.addEventListener('clippy-reset-gravity', onResetGravity);
+                window.addEventListener('clippy-physics-interaction', onPhysicsInteraction);
 
                 setTimeout(() => {
                     if (!mounted || !agentRef.current) return;
@@ -196,11 +247,7 @@ export default function ClippyAssistant() {
                     spokenSections.current.add('hero');
                 }, WELCOME_DELAY_MS);
 
-                // threshold 0.5: fires only when section is 50% visible,
-                // preventing false triggers on scroll bounce.
-                // spokenSections ensures each section message fires exactly once.
                 const sectionIds = ['about', 'experience', 'skills', 'projects', 'contact'];
-
                 observerRef.current = new IntersectionObserver(
                     (entries) => {
                         entries.forEach((entry) => {
@@ -225,6 +272,13 @@ export default function ClippyAssistant() {
                     if (agentRef.current) agentRef.current.animate();
                 }, ANIMATION_INTERVAL_MS);
 
+                // Cleanup nested events
+                (agentRef.current as any)._customCleanup = () => {
+                    window.removeEventListener('clippy-zero-gravity', onZeroGravity);
+                    window.removeEventListener('clippy-reset-gravity', onResetGravity);
+                    window.removeEventListener('clippy-physics-interaction', onPhysicsInteraction);
+                };
+
             } catch (err) {
                 console.error('[ClippyAssistant] Failed to load Clippy:', err);
             }
@@ -243,7 +297,7 @@ export default function ClippyAssistant() {
             if (animationTimer.current) clearInterval(animationTimer.current);
             activityEvents.forEach((evt) => window.removeEventListener(evt, handleActivity));
             if (agentRef.current) {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (agentRef.current as any)._customCleanup?.();
                 (agentRef.current._el as any)?._dragCleanup?.();
                 agentRef.current.hide(true, () => {});
                 agentRef.current = null;
