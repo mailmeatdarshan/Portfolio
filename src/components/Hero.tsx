@@ -6,6 +6,7 @@ import { personalInfo } from "@/data/portfolio";
 import { Button } from "./ui/button";
 import { ArrowRight, Mail } from "lucide-react";
 import Link from "next/link";
+import Starfield from "./ui/Starfield";
 
 export default function Hero() {
     // Flatten the array of strings into a single sentence or cycle them? 
@@ -45,7 +46,8 @@ export default function Hero() {
     ];
 
     return (
-        <div className="h-screen w-full rounded-md flex md:items-center md:justify-center bg-black/[0.96] antialiased bg-grid-white/[0.02] relative overflow-hidden">
+        <div className="h-screen w-full rounded-md flex md:items-center md:justify-center bg-black/[0.96] antialiased relative overflow-hidden">
+            <Starfield />
             <Spotlight
                 className="-top-40 left-0 md:left-60 md:-top-20"
                 fill="white"
