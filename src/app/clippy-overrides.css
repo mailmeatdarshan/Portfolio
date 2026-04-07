@@ -65,7 +65,7 @@
         transform: scale(0.75) !important;
         transform-origin: bottom right !important;
         bottom: 90px !important;
-        right: 4px !important;
+        right: 15px !important;
     }
 
     .clippy-balloon {
@@ -80,5 +80,6 @@
     .clippy {
         transform: scale(0.65) !important;
         bottom: 85px !important;
+        right: 20px !important;
     }
 }

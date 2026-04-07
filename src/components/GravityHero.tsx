@@ -279,17 +279,17 @@ export default function GravityHero() {
                 <button
                     onClick={(e) => togglePhysics(e)}
                     onPointerDown={(e) => e.stopPropagation()}
-                    className="absolute bottom-10 right-10 z-[70] p-4 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-full transition-all group flex items-center gap-2 text-white/70 hover:text-white pointer-events-auto shadow-xl"
+                    className="absolute bottom-10 left-1/2 -translate-x-1/2 md:left-auto md:right-10 md:translate-x-0 z-[70] p-3 md:p-4 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-full transition-all group flex items-center gap-0 md:gap-2 text-white/70 hover:text-white pointer-events-auto shadow-xl"
                 >
                     {isPhysicsEnabled ? (
                         <>
                             <RotateCcw className="w-5 h-5 group-hover:rotate-[-45deg] transition-transform" />
-                            <span className="text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Reset Layout</span>
+                            <span className="max-w-0 md:max-w-xs overflow-hidden text-xs font-bold uppercase tracking-widest opacity-0 md:group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">Reset Layout</span>
                         </>
                     ) : (
                         <>
                             <Orbit className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                            <span className="text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Start Floating</span>
+                            <span className="max-w-0 md:max-w-xs overflow-hidden text-xs font-bold uppercase tracking-widest opacity-0 md:group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">Start Floating</span>
                         </>
                     )}
                 </button>
