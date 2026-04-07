@@ -42,9 +42,6 @@ export default function RootLayout({
         className={`${outfit.variable} ${spaceGrotesk.variable} antialiased font-sans`}
         suppressHydrationWarning
       >
-        {/* Top Backdrop Blur Gradient Overlay */}
-        <div className="fixed top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/80 via-black/40 to-transparent backdrop-blur-md z-[45] pointer-events-none" />
-        
         <Navbar />
         {children}
         <BackToTop />

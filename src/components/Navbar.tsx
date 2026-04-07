@@ -7,20 +7,34 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isScrollingUp, setIsScrollingUp] = useState(false);
+    const [lastScrollY, setLastScrollY] = useState(0);
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
     useEffect(() => {
         const handleScroll = () => {
-            if (window.scrollY > 20) {
-                setIsScrolled(true);
+            const currentScrollY = window.scrollY;
+            
+            // Basic scrolled state for navbar styling
+            setIsScrolled(currentScrollY > 20);
+
+            // Logic for "Scroll Up" detection
+            // We show the blur ONLY when scrolling up and NOT at the very top
+            const isMovingUp = currentScrollY < lastScrollY;
+            const isNotAtTop = currentScrollY > 20;
+
+            if (isMovingUp && isNotAtTop) {
+                setIsScrollingUp(true);
             } else {
-                setIsScrolled(false);
+                setIsScrollingUp(false);
             }
+
+            setLastScrollY(currentScrollY);
         };
 
-        window.addEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
+    }, [lastScrollY]);
 
     const navLinks = [
         { name: "Home", href: "/" },
@@ -35,6 +49,19 @@ export default function Navbar() {
 
     return (
         <div className="fixed top-0 left-0 w-full z-50 flex justify-center p-6 pointer-events-none">
+            {/* Dynamic Top Backdrop Blur Overlay - Only on Scroll Up */}
+            <AnimatePresence>
+                {isScrollingUp && (
+                    <motion.div 
+                        initial={{ opacity: 0, y: -40 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -40 }}
+                        transition={{ duration: 0.5, ease: "easeOut" }}
+                        className="fixed top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/80 via-black/40 to-transparent backdrop-blur-md z-[45] pointer-events-none" 
+                    />
+                )}
+            </AnimatePresence>
+
             <motion.nav
                 initial={{ y: -100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -47,8 +74,12 @@ export default function Navbar() {
                     transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]
                     liquid-glass
                     ${isScrolled 
-                        ? "w-full max-w-4xl translate-y-2 border-white/30" 
+                        ? "w-full max-w-4xl translate-y-2" 
                         : "w-full max-w-5xl"
+                    }
+                    ${isScrollingUp 
+                        ? "bg-black/95 border-white/40 shadow-[0_0_30px_rgba(0,0,0,0.8)] scale-[1.01] z-50 backdrop-blur-none" 
+                        : "z-10"
                     }
                 `}
             >
