@@ -2,39 +2,54 @@
 import React from "react";
 import { technicalArsenal } from "@/data/portfolio";
 import { motion } from "framer-motion";
+import { InfiniteMovingCards } from "./ui/infinite-moving-cards";
 
 export default function TechnicalArsenal() {
-    return (
-        <div className="py-20 w-full max-w-7xl mx-auto px-4">
-            <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-16">
-                Technical Arsenal
-            </h2>
+    // Flatten skills for the marquee
+    const row1 = technicalArsenal
+        .filter(cat => cat.category === "Languages" || cat.category === "Frameworks")
+        .flatMap(cat => cat.items.map(item => ({ name: item, category: cat.category })));
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                {technicalArsenal.map((category, idx) => (
-                    <motion.div
-                        key={category.category}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: idx * 0.1, duration: 0.5 }}
-                        className="bg-neutral-900/50 p-6 rounded-2xl border border-neutral-800 hover:border-neutral-700 transition-colors"
-                    >
-                        <h3 className="text-2xl font-bold text-blue-500 mb-6 border-b border-neutral-800 pb-2">
-                            {category.category}
-                        </h3>
-                        <div className="flex flex-wrap gap-2">
-                            {category.items.map((item) => (
-                                <span
-                                    key={item}
-                                    className="px-3 py-1 bg-neutral-800 rounded-full text-sm text-neutral-300 hover:text-white hover:bg-neutral-700 transition-colors"
-                                >
-                                    {item}
-                                </span>
-                            ))}
-                        </div>
-                    </motion.div>
-                ))}
+    const row2 = technicalArsenal
+        .filter(cat => cat.category === "Tools" || cat.category === "Skills")
+        .flatMap(cat => cat.items.map(item => ({ name: item, category: cat.category })));
+
+    return (
+        <div className="py-20 w-full overflow-hidden">
+            <div className="max-w-7xl mx-auto px-4 mb-16">
+                <motion.h2 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                    className="text-4xl md:text-5xl font-bold text-center text-white"
+                >
+                    Technical Arsenal
+                </motion.h2>
+                <motion.p 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                    className="text-neutral-400 text-center mt-4 max-w-2xl mx-auto"
+                >
+                    A collection of technologies and tools I use to bring ideas to life.
+                </motion.p>
+            </div>
+
+            <div className="flex flex-col gap-8 w-full">
+                <InfiniteMovingCards
+                    items={row1}
+                    direction="right"
+                    speed="slow"
+                    className="w-full"
+                />
+                <InfiniteMovingCards
+                    items={row2}
+                    direction="left"
+                    speed="slow"
+                    className="w-full"
+                />
             </div>
         </div>
     );
