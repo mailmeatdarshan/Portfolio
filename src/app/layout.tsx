@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import BackToTop from "@/components/BackToTop";
 import ClippyAssistant from "@/components/ClippyAssistant";
 import Starfield from "@/components/ui/Starfield";
+import { SmoothScroll } from "@/components/SmoothScroll";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -43,11 +44,13 @@ export default function RootLayout({
         className={`${outfit.variable} ${spaceGrotesk.variable} antialiased font-sans bg-black/[0.96]`}
         suppressHydrationWarning
       >
-        <Starfield />
-        <Navbar />
-        {children}
-        <BackToTop />
-        <ClippyAssistant />
+        <SmoothScroll>
+          <Starfield />
+          <Navbar />
+          {children}
+          <BackToTop />
+          <ClippyAssistant />
+        </SmoothScroll>
       </body>
     </html>
   );

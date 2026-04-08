@@ -120,11 +120,11 @@ export const projects: Project[] = [
         id: 17,
         title: "ShriHariEnterprises",
         description: "A professional business platform for Shri Hari Enterprises, currently under development to streamline their operations and digital presence.",
-        tech: ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL"],
-        image: "/images/projects/welcome.png",
+        tech: ["MongoDB", "Express", "React", "Node.js", "Tailwind CSS", "JWT"],
+        image: "/images/projects/shriharienterprises.png",
         featured: false,
         liveUrl: "#",
-        githubUrl: "https://github.com/mailmeatdarshan"
+        githubUrl: "https://github.com/mailmeatdarshan/ShriHariEnterprises"
     },
     {
         id: 14,
@@ -143,7 +143,7 @@ export const projects: Project[] = [
         tech: ["React", "Node.js", "MongoDB", "Redis", "RabbitMQ", "Chart.js"],
         image: "/images/projects/hisabkitab.png",
         featured: true,
-        liveUrl: "https://hisab-kitab-sepia.vercel.app",
+        liveUrl: "https://hisab-kitab-sepia.vercel.app/",
         githubUrl: "https://github.com/mailmeatdarshan/HisabKitab"
     },
     {
@@ -159,12 +159,12 @@ export const projects: Project[] = [
     {
         id: 16,
         title: "BhavansPracbuddy",
-        description: "Your ultimate lab companion for Bhavans College. Access practical manuals, code snippets, and viva questions all in one place. Streamlining the practical learning experience for CS and IT students.",
-        tech: ["Next.js", "Tailwind CSS", "Firebase", "TypeScript"],
-        image: "/images/projects/welcome.png", 
+        description: "Bhavans PracBuddy is a purpose-built tool for Bhavan's College students to automate the most painful part of college life — practical journals. Upload your practical PDF, fill in your details, optionally generate handwritten-style theory, and get a submission-ready journal in seconds.",
+        tech: ["Node.js", "Express", "React", "Firebase", "JavaScript"],
+        image: "/images/projects/pracbuddy.png",
         featured: true,
-        liveUrl: "#",
-        githubUrl: "https://github.com/mailmeatdarshan"
+        liveUrl: "https://pracbuddy.vercel.app",
+        githubUrl: "https://github.com/mailmeatdarshan/PracBuddy"
     },
     {
         id: 2,
