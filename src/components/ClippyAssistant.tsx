@@ -172,6 +172,19 @@ export default function ClippyAssistant() {
                 agentRef.current = agent;
                 agent.show(false);
 
+                // Forcing position after showing with a small delay
+                setTimeout(() => {
+                    if (agent._el) {
+                        const el = agent._el as HTMLElement;
+                        el.style.position = 'fixed';
+                        el.style.bottom = window.innerWidth < 768 ? '40px' : '150px';
+                        el.style.right = window.innerWidth < 768 ? '20px' : '40px';
+                        el.style.left = 'auto';
+                        el.style.top = 'auto';
+                        el.style.zIndex = '9999';
+                    }
+                }, 500);
+
                 if (agent._el) {
                     agent._el.addEventListener('mousedown', () => {
                         handleClippyClickRef.current();

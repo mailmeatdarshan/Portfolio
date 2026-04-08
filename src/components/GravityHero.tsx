@@ -291,19 +291,21 @@ export default function GravityHero() {
                 <button
                     onClick={(e) => togglePhysics(e)}
                     onPointerDown={(e) => e.stopPropagation()}
-                    className="hidden md:flex absolute bottom-10 right-10 z-[70] p-4 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-full transition-all group items-center gap-2 text-white/70 hover:text-white pointer-events-auto shadow-xl"
+                    className="hidden md:flex absolute bottom-10 right-10 z-[70] bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-full transition-all duration-500 group items-center text-white/70 hover:text-white pointer-events-auto shadow-xl overflow-hidden w-14 hover:w-52 h-14 justify-center px-4"
                 >
-                    {isPhysicsEnabled ? (
-                        <>
-                            <RotateCcw className="w-5 h-5 group-hover:rotate-[-45deg] transition-transform" />
-                            <span className="max-w-0 md:max-w-xs overflow-hidden text-xs font-bold uppercase tracking-widest opacity-0 md:group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">Reset Layout</span>
-                        </>
-                    ) : (
-                        <>
-                            <Orbit className="w-5 h-5 group-hover:scale-110 transition-transform" />
-                            <span className="max-w-0 md:max-w-xs overflow-hidden text-xs font-bold uppercase tracking-widest opacity-0 md:group-hover:opacity-100 transition-all duration-300 whitespace-nowrap">Start Floating</span>
-                        </>
-                    )}
+                    <div className="flex items-center justify-center gap-0 group-hover:gap-3 transition-all duration-500 w-full">
+                        {isPhysicsEnabled ? (
+                            <>
+                                <RotateCcw className="w-6 h-6 group-hover:rotate-[-45deg] transition-transform shrink-0" />
+                                <span className="max-w-0 group-hover:max-w-xs overflow-hidden text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all duration-500 whitespace-nowrap">Reset Layout</span>
+                            </>
+                        ) : (
+                            <>
+                                <Orbit className="w-6 h-6 group-hover:rotate-[180deg] transition-transform duration-700 shrink-0" />
+                                <span className="max-w-0 group-hover:max-w-xs overflow-hidden text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-all duration-500 whitespace-nowrap">Start Floating</span>
+                            </>
+                        )}
+                    </div>
                 </button>
             )}
             
