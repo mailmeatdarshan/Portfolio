@@ -54,7 +54,7 @@ const DRAG_MESSAGES = [
 ];
 
 const GRAVITY_MESSAGES = [
-    "Ohh look they all are in space or floating! 🚀",
+    "Ohh look they all are floating!",
     "Wait, where did the gravity go?",
     "Gravity has left the chat.",
     "Wheee! Everything is weightless! 🎈",

@@ -5,6 +5,7 @@ import "./clippy-overrides.css";
 import Navbar from "@/components/Navbar";
 import BackToTop from "@/components/BackToTop";
 import ClippyAssistant from "@/components/ClippyAssistant";
+import Starfield from "@/components/ui/Starfield";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -39,9 +40,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${outfit.variable} ${spaceGrotesk.variable} antialiased font-sans`}
+        className={`${outfit.variable} ${spaceGrotesk.variable} antialiased font-sans bg-black/[0.96]`}
         suppressHydrationWarning
       >
+        <Starfield />
         <Navbar />
         {children}
         <BackToTop />

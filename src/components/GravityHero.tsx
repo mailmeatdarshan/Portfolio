@@ -5,9 +5,8 @@ import { Spotlight } from "./ui/spotlight";
 import { TypewriterEffect } from "./ui/typewriter-effect";
 import { personalInfo } from "@/data/portfolio";
 import { Button } from "./ui/button";
-import { ArrowRight, Mail, Orbit, RotateCcw } from "lucide-react";
+import { ArrowRight, Orbit, RotateCcw } from "lucide-react";
 import Link from "next/link";
-import Starfield from "./ui/Starfield";
 import { cn } from "@/lib/utils";
 
 interface PhysicsBody {
@@ -270,9 +269,8 @@ export default function GravityHero() {
     return (
         <div 
             ref={sceneRef}
-            className="h-screen w-full flex items-center justify-center bg-black/[0.96] antialiased relative overflow-hidden select-none"
+            className="h-screen w-full flex items-center justify-center bg-transparent antialiased relative overflow-hidden select-none"
         >
-            <Starfield />
             <Spotlight
                 className="-top-40 left-0 md:left-60 md:-top-20"
                 fill="white"

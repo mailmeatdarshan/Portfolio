@@ -7,21 +7,21 @@ import Contact from "@/components/Contact";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-black/[0.96] antialiased">
+    <main className="min-h-screen antialiased">
       <GravityHero />
-      <div id="about" className="bg-black/[0.96]">
+      <div id="about">
         <About />
       </div>
-      <div id="experience" className="bg-black/[0.96]">
+      <div id="experience">
         <Experience />
       </div>
-      <div id="skills" className="bg-black/[0.96]">
+      <div id="skills">
         <TechnicalArsenal />
       </div>
       <div id="projects">
         <Projects />
       </div>
-      <div id="contact" className="bg-black/[0.96]">
+      <div id="contact">
         <Contact />
       </div>
     </main>

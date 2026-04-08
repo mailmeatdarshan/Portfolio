@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 
 export const BentoGrid = ({
   className,
@@ -29,6 +30,8 @@ export const BentoGridItem = ({
   isAnyHovered,
   onMouseEnter,
   onMouseLeave,
+  onClick,
+  layoutId,
 }: {
   className?: string;
   title?: string | React.ReactNode;
@@ -39,9 +42,13 @@ export const BentoGridItem = ({
   isAnyHovered?: boolean;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
+  onClick?: () => void;
+  layoutId?: string;
 }) => {
   return (
-    <div
+    <motion.div
+      layoutId={layoutId}
+      onClick={onClick}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       className={cn(
@@ -61,6 +68,6 @@ export const BentoGridItem = ({
           {description}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
