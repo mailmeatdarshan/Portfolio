@@ -117,6 +117,16 @@ export const technicalArsenal: Skill[] = [
 
 export const projects: Project[] = [
     {
+        id: 17,
+        title: "ShriHariEnterprises",
+        description: "A professional business platform for Shri Hari Enterprises, currently under development to streamline their operations and digital presence.",
+        tech: ["Next.js", "TypeScript", "Tailwind CSS", "PostgreSQL"],
+        image: "/images/projects/welcome.png",
+        featured: false,
+        liveUrl: "#",
+        githubUrl: "https://github.com/mailmeatdarshan"
+    },
+    {
         id: 14,
         title: "MyBhavans",
         description: "A comprehensive college social media app built specifically for Bhavans College. It features a unified feed system, skill-swap marketplace, and student utilities, fostering a connected campus community.",
