@@ -3,9 +3,11 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUp } from "lucide-react";
+import { useLenis } from "lenis/react";
 
 export default function BackToTop() {
   const [isVisible, setIsVisible] = useState(false);
+  const lenis = useLenis();
 
   useEffect(() => {
     const toggleVisibility = () => {
@@ -21,10 +23,14 @@ export default function BackToTop() {
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    if (lenis) {
+      lenis.scrollTo(0, { duration: 1.5 });
+    } else {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
   };
 
   return (

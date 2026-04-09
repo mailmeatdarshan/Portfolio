@@ -48,8 +48,8 @@ export default function Contact() {
             <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-10">
                 Get in Touch
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div className="flex flex-col justify-center space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 relative">
+                <div className="flex flex-col justify-center space-y-8 relative z-10">
                     <div>
                         <h3 className="text-2xl font-bold text-white mb-4">Let's Connect</h3>
                         <p className="text-neutral-400">
@@ -75,7 +75,7 @@ export default function Contact() {
                     </div>
                 </div>
 
-                <div className="bg-neutral-900/50 p-8 rounded-2xl border border-neutral-800">
+                <div className="bg-neutral-900/50 p-8 rounded-2xl border border-neutral-800 relative z-10">
                     <form className="space-y-6" onSubmit={handleSubmit}>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="space-y-2">

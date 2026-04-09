@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 export default function About() {
     return (
-        <div className="py-20 w-full max-w-7xl mx-auto px-4">
+        <div className="py-20 w-full max-w-7xl mx-auto px-4 relative overflow-hidden">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}

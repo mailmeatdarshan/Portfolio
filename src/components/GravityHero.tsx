@@ -8,6 +8,7 @@ import { Button } from "./ui/button";
 import { ArrowRight, Orbit, RotateCcw } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { FloatingAstronaut } from "./ui/floating-astronaut";
 
 interface PhysicsBody {
     body: Matter.Body;
@@ -47,15 +48,11 @@ export default function GravityHero() {
     ];
 
     useEffect(() => {
-        if (isPhysicsEnabled) {
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = "";
-        }
+        // Remove overflow hidden as it blocks Lenis scroll
         return () => {
             document.body.style.overflow = "";
         };
-    }, [isPhysicsEnabled]);
+    }, []);
 
     const togglePhysics = (e?: React.MouseEvent | React.TouchEvent) => {
         if (e) {
@@ -275,6 +272,20 @@ export default function GravityHero() {
                 className="-top-40 left-0 md:left-60 md:-top-20"
                 fill="white"
             />
+
+            {/* Astronaut Background */}
+            <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
+                <FloatingAstronaut 
+                    src="/images/astronauts/newastranauts.png" 
+                    alt="Flying Astronaut"
+                    className="absolute top-40 left-7 md:top-1/2 md:left-1/2 md:-translate-x-1/2 md:-translate-y-1/2 w-[350px] h-[350px] md:w-[600px] md:h-[600px]"
+                    width={600}
+                    height={600}
+                    delay={0}
+                    distance={30}
+                    rotate={10}
+                />
+            </div>
 
             {/* Interaction Layer for Matter.js */}
             <div 
