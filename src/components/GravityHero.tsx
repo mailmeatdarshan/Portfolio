@@ -29,13 +29,15 @@ export default function GravityHero() {
     const [hasStarted, setHasStarted] = useState(false);
     
     const isEnabledRef = useRef(false);
+    const hasInitializedRef = useRef(false);
 
     const nameFirstRef = useRef<HTMLSpanElement>(null);
     const nameLastRef = useRef<HTMLSpanElement>(null);
     const titleRef = useRef<HTMLSpanElement>(null);
     const bioRef = useRef<HTMLDivElement>(null);
     const typewriterRef = useRef<HTMLDivElement>(null);
-    const buttonsRef = useRef<HTMLDivElement>(null);
+    const button1Ref = useRef<HTMLDivElement>(null);
+    const button2Ref = useRef<HTMLDivElement>(null);
 
     const bodiesRef = useRef<PhysicsBody[]>([]);
 
@@ -48,7 +50,6 @@ export default function GravityHero() {
     ];
 
     useEffect(() => {
-        // Remove overflow hidden as it blocks Lenis scroll
         return () => {
             document.body.style.overflow = "";
         };
@@ -69,7 +70,6 @@ export default function GravityHero() {
                 element.style.transform = 'translate3d(0, 0, 0) rotate(0rad)';
             });
 
-            // Notify Clippy of Reset
             window.dispatchEvent(new CustomEvent('clippy-reset-gravity'));
 
             setTimeout(() => {
@@ -91,7 +91,6 @@ export default function GravityHero() {
             isEnabledRef.current = true;
             setHasStarted(true);
 
-            // Notify Clippy of Launch
             window.dispatchEvent(new CustomEvent('clippy-zero-gravity'));
         }
     };
@@ -136,7 +135,8 @@ export default function GravityHero() {
         World.add(engine.world, mouseConstraint);
 
         const initPhysics = () => {
-            if (!sceneRef.current) return;
+            if (!sceneRef.current || hasInitializedRef.current) return;
+            hasInitializedRef.current = true;
             
             const elements = [
                 { ref: nameFirstRef, id: 'name' },
@@ -144,7 +144,8 @@ export default function GravityHero() {
                 { ref: titleRef, id: 'title' },
                 { ref: bioRef, id: 'bio' },
                 { ref: typewriterRef, id: 'typewriter' },
-                { ref: buttonsRef, id: 'buttons' }
+                { ref: button1Ref, id: 'buttons' },
+                { ref: button2Ref, id: 'buttons' }
             ];
 
             const container = sceneRef.current.getBoundingClientRect();
@@ -177,7 +178,6 @@ export default function GravityHero() {
                             window.dispatchEvent(new CustomEvent('clippy-physics-interaction'));
                         }
                     });
-                    // Touch support for interaction
                     el.addEventListener('touchstart', () => {
                         if (isEnabledRef.current) {
                             window.dispatchEvent(new CustomEvent('clippy-physics-interaction'));
@@ -200,11 +200,22 @@ export default function GravityHero() {
             setIsPhysicsEnabled(true);
             isEnabledRef.current = true;
 
-            // Notify Clippy of Initial Launch
             window.dispatchEvent(new CustomEvent('clippy-zero-gravity'));
         };
 
-        const timer = setTimeout(initPhysics, 6500);
+        const handleSplashFinished = () => {
+            if (!hasInitializedRef.current) {
+                setTimeout(initPhysics, 1500);
+            }
+        };
+
+        window.addEventListener("splash-finished", handleSplashFinished);
+        
+        const timer = setTimeout(() => {
+            if (!hasInitializedRef.current) {
+                initPhysics();
+            }
+        }, 8000);
 
         Events.on(engine, 'beforeUpdate', () => {
             if (isEnabledRef.current) {
@@ -243,6 +254,7 @@ export default function GravityHero() {
 
         return () => {
             clearTimeout(timer);
+            window.removeEventListener("splash-finished", handleSplashFinished);
             if (requestRef.current) cancelAnimationFrame(requestRef.current);
             World.clear(engine.world, false);
             Engine.clear(engine);
@@ -273,7 +285,6 @@ export default function GravityHero() {
                 fill="white"
             />
 
-            {/* Astronaut Background */}
             <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
                 <FloatingAstronaut 
                     src="/images/astronauts/newastranauts.png" 
@@ -287,7 +298,6 @@ export default function GravityHero() {
                 />
             </div>
 
-            {/* Interaction Layer for Matter.js */}
             <div 
                 ref={interactionRef}
                 className={cn(
@@ -361,19 +371,22 @@ export default function GravityHero() {
                 </div>
 
                 <div 
-                    ref={buttonsRef}
                     className="flex flex-col md:flex-row items-center justify-center gap-4 mt-10 pointer-events-auto"
                 >
-                    <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700 text-white border-none rounded-full px-8">
-                        <Link href="#projects">
-                            View Projects <ArrowRight className="ml-2 h-4 w-4" />
-                        </Link>
-                    </Button>
-                    <Button asChild variant="outline" size="lg" className="rounded-full px-8 border-neutral-600 text-white hover:bg-neutral-800 hover:text-white bg-transparent">
-                        <Link href="#contact">
-                            Contact Me
-                        </Link>
-                    </Button>
+                    <div ref={button1Ref} className="inline-block">
+                        <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700 text-white border-none rounded-full px-8">
+                            <Link href="#projects">
+                                View Projects <ArrowRight className="ml-2 h-4 w-4" />
+                            </Link>
+                        </Button>
+                    </div>
+                    <div ref={button2Ref} className="inline-block">
+                        <Button asChild variant="outline" size="lg" className="rounded-full px-8 border-neutral-600 text-white hover:bg-neutral-800 hover:text-white bg-transparent">
+                            <Link href="#contact">
+                                Contact Me
+                            </Link>
+                        </Button>
+                    </div>
                 </div>
             </div>
         </div>

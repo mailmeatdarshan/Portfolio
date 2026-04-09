@@ -45,6 +45,7 @@
 
   --font-sans: var(--font-outfit);
   --font-display: var(--font-space-grotesk);
+  --font-orbitron: var(--font-orbitron);
 }
 
 @keyframes scroll {

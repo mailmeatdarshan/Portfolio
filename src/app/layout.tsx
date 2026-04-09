@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Outfit, Space_Grotesk } from "next/font/google";
+import { Outfit, Space_Grotesk, Orbitron } from "next/font/google";
 import "./globals.css";
 import "./clippy-overrides.css";
 import Navbar from "@/components/Navbar";
@@ -7,6 +7,7 @@ import BackToTop from "@/components/BackToTop";
 import ClippyAssistant from "@/components/ClippyAssistant";
 import Starfield from "@/components/ui/Starfield";
 import { SmoothScroll } from "@/components/SmoothScroll";
+import SplashScreen from "@/components/ui/SplashScreen";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -15,6 +16,11 @@ const outfit = Outfit({
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
+  subsets: ["latin"],
+});
+
+const orbitron = Orbitron({
+  variable: "--font-orbitron",
   subsets: ["latin"],
 });
 
@@ -41,9 +47,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${outfit.variable} ${spaceGrotesk.variable} antialiased font-sans bg-black/[0.96]`}
+        className={`${outfit.variable} ${spaceGrotesk.variable} ${orbitron.variable} antialiased font-sans bg-black/[0.96]`}
         suppressHydrationWarning
       >
+        <SplashScreen />
         <SmoothScroll>
           <Starfield />
           <Navbar />

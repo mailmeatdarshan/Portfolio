@@ -254,8 +254,27 @@ export default function ClippyAssistant() {
                 window.addEventListener('clippy-reset-gravity', onResetGravity);
                 window.addEventListener('clippy-physics-interaction', onPhysicsInteraction);
 
+                // ── Splash Screen Integration ──────────────────────────────
+                const onSplashStarted = () => {
+                    if (agentRef.current) agentRef.current.hide(true);
+                };
+
+                const onSplashFinished = () => {
+                    if (agentRef.current) agentRef.current.show(false);
+                };
+
+                window.addEventListener('splash-started', onSplashStarted);
+                window.addEventListener('splash-finished', onSplashFinished);
+
+                (agentRef.current as any)._splashCleanup = () => {
+                    window.removeEventListener('splash-started', onSplashStarted);
+                    window.removeEventListener('splash-finished', onSplashFinished);
+                };
+
                 setTimeout(() => {
                     if (!mounted || !agentRef.current) return;
+                    // Only speak if not in splash
+                    if (!sessionStorage.getItem("hasSeenSplash")) return;
                     safeSpeak(SECTION_MESSAGES.hero);
                     spokenSections.current.add('hero');
                 }, WELCOME_DELAY_MS);

@@ -11,6 +11,15 @@ interface Star {
   opacity: number;
 }
 
+interface Meteor {
+  x: number;
+  y: number;
+  length: number;
+  speed: number;
+  opacity: number;
+  angle: number;
+}
+
 const Starfield: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -23,6 +32,7 @@ const Starfield: React.FC = () => {
 
     let animationFrameId: number;
     let stars: Star[] = [];
+    let meteors: Meteor[] = [];
     const starCount = 200;
 
     const resizeCanvas = () => {
@@ -45,24 +55,66 @@ const Starfield: React.FC = () => {
       }
     };
 
+    const createMeteor = () => {
+      const side = Math.random() > 0.5;
+      meteors.push({
+        x: side ? Math.random() * canvas.width : canvas.width,
+        y: side ? 0 : Math.random() * canvas.height,
+        length: Math.random() * 80 + 20,
+        speed: Math.random() * 10 + 5,
+        opacity: 1,
+        angle: Math.PI / 4 + (Math.random() - 0.5) * 0.2,
+      });
+    };
+
     const draw = (time: number) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
+      // Draw Stars
       stars.forEach((star) => {
-        // Organic twinkling effect
         const alpha = (Math.sin(time * 0.001 * star.speed * 100 + star.phase) + 1) / 2;
-        const currentOpacity = alpha * 0.8 + 0.2; // Keep some base visibility
+        const currentOpacity = alpha * 0.8 + 0.2;
 
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(255, 255, 255, ${currentOpacity})`;
         ctx.fill();
 
-        // Subtle parallax/drift
         star.y -= star.radius * 0.05;
         if (star.y < 0) {
           star.y = canvas.height;
           star.x = Math.random() * canvas.width;
+        }
+      });
+
+      // Draw Meteors
+      if (Math.random() < 0.01) createMeteor();
+
+      meteors.forEach((meteor, index) => {
+        ctx.beginPath();
+        const grad = ctx.createLinearGradient(
+          meteor.x, meteor.y, 
+          meteor.x - Math.cos(meteor.angle) * meteor.length,
+          meteor.y + Math.sin(meteor.angle) * meteor.length
+        );
+        grad.addColorStop(0, `rgba(255, 255, 255, ${meteor.opacity})`);
+        grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+        
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 2;
+        ctx.moveTo(meteor.x, meteor.y);
+        ctx.lineTo(
+          meteor.x - Math.cos(meteor.angle) * meteor.length,
+          meteor.y + Math.sin(meteor.angle) * meteor.length
+        );
+        ctx.stroke();
+
+        meteor.x -= Math.cos(meteor.angle) * meteor.speed;
+        meteor.y += Math.sin(meteor.angle) * meteor.speed;
+        meteor.opacity -= 0.01;
+
+        if (meteor.opacity <= 0 || meteor.x < -100 || meteor.y > canvas.height + 100) {
+          meteors.splice(index, 1);
         }
       });
 
