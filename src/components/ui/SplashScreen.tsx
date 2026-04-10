@@ -170,14 +170,6 @@ const SplashScreen: React.FC = () => {
             </div>
           </div>
 
-          {/* Snellenberg-style Curved Exit Overlay */}
-          <svg className="absolute top-0 w-full h-[calc(100%+300px)] pointer-events-none">
-             <motion.path 
-                initial={{ d: "M0 0 L100 0 L100 100 Q50 100 0 100 Z" }}
-                exit={{ d: "M0 0 L100 0 L100 100 Q50 50 0 100 Z" }}
-                fill="#0a0a0a"
-             />
-          </svg>
         </motion.div>
       )}
     </AnimatePresence>

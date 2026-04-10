@@ -8,6 +8,7 @@ import ClippyAssistant from "@/components/ClippyAssistant";
 import Starfield from "@/components/ui/Starfield";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import SplashScreen from "@/components/ui/SplashScreen";
+import DotNav from "@/components/ui/dot-nav";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -53,6 +54,7 @@ export default function RootLayout({
         <SplashScreen />
         <SmoothScroll>
           <Starfield />
+          <DotNav />
           <Navbar />
           {children}
           <BackToTop />

@@ -8,7 +8,9 @@ import Contact from "@/components/Contact";
 export default function Home() {
   return (
     <main className="min-h-screen antialiased">
-      <GravityHero />
+      <div id="home">
+        <GravityHero />
+      </div>
       <div id="about">
         <About />
       </div>
