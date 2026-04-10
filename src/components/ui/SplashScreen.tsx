@@ -87,19 +87,6 @@ const SplashScreen: React.FC = () => {
           }}
           className="fixed inset-0 z-[10000] flex flex-col items-center justify-center bg-[#0a0a0a] overflow-hidden"
         >
-          {/* Background Text Reveal (Stabondar Style) */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 0.2, scale: 1 }}
-            transition={{ duration: 2, ease: "easeOut" }}
-            className="absolute inset-0 flex flex-col items-center justify-center select-none pointer-events-none leading-none"
-          >
-            <h1 className="text-[25vw] md:text-[18vw] font-bold font-display flex flex-col items-center">
-              <span>DARSHAN</span>
-              <span className="md:ml-[10vw]">DUBEY</span>
-            </h1>
-          </motion.div>
-
           {/* Minimalist Meteor Shower */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
             {[...Array(5)].map((_, i) => (
