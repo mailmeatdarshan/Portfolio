@@ -166,7 +166,14 @@ export default function ClippyAssistant() {
                 const ClippyLoaders = (await import('clippyjs/agents/clippy')).default;
 
                 if (!mounted) return;
-                const agent = await initAgent(ClippyLoaders);
+                
+                // Create a copy of the loaders but override sound to return empty to disable audio
+                const noSoundLoaders = {
+                    ...ClippyLoaders,
+                    sound: () => Promise.resolve({ default: {} })
+                };
+
+                const agent = await initAgent(noSoundLoaders);
                 if (!mounted) { agent.hide(true, () => {}); return; }
 
                 agentRef.current = agent;
@@ -182,6 +189,14 @@ export default function ClippyAssistant() {
                         el.style.left = 'auto';
                         el.style.top = 'auto';
                         el.style.zIndex = '9999';
+                        
+                        // Improve image clarity
+                        el.style.imageRendering = 'pixelated';
+                        // Apply to overlays as well
+                        const overlays = el.querySelectorAll('div');
+                        overlays.forEach(overlay => {
+                            (overlay as HTMLElement).style.imageRendering = 'pixelated';
+                        });
                     }
                 }, 500);
 
