@@ -1,14 +1,17 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 
-export type Theme = "space" | "earth" | "transitioning-to-earth" | "transitioning-to-space";
+export type Theme = "space" | "earth" | "zen" | "transitioning-to-earth" | "transitioning-to-space" | "transitioning-to-zen";
 
 interface ThemeContextProps {
   theme: Theme;
   isEarth: boolean;
   isSpace: boolean;
+  isZen: boolean;
   isTransitioning: boolean;
   triggerTransition: () => void;
+  setZenMode: () => void;
+  setEarthMode: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
@@ -23,15 +26,39 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
       setTheme("transitioning-to-earth");
       setTimeout(() => {
         setTheme("earth");
-        localStorage.setItem("portfolio-theme", "earth");
         window.dispatchEvent(new CustomEvent("clippy-landed"));
       }, TRANSITION_DURATION);
     } else if (theme === "earth") {
       setTheme("transitioning-to-space");
       setTimeout(() => {
         setTheme("space");
-        localStorage.setItem("portfolio-theme", "space");
         window.dispatchEvent(new CustomEvent("clippy-liftoff"));
+      }, TRANSITION_DURATION);
+    } else if (theme === "zen") {
+      // If in zen mode, clicking the main toggle returns to space
+      setTheme("transitioning-to-space");
+      setTimeout(() => {
+        setTheme("space");
+        window.dispatchEvent(new CustomEvent("clippy-liftoff"));
+      }, TRANSITION_DURATION);
+    }
+  }, [theme]);
+
+  const setZenMode = useCallback(() => {
+    if (theme !== "zen" && !theme.startsWith("transitioning")) {
+      setTheme("transitioning-to-zen");
+      setTimeout(() => {
+        setTheme("zen");
+      }, TRANSITION_DURATION);
+    }
+  }, [theme]);
+
+  const setEarthMode = useCallback(() => {
+    if (theme !== "earth" && !theme.startsWith("transitioning")) {
+      setTheme("transitioning-to-earth");
+      setTimeout(() => {
+        setTheme("earth");
+        window.dispatchEvent(new CustomEvent("clippy-landed"));
       }, TRANSITION_DURATION);
     }
   }, [theme]);
@@ -39,11 +66,11 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   // Sync theme classes on body
   useEffect(() => {
     const body = document.body;
-    body.classList.remove("theme-space", "theme-earth", "theme-transitioning-to-earth", "theme-transitioning-to-space");
+    body.classList.remove("theme-space", "theme-earth", "theme-zen", "theme-transitioning-to-earth", "theme-transitioning-to-space", "theme-transitioning-to-zen");
     body.classList.add(`theme-${theme}`);
     
-    // Lock scroll during transition
-    if (theme.startsWith("transitioning")) {
+    // Lock scroll during transition OR when in zen mode
+    if (theme.startsWith("transitioning") || theme === "zen") {
       document.documentElement.style.overflow = "hidden";
     } else {
       document.documentElement.style.overflow = "";
@@ -55,10 +82,11 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
   const isEarth = theme === "earth";
   const isSpace = theme === "space";
+  const isZen = theme === "zen";
   const isTransitioning = theme.startsWith("transitioning");
 
   return (
-    <ThemeContext.Provider value={{ theme, isEarth, isSpace, isTransitioning, triggerTransition }}>
+    <ThemeContext.Provider value={{ theme, isEarth, isSpace, isZen, isTransitioning, triggerTransition, setZenMode, setEarthMode }}>
       {children}
     </ThemeContext.Provider>
   );

@@ -3,11 +3,13 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "@/contexts/ThemeProvider";
+import { Sparkles } from "lucide-react";
 
 export default function ModeToggle() {
-  const { theme, isEarth, isTransitioning, triggerTransition } = useTheme();
+  const { theme, isEarth, isZen, isTransitioning, triggerTransition } = useTheme();
 
   const showEarthState = theme === "earth" || theme === "transitioning-to-earth";
+  const showZenState = theme === "zen" || theme === "transitioning-to-zen";
 
   return (
     <div className="fixed bottom-8 left-6 md:left-8 z-[101]">
@@ -18,7 +20,9 @@ export default function ModeToggle() {
         whileTap={{ scale: 0.95 }}
         className="w-12 h-12 flex items-center justify-center rounded-full backdrop-blur-md shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed group border border-white/20"
         style={{
-          background: showEarthState
+          background: showZenState 
+            ? "#1e2533" 
+            : showEarthState
             ? "#1c1917"
             : "rgba(255, 255, 255, 0.1)",
         }}
@@ -28,8 +32,8 @@ export default function ModeToggle() {
           {/* Rocket (Space state) */}
           <motion.div
             animate={{
-              y: showEarthState ? 32 : 0,
-              opacity: showEarthState ? 0 : 1,
+              y: (showEarthState || showZenState) ? 32 : 0,
+              opacity: (showEarthState || showZenState) ? 0 : 1,
             }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
             className="absolute"
@@ -56,7 +60,7 @@ export default function ModeToggle() {
           {/* Sun (Earth state) */}
           <motion.div
             animate={{
-              y: showEarthState ? 0 : -32,
+              y: showEarthState ? 0 : (showZenState ? 32 : -32),
               opacity: showEarthState ? 1 : 0,
             }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
@@ -84,6 +88,18 @@ export default function ModeToggle() {
               <path d="m6.34 17.66-1.41 1.41" />
               <path d="m19.07 4.93-1.41 1.41" />
             </svg>
+          </motion.div>
+
+          {/* Sparkles (Zen state) */}
+          <motion.div
+            animate={{
+              y: showZenState ? 0 : -32,
+              opacity: showZenState ? 1 : 0,
+            }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+            className="absolute"
+          >
+            <Sparkles className="w-5 h-5 text-blue-400" />
           </motion.div>
         </div>
       </motion.button>

@@ -251,13 +251,15 @@ export default function GravityHero() {
 
         const update = () => {
             if (engineRef.current && isEnabledRef.current) {
-                Engine.update(engineRef.current);
+                Engine.update(engineRef.current, 1000 / 60);
                 bodiesRef.current.forEach(({ body, element, initialX, initialY }) => {
                     const { x, y } = body.position;
                     const angle = body.angle;
                     const dx = x - initialX;
                     const dy = y - initialY;
-                    element.style.transform = `translate3d(${dx}px, ${dy}px, 0) rotate(${angle}rad)`;
+                    
+                    // Use translate3d for hardware acceleration and fixed precision to reduce layout thrashing
+                    element.style.transform = `translate3d(${dx.toFixed(1)}px, ${dy.toFixed(1)}px, 0) rotate(${angle.toFixed(3)}rad)`;
                 });
             }
             requestRef.current = requestAnimationFrame(update);
@@ -375,11 +377,16 @@ export default function GravityHero() {
                 )}
             />
             
-            {hasStarted && isSpace && (
+            {hasStarted && (
                 <button
                     onClick={(e) => togglePhysics(e)}
                     onPointerDown={(e) => e.stopPropagation()}
-                    className="hidden md:flex absolute bottom-10 right-10 z-[90] bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-full transition-all duration-500 group items-center text-white/70 hover:text-white pointer-events-auto shadow-xl overflow-hidden w-14 hover:w-52 h-14 justify-center px-4"
+                    className={cn(
+                        "hidden md:flex absolute bottom-10 right-10 z-[90] backdrop-blur-md border rounded-full transition-all duration-500 group items-center pointer-events-auto shadow-xl overflow-hidden w-14 hover:w-52 h-14 justify-center px-4",
+                        isEarth 
+                            ? "bg-stone-800/10 border-stone-800/20 text-stone-800 hover:bg-stone-800/20" 
+                            : "bg-white/10 border-white/20 text-white/70 hover:bg-white/20 hover:text-white"
+                    )}
                 >
                     <div className="flex items-center justify-center gap-0 group-hover:gap-3 transition-all duration-500 w-full">
                         {isPhysicsEnabled ? (
@@ -399,8 +406,8 @@ export default function GravityHero() {
             
             <div 
                 className={cn(
-                    "p-4 max-w-7xl mx-auto relative z-10 w-full pt-0 flex flex-col items-center transition-all duration-700",
-                    isPhysicsEnabled ? "opacity-100" : "opacity-100"
+                    "p-4 max-w-7xl mx-auto relative z-10 w-full pt-0 flex flex-col items-center",
+                    !isPhysicsEnabled && "transition-all duration-700"
                 )}
             >
                 <h1 className="text-4xl md:text-7xl font-bold text-center pointer-events-none leading-tight">

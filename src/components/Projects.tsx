@@ -82,8 +82,8 @@ export default function Projects() {
                             description={project.description}
                             header={
                                 <div className={cn(
-                                    "w-full rounded-2xl overflow-hidden relative group",
-                                    isLarge ? "flex-[25] min-h-[40rem]" : "flex-[4] min-h-[14rem]",
+                                    "w-full rounded-2xl overflow-hidden relative group flex-[4] min-h-[14rem]",
+                                    isLarge ? "md:flex-[25] md:min-h-[40rem]" : "md:flex-[4] md:min-h-[14rem]",
                                     isEarth ? "bg-stone-100" : "bg-neutral-100 dark:bg-neutral-800/50"
                                 )}>
                                     <Image
