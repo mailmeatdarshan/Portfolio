@@ -63,19 +63,21 @@ export const BentoGridItem = ({
       )}
     >
       <RoughCard
-        className="w-full h-full p-3 flex flex-col gap-3 justify-between rounded-3xl"
+        className="w-full h-full p-3 rounded-3xl"
         fillColor={isEarth ? "rgba(255,255,255,0.45)" : "rgba(23,23,23,0.55)"}
         strokeColor={isEarth ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.1)"}
         roughness={isEarth ? 2.2 : 0}
       >
-        {header}
-        <div className="hidden md:flex group-hover/bento:translate-x-2 transition duration-200 flex-col px-1 pb-1">
-          {icon}
-          <div className="font-sans font-bold mb-1 mt-1 transition-colors duration-1000" style={{ color: "var(--theme-text-heading)" }}>
-            {title}
-          </div>
-          <div className="font-sans font-normal text-xs line-clamp-1 transition-colors duration-1000" style={{ color: "var(--theme-text-muted)" }}>
-            {description}
+        <div className="flex flex-col h-full justify-between gap-3">
+          {header}
+          <div className="hidden md:flex group-hover/bento:translate-x-2 transition duration-200 flex-col px-1 pb-1">
+            {icon}
+            <div className="font-sans font-bold mb-1 mt-1 transition-colors duration-1000" style={{ color: "var(--theme-text-heading)" }}>
+              {title}
+            </div>
+            <div className="font-sans font-normal text-xs line-clamp-1 transition-colors duration-1000" style={{ color: "var(--theme-text-muted)" }}>
+              {description}
+            </div>
           </div>
         </div>
       </RoughCard>

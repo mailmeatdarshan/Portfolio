@@ -71,6 +71,8 @@ export default function Projects() {
                         layoutClass = "md:col-span-2 md:row-span-1";
                     }
                     
+                    const isLarge = project.title === "MyBhavans";
+                    
                     return (
                         <BentoGridItem
                             key={project.id}
@@ -80,7 +82,8 @@ export default function Projects() {
                             description={project.description}
                             header={
                                 <div className={cn(
-                                    "flex flex-[4] w-full h-full min-h-[14rem] rounded-2xl overflow-hidden relative group",
+                                    "w-full rounded-2xl overflow-hidden relative group",
+                                    isLarge ? "flex-[25] min-h-[40rem]" : "flex-[4] min-h-[14rem]",
                                     isEarth ? "bg-stone-100" : "bg-neutral-100 dark:bg-neutral-800/50"
                                 )}>
                                     <Image
@@ -88,10 +91,7 @@ export default function Projects() {
                                         alt={project.title}
                                         fill
                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                        className={cn(
-                                            "object-contain transition-all duration-700 will-change-transform",
-                                            hoveredIndex === i ? "scale-105" : "scale-100"
-                                        )}
+                                        className="object-contain transition-all duration-700"
                                     />
                                     <div className={cn(
                                         "absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-4 p-6",
@@ -159,9 +159,9 @@ export default function Projects() {
                         
                         <motion.div
                             layoutId={`project-${selectedProject.id}`}
-                            transition={{ type: "spring", bounce: 0.1, duration: 0.6 }}
+                            transition={{ type: "spring", bounce: 0, duration: 0.6 }}
                             className={cn(
-                                "border w-full max-w-5xl max-h-[95vh] md:max-h-[90vh] rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden relative z-10 shadow-2xl flex flex-col md:flex-row will-change-transform transition-colors duration-1000",
+                                "border w-full max-w-5xl max-h-[95vh] md:max-h-[90vh] rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden relative z-10 shadow-2xl flex flex-col md:flex-row transition-colors duration-1000",
                                 isEarth
                                     ? "bg-white border-stone-200"
                                     : "bg-neutral-900 border-white/10"
@@ -181,18 +181,20 @@ export default function Projects() {
 
                             {/* Left: Image Section */}
                             <div className={cn(
-                                "w-full md:w-1/2 h-48 sm:h-64 md:h-full relative shrink-0",
+                                "w-full md:w-1/2 h-72 md:h-auto relative shrink-0 min-h-[300px]",
                                 isEarth ? "bg-stone-50/50" : "bg-neutral-800/30"
                             )}>
-                                <Image
-                                    src={selectedProject.image}
-                                    alt={selectedProject.title}
-                                    fill
-                                    priority
-                                    className="object-contain p-6 md:p-12 drop-shadow-2xl"
-                                />
+                                <div className="absolute inset-0 p-6 md:p-12">
+                                    <Image
+                                        src={selectedProject.image}
+                                        alt={selectedProject.title}
+                                        fill
+                                        priority
+                                        className="object-contain drop-shadow-2xl z-20"
+                                    />
+                                </div>
                                 <div className={cn(
-                                    "absolute inset-0 bg-gradient-to-t via-transparent to-transparent md:hidden",
+                                    "absolute inset-0 bg-gradient-to-t via-transparent to-transparent md:hidden z-10",
                                     isEarth ? "from-white" : "from-neutral-900"
                                 )} />
                             </div>
