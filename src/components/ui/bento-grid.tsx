@@ -56,27 +56,27 @@ export const BentoGridItem = ({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       className={cn(
-        "row-span-1 group/bento transition-all duration-500 cursor-pointer relative",
+        "row-span-1 group/bento transition-all duration-1000 cursor-pointer relative rounded-3xl",
         isAnyHovered && !isHovered && "blur-[2px] opacity-40 scale-[0.98]",
         isHovered && "scale-[1.01] z-30 shadow-2xl",
         className
       )}
     >
       <RoughCard
-        className="w-full h-full p-3 flex flex-col justify-between"
-        fillColor={isEarth ? "rgba(255,255,255,0.4)" : "rgba(23,23,23,0.5)"}
-        strokeColor={isEarth ? "rgba(0,0,0,0.12)" : "rgba(255,255,255,0.08)"}
-        roughness={isEarth ? 2 : 0}
+        className="w-full h-full p-3 flex flex-col gap-3 justify-between rounded-3xl"
+        fillColor={isEarth ? "rgba(255,255,255,0.45)" : "rgba(23,23,23,0.55)"}
+        strokeColor={isEarth ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.1)"}
+        roughness={isEarth ? 2.2 : 0}
       >
         {header}
-        <div className="hidden md:flex group-hover/bento:translate-x-2 transition duration-200 flex-col px-1 pb-1 mt-2">
-            {icon}
-            <div className="font-sans font-bold text-neutral-800 dark:text-neutral-100 mb-1 mt-1">
+        <div className="hidden md:flex group-hover/bento:translate-x-2 transition duration-200 flex-col px-1 pb-1">
+          {icon}
+          <div className="font-sans font-bold mb-1 mt-1 transition-colors duration-1000" style={{ color: "var(--theme-text-heading)" }}>
             {title}
-            </div>
-            <div className="font-sans font-normal text-neutral-600 text-xs dark:text-neutral-400 line-clamp-1">
+          </div>
+          <div className="font-sans font-normal text-xs line-clamp-1 transition-colors duration-1000" style={{ color: "var(--theme-text-muted)" }}>
             {description}
-            </div>
+          </div>
         </div>
       </RoughCard>
     </motion.div>
