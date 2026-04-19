@@ -22,7 +22,8 @@ export default function TechnicalArsenal() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
-                    className="text-4xl md:text-5xl font-bold text-center text-white"
+                    className="text-4xl md:text-5xl font-bold text-center transition-colors duration-1000"
+                    style={{ color: "var(--theme-text-heading)" }}
                 >
                     Technical Arsenal
                 </motion.h2>
@@ -31,7 +32,8 @@ export default function TechnicalArsenal() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.1 }}
-                    className="text-neutral-400 text-center mt-4 max-w-2xl mx-auto"
+                    className="text-center mt-4 max-w-2xl mx-auto transition-colors duration-1000"
+                    style={{ color: "var(--theme-text-muted)" }}
                 >
                     A collection of technologies and tools I use to bring ideas to life.
                 </motion.p>

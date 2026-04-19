@@ -67,6 +67,20 @@ const RESET_MESSAGES = [
     "Nature is healing… from you.",
 ];
 
+const LANDED_MESSAGES = [
+    "Phew! Solid ground at last! 🌍",
+    "Oof, that was a hard landing! My circuits are rattling 😵",
+    "Ahh, fresh air! ...wait, I'm a paperclip. Nevermind.",
+    "GravIty restored. I can feel my staples again! 📎",
+];
+
+const LIFTOFF_MESSAGES = [
+    "And we have liftoff! 🚀",
+    "Hold on tight! We're going back to space! 🌌",
+    "Goodbye ground, hello void! Wheee!",
+    "Zero gravity mode: ENGAGED. Don't float away! 🎈",
+];
+
 const INTERACTION_MESSAGES = [
     "Careful! You'll break the laws of physics… oh wait. Bold of me to assume you studied them 💀",
     "Stop throwing the developer around! 😤",
@@ -83,9 +97,11 @@ const INTERACTION_MESSAGES = [
 ];
 
 const MESSAGE_COOLDOWN_MS = 5000;
-const IDLE_FIRST_MS = 12000;   
-const IDLE_REPEAT_MS = 18000;  
+const IDLE_FIRST_MS = 12000;
+const IDLE_REPEAT_MS = 18000;
 const ANIMATION_INTERVAL_MS = 20000;
+let landedMsgIndex = 0;
+let liftoffMsgIndex = 0;
 const WELCOME_DELAY_MS = 1500;
 const DRAG_THRESHOLD_PX = 20;  
 
@@ -265,9 +281,25 @@ export default function ClippyAssistant() {
                     if (agentRef.current) agentRef.current.animate();
                 };
 
+                const onLanded = () => {
+                    const msg = LANDED_MESSAGES[landedMsgIndex % LANDED_MESSAGES.length];
+                    landedMsgIndex++;
+                    safeSpeakRef.current(msg, true);
+                    if (agentRef.current) agentRef.current.animate();
+                };
+
+                const onLiftoff = () => {
+                    const msg = LIFTOFF_MESSAGES[liftoffMsgIndex % LIFTOFF_MESSAGES.length];
+                    liftoffMsgIndex++;
+                    safeSpeakRef.current(msg, true);
+                    if (agentRef.current) agentRef.current.animate();
+                };
+
                 window.addEventListener('clippy-zero-gravity', onZeroGravity);
                 window.addEventListener('clippy-reset-gravity', onResetGravity);
                 window.addEventListener('clippy-physics-interaction', onPhysicsInteraction);
+                window.addEventListener('clippy-landed', onLanded);
+                window.addEventListener('clippy-liftoff', onLiftoff);
 
                 // ── Splash Screen Integration ──────────────────────────────
                 const onSplashStarted = () => {
@@ -324,6 +356,8 @@ export default function ClippyAssistant() {
                     window.removeEventListener('clippy-zero-gravity', onZeroGravity);
                     window.removeEventListener('clippy-reset-gravity', onResetGravity);
                     window.removeEventListener('clippy-physics-interaction', onPhysicsInteraction);
+                    window.removeEventListener('clippy-landed', onLanded);
+                    window.removeEventListener('clippy-liftoff', onLiftoff);
                 };
 
             } catch (err) {

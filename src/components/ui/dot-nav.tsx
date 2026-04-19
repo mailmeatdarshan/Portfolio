@@ -4,6 +4,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useLenis } from "lenis/react";
+import { useTheme } from "@/contexts/ThemeProvider";
 
 const sections = [
   { id: "home", label: "Home", num: "01" },
@@ -18,6 +19,7 @@ export default function DotNav() {
   const [activeSection, setActiveSection] = useState("home");
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
   const lenis = useLenis();
+  const { isEarth } = useTheme();
 
   useEffect(() => {
     const observerOptions = {
@@ -58,14 +60,17 @@ export default function DotNav() {
     }
   }, [lenis]);
 
+  const accentColor = isEarth ? "#d97706" : "#3b82f6";
+
   return (
     <div className="fixed left-6 md:left-10 top-1/2 -translate-y-1/2 z-[100] hidden lg:flex flex-col items-start gap-8">
       {/* Decorative vertical line with accent dash */}
       <div className="absolute left-[3px] top-[-20px] bottom-[-20px] w-[1px] bg-white/5 overflow-hidden">
         <motion.div 
-          className="w-full bg-blue-500 h-20"
+          className="w-full h-20"
+          style={{ background: accentColor }}
           animate={{
-            y: sections.findIndex(s => s.id === activeSection) * 48 // matches the gap + height
+            y: sections.findIndex(s => s.id === activeSection) * 48
           }}
           transition={{ type: "spring", stiffness: 100, damping: 20 }}
         />
@@ -90,25 +95,29 @@ export default function DotNav() {
                 className={cn(
                   "w-[3px] h-[3px] rounded-full transition-all duration-500 z-10",
                   isActive 
-                    ? "bg-blue-500 scale-[1.5]" 
-                    : "bg-white/20 group-hover:bg-white/60"
+                    ? "scale-[1.5]" 
+                    : isEarth
+                      ? "bg-stone-800/20 group-hover:bg-stone-800/60"
+                      : "bg-white/20 group-hover:bg-white/60"
                 )}
+                style={isActive ? { background: accentColor } : undefined}
               />
               {isActive && (
                 <motion.div
                   layoutId="active-dot-glow"
-                  className="absolute inset-0 bg-blue-500/40 blur-[4px] rounded-full"
+                  className="absolute inset-0 blur-[4px] rounded-full"
+                  style={{ background: `${accentColor}66` }}
                 />
               )}
             </div>
 
-            {/* Label - Dashboard/Terminal Style */}
+            {/* Label */}
             <div className="flex items-center gap-2">
               <span
                 className={cn(
                   "text-[8px] font-bold tracking-[0.2em] transition-all duration-300 font-sans",
-                  isActive ? "text-blue-500" : "text-white/30"
                 )}
+                style={{ color: isActive ? accentColor : isEarth ? "rgba(28,25,23,0.3)" : "rgba(255,255,255,0.3)" }}
               >
                 {section.num}
               </span>
@@ -116,9 +125,10 @@ export default function DotNav() {
                 className={cn(
                   "text-[11px] font-bold uppercase tracking-[0.15em] transition-all duration-300 font-sans pointer-events-none",
                   isHovered 
-                    ? "text-white opacity-100 translate-x-0" 
-                    : "text-white opacity-0 -translate-x-2"
+                    ? "opacity-100 translate-x-0" 
+                    : "opacity-0 -translate-x-2"
                 )}
+                style={{ color: isEarth ? "#1c1917" : "#ffffff" }}
               >
                 {section.label}
               </span>

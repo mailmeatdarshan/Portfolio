@@ -9,6 +9,8 @@ import { ArrowRight, Orbit, RotateCcw } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { FloatingAstronaut } from "./ui/floating-astronaut";
+import { useTheme } from "@/contexts/ThemeProvider";
+import { motion } from "framer-motion";
 
 interface PhysicsBody {
     body: Matter.Body;
@@ -20,6 +22,8 @@ interface PhysicsBody {
 const CATEGORY_DEFAULT = 0x0001;
 const CATEGORY_BUTTONS = 0x0002;
 
+import { SketchyArrow, SketchyScribble } from "./ui/sketchy-doodles";
+
 export default function GravityHero() {
     const sceneRef = useRef<HTMLDivElement>(null);
     const interactionRef = useRef<HTMLDivElement>(null);
@@ -27,6 +31,7 @@ export default function GravityHero() {
     const requestRef = useRef<number | null>(null);
     const [isPhysicsEnabled, setIsPhysicsEnabled] = useState(false);
     const [hasStarted, setHasStarted] = useState(false);
+    const { theme, isEarth, isSpace } = useTheme();
     
     const isEnabledRef = useRef(false);
     const hasInitializedRef = useRef(false);
@@ -47,6 +52,14 @@ export default function GravityHero() {
         { text: "into", className: "text-white" },
         { text: "Digital", className: "text-blue-500" },
         { text: "Reality.", className: "text-blue-500" },
+    ];
+
+    const heroWordsEarth = [
+        { text: "Transforming", className: "text-stone-800" },
+        { text: "Ideas", className: "text-stone-800" },
+        { text: "into", className: "text-stone-800" },
+        { text: "Digital", className: "text-amber-600" },
+        { text: "Reality.", className: "text-amber-600" },
     ];
 
     useEffect(() => {
@@ -273,6 +286,46 @@ export default function GravityHero() {
         }));
     }, [isPhysicsEnabled]);
 
+    // Theme-based gravity
+    useEffect(() => {
+        if (!engineRef.current) return;
+
+        if (theme === "earth" || theme === "transitioning-to-earth") {
+            engineRef.current.gravity.y = 1;
+            engineRef.current.gravity.scale = 0.001;
+
+            const width = sceneRef.current?.getBoundingClientRect().width || window.innerWidth;
+            const height = sceneRef.current?.getBoundingClientRect().height || window.innerHeight;
+
+            const existingBodies = Matter.Composite.allBodies(engineRef.current.world);
+            const earthFloorExists = existingBodies.some(b => b.label === "earthFloor");
+
+            if (!earthFloorExists) {
+                const earthFloor = Matter.Bodies.rectangle(
+                    width / 2, 
+                    height - 10, 
+                    width * 2, 
+                    100, 
+                    { isStatic: true, label: "earthFloor", friction: 0.8, restitution: 0.2 }
+                );
+                Matter.World.add(engineRef.current.world, earthFloor);
+            }
+
+            if (!isEnabledRef.current && theme === "earth") {
+               togglePhysics();
+            }
+        } else {
+            engineRef.current.gravity.y = 0;
+            engineRef.current.gravity.scale = 0;
+
+            const existingBodies = Matter.Composite.allBodies(engineRef.current.world);
+            const earthFloor = existingBodies.find(b => b.label === "earthFloor");
+            if (earthFloor) {
+                Matter.World.remove(engineRef.current.world, earthFloor);
+            }
+        }
+    }, [theme]);
+
     const nameParts = personalInfo.name.split(" ");
 
     return (
@@ -282,10 +335,26 @@ export default function GravityHero() {
         >
             <Spotlight
                 className="-top-40 left-0 md:left-60 md:-top-20"
-                fill="white"
+                fill={isEarth ? "#f59e0b" : "white"}
             />
 
-            <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
+            {/* Sketchy Doodles — only in earth mode */}
+            {isEarth && (
+                <>
+                    <SketchyArrow className="absolute top-[20%] left-[10%] z-20 hidden md:block" />
+                    <SketchyScribble 
+                        text="Built with Passion ✨" 
+                        className="absolute bottom-[20%] right-[15%] z-20 hidden lg:block rotate-[-5deg]"
+                    />
+                </>
+            )}
+
+            {/* Astronaut — fades out in earth mode */}
+            <motion.div
+                className="absolute inset-0 z-0 pointer-events-none"
+                animate={{ opacity: isEarth ? 0 : 0.4 }}
+                transition={{ duration: 1.5, ease: "easeInOut" }}
+            >
                 <FloatingAstronaut 
                     src="/images/astronauts/newastranauts.png" 
                     alt="Flying Astronaut"
@@ -296,7 +365,7 @@ export default function GravityHero() {
                     distance={30}
                     rotate={10}
                 />
-            </div>
+            </motion.div>
 
             <div 
                 ref={interactionRef}
@@ -306,11 +375,11 @@ export default function GravityHero() {
                 )}
             />
             
-            {hasStarted && (
+            {hasStarted && isSpace && (
                 <button
                     onClick={(e) => togglePhysics(e)}
                     onPointerDown={(e) => e.stopPropagation()}
-                    className="hidden md:flex absolute bottom-10 right-10 z-[70] bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-full transition-all duration-500 group items-center text-white/70 hover:text-white pointer-events-auto shadow-xl overflow-hidden w-14 hover:w-52 h-14 justify-center px-4"
+                    className="hidden md:flex absolute bottom-10 right-10 z-[90] bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-full transition-all duration-500 group items-center text-white/70 hover:text-white pointer-events-auto shadow-xl overflow-hidden w-14 hover:w-52 h-14 justify-center px-4"
                 >
                     <div className="flex items-center justify-center gap-0 group-hover:gap-3 transition-all duration-500 w-full">
                         {isPhysicsEnabled ? (
@@ -335,53 +404,81 @@ export default function GravityHero() {
                 )}
             >
                 <h1 className="text-4xl md:text-7xl font-bold text-center pointer-events-none leading-tight">
-                    <span 
+                    <motion.span 
                         ref={nameFirstRef} 
-                        className="inline-block pointer-events-auto mr-2 md:mr-4 bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400"
+                        className="inline-block pointer-events-auto mr-2 md:mr-4 bg-clip-text text-transparent"
+                        animate={{
+                            backgroundImage: isEarth
+                                ? "linear-gradient(to bottom, #1c1917, #57534e)"
+                                : "linear-gradient(to bottom, #fafaf9, #a3a3a3)",
+                        }}
+                        transition={{ duration: 1.5 }}
+                        style={{ backgroundClip: "text", WebkitBackgroundClip: "text" }}
                     >
                         {nameParts[0]}
-                    </span>
-                    <span 
+                    </motion.span>
+                    <motion.span 
                         ref={nameLastRef} 
-                        className="inline-block pointer-events-auto bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400"
+                        className="inline-block pointer-events-auto bg-clip-text text-transparent"
+                        animate={{
+                            backgroundImage: isEarth
+                                ? "linear-gradient(to bottom, #1c1917, #57534e)"
+                                : "linear-gradient(to bottom, #fafaf9, #a3a3a3)",
+                        }}
+                        transition={{ duration: 1.5 }}
+                        style={{ backgroundClip: "text", WebkitBackgroundClip: "text" }}
                     >
                         {nameParts[1]}
-                    </span>
+                    </motion.span>
                     <br />
-                    <span 
+                    <motion.span 
                         ref={titleRef}
-                        className="text-xl md:text-3xl font-normal text-neutral-300 inline-block pointer-events-auto mt-2"
+                        className="text-xl md:text-3xl font-normal inline-block pointer-events-auto mt-2"
+                        animate={{ color: isEarth ? "#78716c" : "#d4d4d4" }}
+                        transition={{ duration: 1.5 }}
                     >
                         {personalInfo.title}
-                    </span>
+                    </motion.span>
                 </h1>
 
-                <div 
+                <motion.div 
                     ref={bioRef}
-                    className="mt-6 text-center text-neutral-300 max-w-lg mx-auto pointer-events-auto leading-relaxed"
+                    className="mt-6 text-center max-w-lg mx-auto pointer-events-auto leading-relaxed"
+                    animate={{ color: isEarth ? "#57534e" : "#d4d4d4" }}
+                    transition={{ duration: 1.5 }}
                 >
                     {personalInfo.bio}
-                </div>
+                </motion.div>
 
                 <div 
                     ref={typewriterRef}
                     className="flex justify-center mt-8 pointer-events-auto min-h-[40px]"
                 >
-                    <TypewriterEffect words={heroWords} />
+                    <TypewriterEffect words={isEarth ? heroWordsEarth : heroWords} />
                 </div>
 
                 <div 
                     className="flex flex-col md:flex-row items-center justify-center gap-4 mt-10 pointer-events-auto"
                 >
                     <div ref={button1Ref} className="inline-block">
-                        <Button asChild size="lg" className="bg-blue-600 hover:bg-blue-700 text-white border-none rounded-full px-8">
+                        <Button asChild size="lg" className={cn(
+                            "border-none rounded-full px-8 transition-colors duration-1000",
+                            isEarth
+                                ? "bg-amber-600 hover:bg-amber-700 text-white"
+                                : "bg-blue-600 hover:bg-blue-700 text-white"
+                        )}>
                             <Link href="#projects">
                                 View Projects <ArrowRight className="ml-2 h-4 w-4" />
                             </Link>
                         </Button>
                     </div>
                     <div ref={button2Ref} className="inline-block">
-                        <Button asChild variant="outline" size="lg" className="rounded-full px-8 border-neutral-600 text-white hover:bg-neutral-800 hover:text-white bg-transparent">
+                        <Button asChild variant="outline" size="lg" className={cn(
+                            "rounded-full px-8 bg-transparent transition-colors duration-1000",
+                            isEarth
+                                ? "border-stone-400 text-stone-700 hover:bg-stone-100 hover:text-stone-900"
+                                : "border-neutral-600 text-white hover:bg-neutral-800 hover:text-white"
+                        )}>
                             <Link href="#contact">
                                 Contact Me
                             </Link>

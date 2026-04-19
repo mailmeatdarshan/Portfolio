@@ -2,8 +2,13 @@
 import React from "react";
 import { personalInfo } from "@/data/portfolio";
 import { motion } from "framer-motion";
+import { useTheme } from "@/contexts/ThemeProvider";
+
+import { RoughCard } from "./ui/rough-card";
 
 export default function About() {
+    const { isEarth } = useTheme();
+
     return (
         <div className="py-20 w-full max-w-7xl mx-auto px-4 relative overflow-hidden">
             <motion.div
@@ -12,33 +17,60 @@ export default function About() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
             >
-                <h2 className="text-4xl md:text-5xl font-bold text-center text-white mb-10">
+                <h2 className={`text-4xl md:text-5xl font-bold text-center mb-10 transition-colors duration-1000`}
+                    style={{ color: "var(--theme-text-heading)" }}
+                >
                     My World
                 </h2>
 
-                <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="max-w-4xl mx-auto text-center mb-20 bg-neutral-900/50 p-8 rounded-3xl border border-neutral-800 backdrop-blur-sm"
+                <RoughCard
+                    className="max-w-4xl mx-auto text-center mb-20 p-8 rounded-3xl"
+                    fillColor={isEarth ? "rgba(255,255,255,0.4)" : "rgba(23,23,23,0.5)"}
+                    strokeColor={isEarth ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.1)"}
+                    roughness={isEarth ? 2.5 : 0}
                 >
-                    <h3 className="text-2xl font-bold text-white mb-6">About Me</h3>
-                    <p className="text-lg md:text-xl text-neutral-300 leading-relaxed mb-6 font-light">
-                        I’m a computer science student with a strong interest in <span className="text-blue-400 font-medium">web development</span>, <span className="text-yellow-400 font-medium">cloud computing</span>, <span className="text-purple-400 font-medium">automation</span>, and <span className="text-green-400 font-medium">backend development</span>. I enjoy building efficient systems that solve real-world problems. I’m especially passionate about modern technologies and scalable system design.
+                    <h3 className="text-2xl font-bold mb-6 transition-colors duration-1000"
+                        style={{ color: "var(--theme-text-heading)" }}
+                    >
+                        About Me
+                    </h3>
+                    <p className="text-lg md:text-xl leading-relaxed mb-6 font-light transition-colors duration-1000"
+                        style={{ color: "var(--theme-text-body)" }}
+                    >
+                        I&apos;m a computer science student with a strong interest in{" "}
+                        <span className={`font-medium transition-colors duration-1000 ${isEarth ? "text-amber-600" : "text-blue-400"}`}>web development</span>,{" "}
+                        <span className={`font-medium transition-colors duration-1000 ${isEarth ? "text-emerald-600" : "text-yellow-400"}`}>cloud computing</span>,{" "}
+                        <span className={`font-medium transition-colors duration-1000 ${isEarth ? "text-orange-600" : "text-purple-400"}`}>automation</span>, and{" "}
+                        <span className={`font-medium transition-colors duration-1000 ${isEarth ? "text-teal-600" : "text-green-400"}`}>backend development</span>.
+                        I enjoy building efficient systems that solve real-world problems. I&apos;m especially passionate about modern technologies and scalable system design.
                     </p>
                     <div className="flex flex-wrap justify-center gap-3">
                         {["#Web Developer", "#Cloud Engineer", "#Backend Specialist", "#Automation Developer"].map((tag, i) => (
-                            <span key={i} className="px-4 py-1.5 rounded-full bg-neutral-800 text-sm font-medium text-neutral-400 border border-neutral-700 hover:border-blue-500 hover:text-blue-400 transition-colors cursor-default">
+                            <span
+                                key={i}
+                                className="px-4 py-1.5 rounded-full text-sm font-medium cursor-default transition-all duration-1000"
+                                style={{
+                                    background: "var(--theme-tag-bg)",
+                                    color: "var(--theme-tag-text)",
+                                    borderWidth: "1px",
+                                    borderStyle: "solid",
+                                    borderColor: "var(--theme-tag-border)",
+                                }}
+                            >
                                 {tag}
                             </span>
                         ))}
                     </div>
-                </motion.div>
+                </RoughCard>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                     {/* What I Love Section */}
                     <div className="space-y-8">
-                        <h3 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 mb-8">
+                        <h3 className="text-3xl font-bold mb-8 bg-clip-text text-transparent transition-all duration-1000"
+                            style={{
+                                backgroundImage: `linear-gradient(to right, var(--theme-gradient-text-from), var(--theme-gradient-text-to))`,
+                            }}
+                        >
                             What I Love
                         </h3>
                         <div className="space-y-6">
@@ -51,10 +83,14 @@ export default function About() {
                                     transition={{ delay: idx * 0.1 }}
                                     className="group"
                                 >
-                                    <h4 className="text-xl font-bold text-white mb-1 group-hover:text-blue-400 transition-colors">
+                                    <h4 className="text-xl font-bold mb-1 transition-colors duration-1000"
+                                        style={{ color: "var(--theme-text-heading)" }}
+                                    >
                                         {item.title}
                                     </h4>
-                                    <p className="text-neutral-400">
+                                    <p className="transition-colors duration-1000"
+                                        style={{ color: "var(--theme-text-muted)" }}
+                                    >
                                         {item.description}
                                     </p>
                                 </motion.div>
@@ -64,7 +100,11 @@ export default function About() {
 
                     {/* Masterplan Section */}
                     <div className="space-y-8">
-                        <h3 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-yellow-500 mb-8">
+                        <h3 className="text-3xl font-bold mb-8 bg-clip-text text-transparent transition-all duration-1000"
+                            style={{
+                                backgroundImage: `linear-gradient(to right, var(--theme-gradient-text-alt-from), var(--theme-gradient-text-alt-to))`,
+                            }}
+                        >
                             Masterplan Before 30
                         </h3>
                         <div className="space-y-4">
@@ -75,17 +115,29 @@ export default function About() {
                                     whileInView={{ opacity: 1, x: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: idx * 0.1 }}
-                                    className="flex items-start gap-4 p-4 rounded-xl bg-neutral-900/30 border border-neutral-800/50 hover:border-yellow-500/30 transition-colors"
+                                    className="flex items-start gap-4 p-4 rounded-xl transition-all duration-1000"
+                                    style={{
+                                        background: isEarth ? "rgba(255,255,255,0.3)" : "rgba(23,23,23,0.3)",
+                                        borderWidth: "1px",
+                                        borderStyle: "solid",
+                                        borderColor: "var(--theme-card-border)",
+                                    }}
                                 >
-                                    <span className="text-yellow-500 font-mono text-lg">0{idx + 1}</span>
-                                    <p className="text-neutral-300">
+                                    <span className={`font-mono text-lg transition-colors duration-1000 ${isEarth ? "text-amber-600" : "text-yellow-500"}`}>
+                                        0{idx + 1}
+                                    </span>
+                                    <p style={{ color: "var(--theme-text-body)" }} className="transition-colors duration-1000">
                                         {item}
                                     </p>
                                 </motion.div>
                             ))}
                         </div>
-                        <div className="mt-8 p-6 rounded-2xl bg-gradient-to-r from-neutral-900 to-neutral-800 border-l-4 border-green-500">
-                            <p className="font-mono text-green-400">
+                        <div className={`mt-8 p-6 rounded-2xl border-l-4 transition-all duration-1000 ${
+                            isEarth
+                                ? "bg-gradient-to-r from-emerald-50 to-amber-50 border-emerald-500"
+                                : "bg-gradient-to-r from-neutral-900 to-neutral-800 border-green-500"
+                        }`}>
+                            <p className={`font-mono transition-colors duration-1000 ${isEarth ? "text-emerald-700" : "text-green-400"}`}>
                                 Status: Manifesting on full throttle. All or nothing.
                             </p>
                         </div>

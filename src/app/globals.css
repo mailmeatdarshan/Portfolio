@@ -46,6 +46,7 @@
   --font-sans: var(--font-outfit);
   --font-display: var(--font-space-grotesk);
   --font-orbitron: var(--font-orbitron);
+  --font-satoshi: var(--font-satoshi);
 }
 
 @keyframes scroll {
@@ -157,16 +158,102 @@ html.lenis body {
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+/* ═══════════════════════════════════════════════════
+   DUAL-MODE THEME SYSTEM — Space ↔ Earth
+   ═══════════════════════════════════════════════════ */
+
+/* Space Mode (default) */
+.theme-space {
+  --theme-bg: rgba(0, 0, 0, 0.96);
+  --theme-text-heading: #ffffff;
+  --theme-text-body: #e5e5e5;
+  --theme-text-muted: #d4d4d4;
+  --theme-text-subtle: #a3a3a3;
+  --theme-card-bg: rgba(23, 23, 23, 0.6);
+  --theme-card-border: rgba(255, 255, 255, 0.1);
+  --theme-card-hover: rgba(38, 38, 38, 0.8);
+  --theme-accent: #3b82f6;
+  --theme-accent-secondary: #8b5cf6;
+  --theme-accent-bg: rgba(59, 130, 246, 0.15);
+  --theme-accent-border: rgba(59, 130, 246, 0.3);
+  --theme-input-bg: rgba(20, 20, 20, 0.8);
+  --theme-input-border: rgba(255, 255, 255, 0.1);
+  --theme-input-text: #ffffff;
+  --theme-nav-blur-from: rgba(0, 0, 0, 0.8);
+  --theme-timeline-border: #404040;
+  --theme-timeline-dot-border: #000000;
+  --theme-gradient-text-from: #c4b5fd;
+  --theme-gradient-text-to: #ec4899;
+  --theme-gradient-text-alt-from: #fde68a;
+  --theme-gradient-text-alt-to: #eab308;
+  --theme-tag-bg: rgba(45, 45, 45, 1);
+  --theme-tag-text: #e5e5e5;
+  --theme-tag-border: #525252;
+  --theme-scrollbar-thumb: rgba(255, 255, 255, 0.15);
+  --theme-scrollbar-hover: rgba(255, 255, 255, 0.25);
+}
+
+/* Earth Mode */
+.theme-earth {
+  --theme-bg: transparent;
+  --theme-text-heading: #1c1917;
+  --theme-text-body: #292524;
+  --theme-text-muted: #57534e;
+  --theme-text-subtle: #78716c;
+  --theme-card-bg: rgba(255, 255, 255, 0.65);
+  --theme-card-border: rgba(0, 0, 0, 0.12);
+  --theme-card-hover: rgba(255, 255, 255, 0.85);
+  --theme-accent: #d97706;
+  --theme-accent-secondary: #059669;
+  --theme-accent-bg: rgba(217, 119, 6, 0.12);
+  --theme-accent-border: rgba(217, 119, 6, 0.3);
+  --theme-input-bg: rgba(255, 255, 255, 0.85);
+  --theme-input-border: rgba(0, 0, 0, 0.15);
+  --theme-input-text: #1c1917;
+  --theme-nav-blur-from: rgba(255, 247, 237, 0.85);
+  --theme-timeline-border: rgba(0, 0, 0, 0.15);
+  --theme-timeline-dot-border: #fffbeb;
+  --theme-gradient-text-from: #b45309;
+  --theme-gradient-text-to: #047857;
+  --theme-gradient-text-alt-from: #047857;
+  --theme-gradient-text-alt-to: #0f766e;
+  --theme-tag-bg: rgba(255, 255, 255, 0.8);
+  --theme-tag-text: #292524;
+  --theme-tag-border: rgba(0, 0, 0, 0.15);
+  --theme-scrollbar-thumb: rgba(0, 0, 0, 0.15);
+  --theme-scrollbar-hover: rgba(0, 0, 0, 0.25);
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply text-foreground;
   }
 
-  /* Custom Scrollbar for a cooler look */
+  /* Theme background base */
+  .theme-space {
+    background-color: rgba(0, 0, 0, 0.96);
+  }
+
+  .theme-earth {
+    background: transparent;
+  }
+
+  /* Typography: earth mode uses Satoshi for headings */
+  .theme-earth h1, .theme-earth h2, .theme-earth h3, .theme-earth .use-satoshi {
+    font-family: var(--font-satoshi), sans-serif;
+  }
+
+  /* Smooth theme transitions on key properties */
+  .theme-space,
+  .theme-earth {
+    transition: background-color 2s ease-in-out;
+  }
+
+  /* Custom Scrollbar */
   ::-webkit-scrollbar {
     width: 10px;
   }
@@ -176,24 +263,39 @@ html.lenis body {
   }
 
   ::-webkit-scrollbar-thumb {
-    background: oklch(0.985 0 0 / 0.1);
+    background: var(--theme-scrollbar-thumb);
     border-radius: 10px;
     border: 2px solid transparent;
     background-clip: content-box;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: oklch(0.985 0 0 / 0.2);
+    background: var(--theme-scrollbar-hover);
     background-clip: content-box;
   }
 }
 
 @layer utilities {
-  .liquid-glass {
+  /* Space mode liquid glass */
+  .theme-space .liquid-glass {
     @apply backdrop-blur-[20px] saturate-[160%] border border-white/20;
     background: rgba(255, 255, 255, 0.05);
     box-shadow: 
       0 10px 30px -10px rgba(0, 0, 0, 0.5),
       inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  }
+
+  /* Earth mode liquid glass — warm frosted */
+  .theme-earth .liquid-glass {
+    @apply backdrop-blur-[20px] saturate-[140%] border;
+    background: rgba(255, 255, 255, 0.45);
+    border-color: rgba(0, 0, 0, 0.08);
+    box-shadow: 
+      0 10px 30px -10px rgba(0, 0, 0, 0.1),
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.5);
+  }
+
+  .liquid-glass {
+    transition: background 1.5s ease, border-color 1.5s ease, box-shadow 1.5s ease;
   }
 }

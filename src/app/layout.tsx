@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
-import { Outfit, Space_Grotesk, Orbitron } from "next/font/google";
+import { Outfit, Space_Grotesk, Orbitron, Permanent_Marker } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import "./clippy-overrides.css";
 import Navbar from "@/components/Navbar";
 import BackToTop from "@/components/BackToTop";
 import ClippyAssistant from "@/components/ClippyAssistant";
-import Starfield from "@/components/ui/Starfield";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import SplashScreen from "@/components/ui/SplashScreen";
 import DotNav from "@/components/ui/dot-nav";
+import { ThemeProvider } from "@/contexts/ThemeProvider";
+import Atmosphere from "@/components/ui/Atmosphere";
+import ModeToggle from "@/components/ui/ModeToggle";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -23,6 +26,39 @@ const spaceGrotesk = Space_Grotesk({
 const orbitron = Orbitron({
   variable: "--font-orbitron",
   subsets: ["latin"],
+});
+
+const permanentMarker = Permanent_Marker({
+  variable: "--font-handwriting",
+  weight: "400",
+  subsets: ["latin"],
+});
+
+const satoshi = localFont({
+  src: [
+    {
+      path: "../../public/fonts/Satoshi-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Satoshi-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Satoshi-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/Satoshi-Variable.woff2",
+      weight: "300 900",
+      style: "normal",
+    },
+  ],
+  variable: "--font-satoshi",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -48,18 +84,21 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${outfit.variable} ${spaceGrotesk.variable} ${orbitron.variable} antialiased font-sans bg-black/[0.96]`}
+        className={`${outfit.variable} ${spaceGrotesk.variable} ${orbitron.variable} ${satoshi.variable} ${permanentMarker.variable} antialiased font-sans`}
         suppressHydrationWarning
       >
-        <SplashScreen />
-        <SmoothScroll>
-          <Starfield />
-          <DotNav />
-          <Navbar />
-          {children}
-          <BackToTop />
-          <ClippyAssistant />
-        </SmoothScroll>
+        <ThemeProvider>
+          <SplashScreen />
+          <SmoothScroll>
+            <Atmosphere />
+            <DotNav />
+            <Navbar />
+            {children}
+            <ModeToggle />
+            <BackToTop />
+            <ClippyAssistant />
+          </SmoothScroll>
+        </ThemeProvider>
       </body>
     </html>
   );
