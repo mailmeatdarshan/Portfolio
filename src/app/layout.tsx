@@ -13,6 +13,7 @@ import { ThemeProvider } from "@/contexts/ThemeProvider";
 import Atmosphere from "@/components/ui/Atmosphere";
 import ModeToggle from "@/components/ui/ModeToggle";
 import ZenMode from "@/components/ui/ZenMode";
+import ZenTransition from "@/components/ui/ZenTransition";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -93,6 +94,7 @@ export default function RootLayout({
           <SmoothScroll>
             <Atmosphere />
             <ZenMode />
+            <ZenTransition />
             <DotNav />
             <Navbar />
             {children}
