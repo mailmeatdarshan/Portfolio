@@ -8,6 +8,7 @@ export interface Project {
     featured: boolean;
     liveUrl: string;
     githubUrl: string;
+    status?: 'In Progress' | 'Completed' | 'Development';
 }
 
 export interface Skill {
@@ -124,7 +125,8 @@ export const projects: Project[] = [
         image: "/images/projects/shriharienterprises.png",
         featured: false,
         liveUrl: "#",
-        githubUrl: "https://github.com/mailmeatdarshan/ShriHariEnterprises"
+        githubUrl: "https://github.com/mailmeatdarshan/ShriHariEnterprises",
+        status: "Development"
     },
     {
         id: 14,

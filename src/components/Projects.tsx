@@ -106,9 +106,12 @@ export default function Projects() {
                                         <motion.div 
                                             initial={{ y: 20, opacity: 0 }}
                                             animate={{ y: 0, opacity: 1 }}
-                                            className="px-4 py-2 bg-white text-black rounded-full font-bold text-sm shadow-xl"
+                                            className={cn(
+                                                "px-4 py-2 rounded-full font-bold text-sm shadow-xl",
+                                                project.status === "Development" ? "bg-amber-500 text-white" : "bg-white text-black"
+                                            )}
                                         >
-                                            Explore Project
+                                            {project.status === "Development" ? "In Progress" : "Explore Project"}
                                         </motion.div>
                                     </div>
                                 </div>
@@ -222,8 +225,13 @@ export default function Projects() {
                                                 borderColor: "var(--theme-accent-border)",
                                             }}
                                         >
-                                            Featured Project
+                                            {selectedProject.status === "Development" ? "Current Project" : "Featured Project"}
                                         </span>
+                                        {selectedProject.status === "Development" && (
+                                            <span className="px-3 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase bg-amber-500/10 text-amber-500 border border-amber-500/20">
+                                                Under Development
+                                            </span>
+                                        )}
                                     </div>
                                     <h2
                                         className="text-2xl md:text-5xl font-bold mb-4 md:mb-6 leading-tight transition-colors duration-1000"
@@ -294,7 +302,7 @@ export default function Projects() {
                                     </div>
 
                                     <div className="flex flex-col sm:flex-row gap-3 mt-8 md:mt-10 pb-2">
-                                        {selectedProject.liveUrl && selectedProject.liveUrl !== "#" && (
+                                        {selectedProject.liveUrl && selectedProject.liveUrl !== "#" && selectedProject.status !== "Development" && (
                                             <Link 
                                                 href={selectedProject.liveUrl} 
                                                 target="_blank"
