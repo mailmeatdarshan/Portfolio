@@ -14,6 +14,7 @@ interface ThemeContextProps {
   setZenMode: () => void;
   setTerminalMode: () => void;
   setEarthMode: () => void;
+  setSpaceMode: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
@@ -75,6 +76,16 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [theme]);
 
+  const setSpaceMode = useCallback(() => {
+    if (theme !== "space" && !theme.startsWith("transitioning")) {
+      setTheme("transitioning-to-space");
+      setTimeout(() => {
+        setTheme("space");
+        window.dispatchEvent(new CustomEvent("clippy-liftoff"));
+      }, TRANSITION_DURATION);
+    }
+  }, [theme]);
+
   // Sync theme classes on body
   useEffect(() => {
     const body = document.body;
@@ -99,7 +110,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const isTransitioning = theme.startsWith("transitioning");
 
   return (
-    <ThemeContext.Provider value={{ theme, isEarth, isSpace, isZen, isTerminal, isTransitioning, triggerTransition, setZenMode, setTerminalMode, setEarthMode }}>
+    <ThemeContext.Provider value={{ theme, isEarth, isSpace, isZen, isTerminal, isTransitioning, triggerTransition, setZenMode, setTerminalMode, setEarthMode, setSpaceMode }}>
       {children}
     </ThemeContext.Provider>
   );

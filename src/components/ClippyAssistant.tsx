@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useCallback } from 'react';
+import { useTheme } from '@/contexts/ThemeProvider';
 
 const SECTION_MESSAGES: Record<string, string> = {
     hero: "Hey! I'm Clippy 📎 Welcome to Darshan's portfolio!",
@@ -106,6 +107,11 @@ const WELCOME_DELAY_MS = 1500;
 const DRAG_THRESHOLD_PX = 20;  
 
 export default function ClippyAssistant() {
+    const { theme } = useTheme();
+    const isZenMode = theme === "zen" || theme === "transitioning-to-zen";
+    const isTerminalMode = theme === "terminal" || theme === "transitioning-to-terminal";
+    const shouldHide = isZenMode || isTerminalMode;
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const agentRef = useRef<any>(null);
     const spokenSections = useRef<Set<string>>(new Set());
@@ -174,6 +180,7 @@ export default function ClippyAssistant() {
     useEffect(() => { handleClippyClickRef.current = handleClippyClick; }, [handleClippyClick]);
 
     useEffect(() => {
+        if (shouldHide) return;
         let mounted = true;
 
         async function loadClippy() {
@@ -380,11 +387,20 @@ export default function ClippyAssistant() {
             if (agentRef.current) {
                 (agentRef.current as any)._customCleanup?.();
                 (agentRef.current._el as any)?._dragCleanup?.();
+                // Force stop all animations and hide the agent along with its balloon
+                agentRef.current.stop();
+                if (agentRef.current._balloon) {
+                    try {
+                        agentRef.current._balloon.close();
+                    } catch (e) {
+                        console.warn('[ClippyAssistant] Failed to close balloon:', e);
+                    }
+                }
                 agentRef.current.hide(true, () => {});
                 agentRef.current = null;
             }
         };
-    }, [safeSpeak, startIdleLoop, stopIdleLoop, handleActivity]);
+    }, [safeSpeak, startIdleLoop, stopIdleLoop, handleActivity, shouldHide]);
 
     return null;
 }

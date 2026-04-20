@@ -299,3 +299,11 @@ html.lenis body {
     transition: background 1.5s ease, border-color 1.5s ease, box-shadow 1.5s ease;
   }
 }
+
+/* Hide Clippy Balloon in Zen and Terminal Modes */
+.theme-zen .clippy-balloon,
+.theme-transitioning-to-zen .clippy-balloon,
+.theme-terminal .clippy-balloon,
+.theme-transitioning-to-terminal .clippy-balloon {
+  display: none !important;
+}

@@ -21,8 +21,11 @@ const fsRoot: DirectoryData = {
     return acc;
   }, {} as DirectoryData),
   "certs": {
-    "web_dev.txt": "Responsive Web Design - freeCodeCamp\nJavaScript Algorithms and Data Structures - freeCodeCamp",
-    "python.txt": "Python for Data Science - IBM\nScientific Computing with Python - freeCodeCamp"
+    "aws_cloud.txt": "AWS Cloud Practitioner Essentials - AWS Training & Certification\nDate: April 18, 2026\nSkills: Cloud Concepts, AWS Core Services, Security & Compliance, Billing & Pricing.\nLearning: Comprehensive overview of AWS Cloud platform, global infrastructure, and core services like EC2, S3, and RDS.",
+    "iitkgp_cloud.txt": "Cloud Computing - NPTEL (IIT Kharagpur)\nDate: Jul-Oct 2025 | Score: 63% (Elite)\nSkills: Virtualization, Cloud Architecture, NIST Model, Service Models (IaaS/PaaS/SaaS).\nLearning: Deep dive into cloud infrastructure, resource management, and distributed systems architecture.",
+    "devops_sre.txt": "Introduction to DevOps and SRE (LFS162) - The Linux Foundation\nDate: April 15, 2026\nSkills: DevOps Philosophy, SRE Principles, CI/CD, Automation.\nLearning: Explored the intersection of development and operations, focusing on reliability and modern deployment pipelines.",
+    "ibm_sql.txt": "SQL and Relational Databases 101 - IBM / Cognitive Class\nDate: May 26, 2025\nSkills: SQL, Relational Database Design, CRUD Operations, Data Modeling.\nLearning: Fundamental SQL statements for data manipulation and understanding relational database schemas.",
+    "cpp_programming.txt": "CS107: C++ Programming - Saylor Academy\nDate: April 12, 2026 | Grade: 72.50%\nSkills: C++, OOP (Classes, Inheritance, Polymorphism), Memory Management, Data Structures.\nLearning: Mastered C++ syntax and core programming concepts, focusing on efficient resource management and object-oriented design."
   },
   "experience": experience.reduce((acc, exp) => {
     acc[exp.company.replace(/\s+/g, "_").toLowerCase() + ".txt"] = `${exp.title} @ ${exp.company}\n${exp.location}\n${exp.duration}\n\n${exp.description.join("\n")}`;
@@ -104,7 +107,7 @@ interface CommandHistoryEntry {
 }
 
 export default function TerminalMode() {
-  const { theme, setEarthMode } = useTheme();
+  const { theme, setSpaceMode } = useTheme();
   const isTerminal = theme === "terminal" || theme === "transitioning-to-terminal";
   
   const [bootPhase, setBootPhase] = useState<"booting" | "awaiting-start" | "ready">("booting");
@@ -163,7 +166,42 @@ export default function TerminalMode() {
   }, [isTerminal]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-      if (e.key === "ArrowUp") {
+      if (e.key === "Tab") {
+          e.preventDefault();
+          const parts = input.split(/\s+/);
+          const lastPart = parts[parts.length - 1];
+          const isCommand = parts.length === 1;
+
+          let suggestions: string[] = [];
+
+          if (isCommand) {
+              const commands = ["ls", "cd", "cat", "whoami", "run", "help", "clear", "exit"];
+              suggestions = commands.filter(c => c.startsWith(lastPart.toLowerCase()));
+          } else {
+              const node = getFsNode(currentPath);
+              if (node && typeof node === "object") {
+                  suggestions = Object.keys(node).filter(name => name.toLowerCase().startsWith(lastPart.toLowerCase()));
+              }
+          }
+
+          if (suggestions.length === 1) {
+              parts[parts.length - 1] = suggestions[0];
+              setInput(parts.join(" ") + (isCommand ? " " : ""));
+          } else if (suggestions.length > 1) {
+              // Optional: Show multiple suggestions in history if user presses Tab twice? 
+              // For now, just complete to the longest common prefix
+              let common = suggestions[0];
+              for (const s of suggestions) {
+                  let i = 0;
+                  while (i < common.length && i < s.length && common[i].toLowerCase() === s[i].toLowerCase()) i++;
+                  common = common.slice(0, i);
+              }
+              if (common.length > lastPart.length) {
+                parts[parts.length - 1] = common;
+                setInput(parts.join(" "));
+              }
+          }
+      } else if (e.key === "ArrowUp") {
           e.preventDefault();
           if (commandHistory.length > 0) {
               const newIndex = Math.min(historyIndex + 1, commandHistory.length - 1);
@@ -224,9 +262,35 @@ export default function TerminalMode() {
       const showHidden = args.includes("-a") || args.includes("-al") || args.includes("-la");
 
       if (node && typeof node === "object") {
+        const keys = Object.keys(node);
+        
+        // Custom sort orders
+        const projectOrder = ["mybhavans", "hisabkitab", "pracbuddy", "chitti", "comfy", "shriharienterprises"];
+        const certOrder = ["aws_cloud", "iitkgp_cloud", "devops_sre", "ibm_sql", "cpp_programming"];
+        const expOrder = ["teachus", "datamanagement"];
+
+        keys.sort((a, b) => {
+            const cleanA = a.replace(".txt", "");
+            const cleanB = b.replace(".txt", "");
+            
+            let order = null;
+            if (resolved.endsWith("projects")) order = projectOrder;
+            else if (resolved.endsWith("certs")) order = certOrder;
+            else if (resolved.endsWith("experience")) order = expOrder;
+
+            if (order) {
+                const indexA = order.findIndex(o => cleanA.startsWith(o));
+                const indexB = order.findIndex(o => cleanB.startsWith(o));
+                if (indexA !== -1 && indexB !== -1) return indexA - indexB;
+                if (indexA !== -1) return -1;
+                if (indexB !== -1) return 1;
+            }
+            return a.localeCompare(b);
+        });
+
         output = (
           <div className="flex flex-wrap gap-x-4 my-2">
-            {Object.keys(node).sort().map(name => {
+            {keys.map(name => {
                 if (name.startsWith(".") && !showHidden) return null;
                 const isDir = typeof node[name] === "object";
                 return (
@@ -294,7 +358,27 @@ export default function TerminalMode() {
                       })}
                   </div>
               );
-          } else if (resolved.includes("certs") || (fileName.includes("python") || fileName.includes("web"))) {
+          } else if (resolved.includes("certs")) {
+              const lines = (node as string).split("\n");
+              output = (
+                <div className="my-3 space-y-3 text-gray-300 border-l-[2px] border-[#89f0a2]/40 pl-4 py-1">
+                    <h3 className="text-[#89f0a2] font-bold text-lg">{lines[0].split(" - ")[0]}</h3>
+                    <p className="text-[#f0db4f] text-sm tracking-wide opacity-90">{lines[0].split(" - ")[1] || ""}</p>
+                    <div className="space-y-2 mt-3">
+                        {lines.slice(1).map((line, idx) => {
+                            const [key, ...val] = line.split(": ");
+                            return (
+                                <p key={idx} className="leading-relaxed text-[0.95em]">
+                                    <span className="text-[#5ec2ff] font-bold mr-2">•</span>
+                                    <span className="font-medium mr-1">{key}:</span>
+                                    {val.join(": ")}
+                                </p>
+                            );
+                        })}
+                    </div>
+                </div>
+              );
+          } else if (fileName.includes("python") || fileName.includes("web")) {
               output = (
                 <div className="my-3 space-y-2 text-gray-300 border-l-[2px] border-[#89f0a2]/40 pl-4 py-1">
                     <h3 className="text-[#89f0a2] font-bold text-[1.05rem]">{fileName === "python.txt" ? "IBM Python Certification" : "freeCodeCamp Web Certification"}</h3>
@@ -418,8 +502,10 @@ export default function TerminalMode() {
     if (bootPhase === "awaiting-start") {
       if (cmdStr.toLowerCase() === "start") {
         setShowLaser(true);
-        setTimeout(() => setShowLaser(false), 1500);
-        setTimeout(() => setBootPhase("ready"), 1000);
+        setTimeout(() => {
+            setShowLaser(false);
+            setBootPhase("ready");
+        }, 2200);
       } else {
         setHistory(prev => [...prev, {
           id: cid,
@@ -437,7 +523,7 @@ export default function TerminalMode() {
         setHistory([]);
         return;
     } else if (cmd === "exit") {
-        setEarthMode();
+        setSpaceMode();
         return;
     } else if (cmd === "run") {
         setHistory(prev => [...prev, { id: cid, command: cmdStr, path: currentPath, output: null }]);
@@ -472,11 +558,13 @@ export default function TerminalMode() {
           {/* Laser Scan Animation */}
           {showLaser && (
               <motion.div 
-                initial={{ top: "-10%" }}
-                animate={{ top: "110%" }}
-                transition={{ duration: 1.5, ease: "linear", repeat: 1 }}
-                className="absolute left-0 right-0 h-[1.5px] bg-[#89f0a2] z-[205] shadow-[0_0_8px_rgba(137,240,162,0.8),0_0_20px_rgba(137,240,162,0.4),0_0_35px_rgba(137,240,162,0.2)] opacity-80"
-              />
+                initial={{ top: "-5%" }}
+                animate={{ top: "105%" }}
+                transition={{ duration: 2.2, ease: "easeInOut" }}
+                className="absolute left-0 right-0 h-[2px] bg-[#89f0a2] z-[205] shadow-[0_0_15px_#89f0a2,0_0_30px_rgba(137,240,162,0.6),0_0_60px_rgba(137,240,162,0.4)] opacity-100"
+              >
+                <div className="absolute inset-0 w-full h-full bg-gradient-to-b from-transparent via-[#89f0a2]/20 to-transparent blur-sm transform scale-y-[15]" />
+              </motion.div>
           )}
 
           {/* Header ASCII Art */}
