@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, RotateCcw, Orbit, Sparkles } from "lucide-react";
+import { Menu, X, RotateCcw, Orbit, Sparkles, Terminal } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@/contexts/ThemeProvider";
 
@@ -12,7 +12,7 @@ export default function Navbar() {
     const [lastScrollY, setLastScrollY] = useState(0);
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     const [isPhysicsEnabled, setIsPhysicsEnabled] = useState(false);
-    const { isEarth, setZenMode, theme } = useTheme();
+    const { isEarth, setZenMode, setTerminalMode, theme } = useTheme();
 
     useEffect(() => {
         const handleGravityState = (e: any) => {
@@ -160,11 +160,35 @@ export default function Navbar() {
                             <Sparkles className="h-4 w-4 relative z-10" />
                             <span className="sr-only">Zen Mode</span>
                         </button>
+                        
+                        <button
+                            onClick={setTerminalMode}
+                            className={`ml-1 p-2 rounded-full transition-all group relative overflow-hidden ${
+                                isEarth
+                                    ? "text-stone-500 hover:text-green-600 bg-stone-800/5 hover:bg-green-50"
+                                    : "text-gray-300 hover:text-green-400 bg-white/5 hover:bg-white/10"
+                            }`}
+                            title="Terminal Mode"
+                        >
+                            <Terminal className="h-4 w-4 relative z-10" />
+                            <span className="sr-only">Terminal Mode</span>
+                        </button>
                     </div>
                 </div>
 
                 {/* Mobile Menu Button */}
                 <div className="md:hidden flex items-center gap-2 relative z-20">
+                    <button
+                        onClick={setTerminalMode}
+                        className={`p-2 rounded-xl transition-all flex items-center justify-center ${
+                            isEarth
+                                ? "text-stone-500 hover:text-green-600 hover:bg-stone-800/10"
+                                : "text-gray-300 hover:text-green-400 hover:bg-white/10"
+                        }`}
+                        aria-label="Terminal Mode"
+                    >
+                        <Terminal className="h-5 w-5" />
+                    </button>
                     <button
                         onClick={setZenMode}
                         className={`p-2 rounded-xl transition-all flex items-center justify-center ${

@@ -151,7 +151,7 @@ export const projects: Project[] = [
         title: "Chitti-The Robot",
         description: "Chitti-The Robot brings OpenAI, Anthropic Claude, Google Gemini, DeepSeek, and Grok AI into one sleek interface. It solves the problem of navigating multiple AI platforms by unifying them into a single, cohesive user experience.",
         tech: ["React", "Vite", "JavaScript", "APIs", "CSS3"],
-        image: "/images/projects/welcome.png",
+        image: "/images/projects/Chitti.png",
         featured: true,
         liveUrl: "https://chitti-the-robot.vercel.app/",
         githubUrl: "https://github.com/mailmeatdarshan/Chitti-the-Robot"

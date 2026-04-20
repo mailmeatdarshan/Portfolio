@@ -1,16 +1,18 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 
-export type Theme = "space" | "earth" | "zen" | "transitioning-to-earth" | "transitioning-to-space" | "transitioning-to-zen";
+export type Theme = "space" | "earth" | "zen" | "terminal" | "transitioning-to-earth" | "transitioning-to-space" | "transitioning-to-zen" | "transitioning-to-terminal";
 
 interface ThemeContextProps {
   theme: Theme;
   isEarth: boolean;
   isSpace: boolean;
   isZen: boolean;
+  isTerminal: boolean;
   isTransitioning: boolean;
   triggerTransition: () => void;
   setZenMode: () => void;
+  setTerminalMode: () => void;
   setEarthMode: () => void;
 }
 
@@ -53,6 +55,16 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [theme]);
 
+  const setTerminalMode = useCallback(() => {
+    if (theme !== "terminal" && !theme.startsWith("transitioning")) {
+      // Shorter transition for terminal
+      setTheme("transitioning-to-terminal");
+      setTimeout(() => {
+        setTheme("terminal");
+      }, 500); 
+    }
+  }, [theme]);
+
   const setEarthMode = useCallback(() => {
     if (theme !== "earth" && !theme.startsWith("transitioning")) {
       setTheme("transitioning-to-earth");
@@ -66,11 +78,11 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   // Sync theme classes on body
   useEffect(() => {
     const body = document.body;
-    body.classList.remove("theme-space", "theme-earth", "theme-zen", "theme-transitioning-to-earth", "theme-transitioning-to-space", "theme-transitioning-to-zen");
+    body.classList.remove("theme-space", "theme-earth", "theme-zen", "theme-terminal", "theme-transitioning-to-earth", "theme-transitioning-to-space", "theme-transitioning-to-zen", "theme-transitioning-to-terminal");
     body.classList.add(`theme-${theme}`);
     
-    // Lock scroll during transition OR when in zen mode
-    if (theme.startsWith("transitioning") || theme === "zen") {
+    // Lock scroll during transition OR when in zen or terminal mode
+    if (theme.startsWith("transitioning") || theme === "zen" || theme === "terminal") {
       document.documentElement.style.overflow = "hidden";
     } else {
       document.documentElement.style.overflow = "";
@@ -83,10 +95,11 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const isEarth = theme === "earth";
   const isSpace = theme === "space";
   const isZen = theme === "zen";
+  const isTerminal = theme === "terminal";
   const isTransitioning = theme.startsWith("transitioning");
 
   return (
-    <ThemeContext.Provider value={{ theme, isEarth, isSpace, isZen, isTransitioning, triggerTransition, setZenMode, setEarthMode }}>
+    <ThemeContext.Provider value={{ theme, isEarth, isSpace, isZen, isTerminal, isTransitioning, triggerTransition, setZenMode, setTerminalMode, setEarthMode }}>
       {children}
     </ThemeContext.Provider>
   );

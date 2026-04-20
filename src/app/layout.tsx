@@ -14,6 +14,7 @@ import Atmosphere from "@/components/ui/Atmosphere";
 import ModeToggle from "@/components/ui/ModeToggle";
 import ZenMode from "@/components/ui/ZenMode";
 import ZenTransition from "@/components/ui/ZenTransition";
+import TerminalMode from "@/components/ui/TerminalMode";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -95,6 +96,7 @@ export default function RootLayout({
             <Atmosphere />
             <ZenMode />
             <ZenTransition />
+            <TerminalMode />
             <DotNav />
             <Navbar />
             {children}
