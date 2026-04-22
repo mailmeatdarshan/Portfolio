@@ -107,7 +107,7 @@ let liftoffMsgIndex = 0;
 const WELCOME_DELAY_MS = 1500;
 const DRAG_THRESHOLD_PX = 20;  
 
-export default function ClippyAssistant() {
+const ClippyAssistant = () => {
     const { theme } = useTheme();
     const pathname = usePathname();
     const isZenMode = theme === "zen" || theme === "transitioning-to-zen";
@@ -406,3 +406,5 @@ export default function ClippyAssistant() {
 
     return null;
 }
+
+export default ClippyAssistant;

@@ -5,7 +5,7 @@ import "./globals.css";
 import "./clippy-overrides.css";
 import Navbar from "@/components/Navbar";
 import BackToTop from "@/components/BackToTop";
-import ClippyAssistant from "@/components/ClippyAssistant";
+import ClientClippy from "@/components/ClientClippy";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import SplashScreen from "@/components/ui/SplashScreen";
 import DotNav from "@/components/ui/dot-nav";
@@ -102,7 +102,7 @@ export default function RootLayout({
             {children}
             <ModeToggle />
             <BackToTop />
-            <ClippyAssistant />
+            <ClientClippy />
           </SmoothScroll>
         </ThemeProvider>
       </body>
