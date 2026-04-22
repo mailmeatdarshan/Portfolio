@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@/contexts/ThemeProvider";
+import { usePathname } from "next/navigation";
 import Starfield from "./Starfield";
 import NatureField from "./NatureField";
 
@@ -17,27 +18,30 @@ interface Bird {
 
 // ─── component ────────────────────────────────────────────────────────────────
 export default function Atmosphere() {
+  const pathname = usePathname();
   const { theme, isEarth } = useTheme();
   const showEarth = theme === "earth" || theme === "transitioning-to-earth";
 
   const canvasRef    = useRef<HTMLCanvasElement>(null);
   const offscreenRef = useRef<HTMLCanvasElement | null>(null); // static bg cache
   const paperRef     = useRef<HTMLCanvasElement | null>(null); // paper texture cache
+
   const rafRef       = useRef<number>(0);
   const timeRef      = useRef(0);
   const birdsRef     = useRef<Bird[]>([]);
   const scrollYRef   = useRef(0);
 
   useEffect(() => {
+    if (pathname === "/about") return;
     const handleScroll = () => {
       scrollYRef.current = window.scrollY;
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
-    if (!showEarth) {
+    if (!showEarth || pathname === "/about") {
       cancelAnimationFrame(rafRef.current);
       const c = canvasRef.current;
       if (c) c.getContext("2d")?.clearRect(0, 0, c.width, c.height);
@@ -338,7 +342,9 @@ export default function Atmosphere() {
     });
 
     return () => cancelAnimationFrame(rafRef.current);
-  }, [showEarth]);
+  }, [showEarth, pathname]);
+
+  if (pathname === "/about") return null;
 
   return (
     <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">

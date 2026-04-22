@@ -4,12 +4,15 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUp } from "lucide-react";
 import { useLenis } from "lenis/react";
+import { usePathname } from "next/navigation";
 
 export default function BackToTop() {
+  const pathname = usePathname();
   const [isVisible, setIsVisible] = useState(false);
   const lenis = useLenis();
 
   useEffect(() => {
+    if (pathname === "/about") return;
     const toggleVisibility = () => {
       if (window.scrollY > 400) {
         setIsVisible(true);
@@ -20,7 +23,9 @@ export default function BackToTop() {
 
     window.addEventListener("scroll", toggleVisibility);
     return () => window.removeEventListener("scroll", toggleVisibility);
-  }, []);
+  }, [pathname]);
+
+  if (pathname === "/about") return null;
 
   const scrollToTop = () => {
     if (lenis) {

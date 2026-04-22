@@ -3,10 +3,14 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@/contexts/ThemeProvider";
+import { usePathname } from "next/navigation";
 
 export default function ZenTransition() {
+  const pathname = usePathname();
   const { theme } = useTheme();
   const isTransitioning = theme === "transitioning-to-zen";
+
+  if (pathname === "/about") return null;
 
   const label = "ENTERING ZEN MODE";
 

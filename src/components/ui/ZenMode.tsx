@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useTheme } from "@/contexts/ThemeProvider";
 import { Github, Play, Linkedin, FileText, Globe, Mail, Rocket, BookOpen } from "lucide-react";
 import { personalInfo } from "@/data/portfolio";
+import { usePathname } from "next/navigation";
 
 interface ZenPlanet {
   id: string;
@@ -31,6 +32,7 @@ const PLANETS: ZenPlanet[] = [
 ];
 
 export default function ZenMode() {
+  const pathname = usePathname();
   const { theme, triggerTransition, setEarthMode } = useTheme();
   const isZen = theme === "zen" || theme === "transitioning-to-zen";
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -149,7 +151,7 @@ export default function ZenMode() {
     };
   }, [isZen, isMobile]);
 
-  if (!mounted) return null;
+  if (!mounted || pathname === "/about") return null;
 
   return (
     <AnimatePresence>

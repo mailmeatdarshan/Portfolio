@@ -4,8 +4,10 @@ import Link from "next/link";
 import { Menu, X, RotateCcw, Orbit, Sparkles, Terminal } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@/contexts/ThemeProvider";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
+    const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isScrollingUp, setIsScrollingUp] = useState(false);
@@ -47,6 +49,8 @@ export default function Navbar() {
         window.addEventListener("scroll", handleScroll, { passive: true });
         return () => window.removeEventListener("scroll", handleScroll);
     }, [lastScrollY]);
+
+    if (pathname === "/about") return null;
 
     const navLinks = [
         { name: "Home", href: "/" },

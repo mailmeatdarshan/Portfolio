@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useLenis } from "lenis/react";
 import { useTheme } from "@/contexts/ThemeProvider";
+import { usePathname } from "next/navigation";
 
 const sections = [
   { id: "home", label: "Home", num: "01" },
@@ -16,12 +17,14 @@ const sections = [
 ];
 
 export default function DotNav() {
+  const pathname = usePathname();
   const [activeSection, setActiveSection] = useState("home");
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
   const lenis = useLenis();
   const { isEarth } = useTheme();
 
   useEffect(() => {
+    if (pathname === "/about") return;
     const observerOptions = {
       root: null,
       rootMargin: "-45% 0px -45% 0px",
@@ -44,7 +47,7 @@ export default function DotNav() {
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [pathname]);
 
   const scrollToSection = useCallback((id: string) => {
     if (lenis) {
@@ -59,6 +62,8 @@ export default function DotNav() {
       }
     }
   }, [lenis]);
+
+  if (pathname === "/about") return null;
 
   const accentColor = isEarth ? "#d97706" : "#3b82f6";
 

@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@/contexts/ThemeProvider";
 import { personalInfo, projects, technicalArsenal, experience, education, socialLinks } from "@/data/portfolio";
+import { usePathname } from "next/navigation";
 
 // --- File System Simulation ---
 
@@ -107,6 +108,7 @@ interface CommandHistoryEntry {
 }
 
 export default function TerminalMode() {
+  const pathname = usePathname();
   const { theme, setSpaceMode } = useTheme();
   const isTerminal = theme === "terminal" || theme === "transitioning-to-terminal";
   
@@ -544,6 +546,8 @@ export default function TerminalMode() {
   const PROMPT_USER = "visitor";
   const PROMPT_HOST = "darshan";
   const displayPath = currentPath;
+
+  if (pathname === "/about") return null;
 
   return (
     <AnimatePresence>

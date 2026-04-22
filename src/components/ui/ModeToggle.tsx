@@ -4,12 +4,16 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useTheme } from "@/contexts/ThemeProvider";
 import { Sparkles } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export default function ModeToggle() {
+  const pathname = usePathname();
   const { theme, isEarth, isZen, isTransitioning, triggerTransition } = useTheme();
 
   const showEarthState = theme === "earth" || theme === "transitioning-to-earth";
   const showZenState = theme === "zen" || theme === "transitioning-to-zen";
+
+  if (pathname === "/about") return null;
 
   return (
     <div className="fixed bottom-8 left-6 md:left-8 z-[101]">

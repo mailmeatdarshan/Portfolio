@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useCallback } from 'react';
 import { useTheme } from '@/contexts/ThemeProvider';
+import { usePathname } from 'next/navigation';
 
 const SECTION_MESSAGES: Record<string, string> = {
     hero: "Hey! I'm Clippy 📎 Welcome to Darshan's portfolio!",
@@ -108,9 +109,10 @@ const DRAG_THRESHOLD_PX = 20;
 
 export default function ClippyAssistant() {
     const { theme } = useTheme();
+    const pathname = usePathname();
     const isZenMode = theme === "zen" || theme === "transitioning-to-zen";
     const isTerminalMode = theme === "terminal" || theme === "transitioning-to-terminal";
-    const shouldHide = isZenMode || isTerminalMode;
+    const shouldHide = isZenMode || isTerminalMode || pathname === "/about";
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const agentRef = useRef<any>(null);
