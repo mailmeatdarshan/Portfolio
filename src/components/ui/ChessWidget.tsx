@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Chess } from "chess.js";
 import dynamic from "next/dynamic";
-const Chessboard = dynamic(() => import("react-chessboard").then((mod) => mod.Chessboard || mod.default), { ssr: false });
+const Chessboard = dynamic(() => import("react-chessboard").then((mod) => mod.Chessboard), { ssr: false });
 import { motion } from "framer-motion";
 import { Trophy, RefreshCw } from "lucide-react";
 
@@ -10,7 +10,8 @@ export const ChessWidget = () => {
     // Use FEN string for state to ensure React detects changes perfectly
     const [fen, setFen] = useState("start");
 
-    function onDrop(sourceSquare: string, targetSquare: string) {
+    function onDrop({ sourceSquare, targetSquare }: { sourceSquare: string; targetSquare: string | null }) {
+        if (!targetSquare) return false;
         const game = new Chess(fen === "start" ? undefined : fen);
         
         try {
@@ -67,11 +68,13 @@ export const ChessWidget = () => {
                 
                 <div className="rounded-xl overflow-hidden shadow-inner border-4 border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 aspect-square flex items-center justify-center">
                     <Chessboard 
-                        position={fen}
-                        onPieceDrop={onDrop}
-                        customDarkSquareStyle={{ backgroundColor: 'rgb(113 113 122 / 0.2)' }}
-                        customLightSquareStyle={{ backgroundColor: 'transparent' }}
-                        animationDuration={200}
+                        options={{
+                            position: fen,
+                            onPieceDrop: onDrop,
+                            darkSquareStyle: { backgroundColor: 'rgb(113 113 122 / 0.2)' },
+                            lightSquareStyle: { backgroundColor: 'transparent' },
+                            animationDurationInMs: 200,
+                        }}
                     />
                 </div>
                 
