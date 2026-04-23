@@ -20,7 +20,11 @@ export const VideoPlayer = ({ src, title, index }: { src: string, title: string,
                 videoRef.current.muted = false;
                 const playPromise = videoRef.current.play();
                 if (playPromise !== undefined) {
-                    playPromise.catch(() => {});
+                    playPromise.catch(e => {
+                        if (e.name !== "AbortError") {
+                            console.error("Sitcom video play failed:", e);
+                        }
+                    });
                 }
             } else {
                 videoRef.current.pause();
