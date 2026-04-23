@@ -1,52 +1,26 @@
 "use client";
 import React, { useState } from "react";
-import { Chess } from "chess.js";
 import dynamic from "next/dynamic";
-const Chessboard = dynamic(() => import("react-chessboard").then((mod) => mod.Chessboard), { ssr: false });
 import { motion } from "framer-motion";
 import { Trophy, RefreshCw } from "lucide-react";
 
+// Load the entire wrapper only on the client
+const ChessBoardWrapper = dynamic(() => import("./ChessBoardWrapper"), { 
+    ssr: false,
+    loading: () => <div className="animate-pulse bg-zinc-100 dark:bg-zinc-800 w-full h-full rounded-lg" />
+});
+
 export const ChessWidget = () => {
-    // Use FEN string for state to ensure React detects changes perfectly
-    const [fen, setFen] = useState("start");
+    const [status, setStatus] = useState("White's turn");
+    const [key, setKey] = useState(0);
 
-    function onDrop({ sourceSquare, targetSquare }: { sourceSquare: string; targetSquare: string | null }) {
-        if (!targetSquare) return false;
-        const game = new Chess(fen === "start" ? undefined : fen);
-        
-        try {
-            const move = game.move({
-                from: sourceSquare,
-                to: targetSquare,
-                promotion: "q", // always promote to queen for simplicity
-            });
-
-            // If illegal move, chess.js returns null
-            if (move === null) return false;
-
-            // Update state with new FEN string
-            setFen(game.fen());
-            return true;
-        } catch (e) {
-            return false;
-        }
-    }
-
-    function resetGame() {
-        setFen("start");
-    }
-
-    // Helper to get status from current FEN
-    const getStatus = () => {
-        const game = new Chess(fen === "start" ? undefined : fen);
-        if (game.isCheckmate()) return `Checkmate! ${game.turn() === 'w' ? 'Black' : 'White'} wins.`;
-        if (game.isDraw()) return "Draw!";
-        if (game.isCheck()) return "Check!";
-        return `${game.turn() === 'w' ? 'White' : 'Black'}'s turn`;
+    const resetGame = () => {
+        setKey(prev => prev + 1);
+        setStatus("White's turn");
     };
 
     return (
-        <div className="w-full max-w-sm mx-auto">
+        <div className="w-full max-w-md mx-auto">
             <motion.div 
                 className="bg-white dark:bg-zinc-900 rounded-[32px] p-6 shadow-layered border border-zinc-200 dark:border-zinc-800"
                 whileHover={{ y: -5 }}
@@ -56,7 +30,7 @@ export const ChessWidget = () => {
                         <span className="text-sm font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
                             <Trophy className="w-4 h-4 text-amber-500" /> Free Play
                         </span>
-                        <span className="text-xs text-zinc-500 font-medium">{getStatus()}</span>
+                        <span className="text-xs text-zinc-500 font-medium">{status}</span>
                     </div>
                     <button 
                         onClick={resetGame}
@@ -67,15 +41,7 @@ export const ChessWidget = () => {
                 </div>
                 
                 <div className="rounded-xl overflow-hidden shadow-inner border-4 border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 aspect-square flex items-center justify-center">
-                    <Chessboard 
-                        options={{
-                            position: fen,
-                            onPieceDrop: onDrop,
-                            darkSquareStyle: { backgroundColor: 'rgb(113 113 122 / 0.2)' },
-                            lightSquareStyle: { backgroundColor: 'transparent' },
-                            animationDurationInMs: 200,
-                        }}
-                    />
+                    <ChessBoardWrapper key={key} onStatusChange={setStatus} />
                 </div>
                 
                 <div className="mt-4 flex justify-center">
