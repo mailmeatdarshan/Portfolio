@@ -38,14 +38,17 @@ export default function ChessBoardWrapper({ onStatusChange }: ChessBoardWrapperP
     }
 
     return (
-        <Chessboard 
-            options={{
-                position: fen,
-                onPieceDrop: onDrop,
-                darkSquareStyle: { backgroundColor: '#b58863' },
-                lightSquareStyle: { backgroundColor: '#f0d9b5' },
-                animationDurationInMs: 200,
-            }}
-        />
+        <div className="w-full h-full">
+            <Chessboard 
+                options={{
+                    position: fen,
+                    onPieceDrop: onDrop,
+                    darkSquareStyle: { backgroundColor: '#b58863' },
+                    lightSquareStyle: { backgroundColor: '#f0d9b5' },
+                    animationDurationInMs: 200,
+                    boardStyle: { width: '100%', height: '100%' }
+                }}
+            />
+        </div>
     );
 }

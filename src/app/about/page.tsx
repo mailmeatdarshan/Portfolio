@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Sparkles, MapPin, Heart, Share2, Headphones, Github, Star, Coffee, Code, User, Info, ExternalLink } from "lucide-react";
+import { ArrowLeft, Sparkles, MapPin, Heart, Share2, Headphones, Github, Star, Coffee, Code, User, Info, ExternalLink, Tv, Clapperboard } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { AudioPronunciation } from "@/components/ui/AudioPronunciation";
@@ -26,7 +26,10 @@ export default function AboutPage() {
     const { isEarth } = useTheme();
     const [isCm, setIsCm] = React.useState(false);
     const [isPlaying, setIsPlaying] = React.useState(false);
+    const [isProfileHovered, setIsProfileHovered] = React.useState(false);
+    const [isMagnusPlaying, setIsMagnusPlaying] = React.useState(false);
     const videoRef = React.useRef<HTMLVideoElement>(null);
+    const profileVideoRef = React.useRef<HTMLVideoElement>(null);
 
     const togglePlay = () => {
         if (videoRef.current) {
@@ -39,13 +42,31 @@ export default function AboutPage() {
         }
     };
 
+    const handleProfileHover = (hovering: boolean) => {
+        if (typeof window !== "undefined" && window.innerWidth < 1024) return;
+        
+        setIsProfileHovered(hovering);
+        if (profileVideoRef.current) {
+            if (hovering) {
+                profileVideoRef.current.play().catch(e => console.error("Video play failed:", e));
+            } else {
+                profileVideoRef.current.pause();
+                profileVideoRef.current.currentTime = 0;
+            }
+        }
+    };
+
+    const playMagnusVideo = () => {
+        if (typeof window !== "undefined" && window.innerWidth < 1024) return;
+        setIsMagnusPlaying(true);
+    };
+
     return (
         <div className={`min-h-screen selection:bg-amber-200 selection:text-amber-900 font-sans transition-colors duration-1000 overflow-x-hidden relative z-[50] ${
             isEarth 
                 ? "bg-white text-zinc-900" 
                 : "bg-[#0f172a] text-zinc-100"
         }`}>
-            
             {/* ═══ NAVIGATION ═══ */}
             <nav className={`fixed top-0 left-0 right-0 z-[100] backdrop-blur-md transition-colors duration-1000 ${
                 isEarth ? "bg-white/70 border-b border-zinc-100" : "bg-black/70 border-b border-white/5"
@@ -95,19 +116,31 @@ export default function AboutPage() {
                     </div>
                     
                     <div className="relative flex justify-center lg:justify-end h-full">
-                        <motion.div 
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: 0.2 }}
-                            className="relative w-72 h-72 md:w-[650px] md:h-[650px] lg:-mb-16 lg:translate-x-20"
-                        >
-                            <Image 
-                                src="/images/profile/avatar.png" 
-                                alt="Darshan Dubey" 
-                                fill 
-                                className="object-cover rounded-b-[5rem] drop-shadow-2xl transition-all duration-700 pointer-events-none"
-                            />
-                        </motion.div>
+                        <div className="drop-shadow-2xl transition-all duration-700">
+                            <motion.div 
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ delay: 0.2 }}
+                                className="relative w-72 h-72 md:w-[650px] md:h-[650px] lg:-mb-16 lg:translate-x-20 overflow-hidden rounded-b-[5rem]"
+                                onMouseEnter={() => handleProfileHover(true)}
+                                onMouseLeave={() => handleProfileHover(false)}
+                            >
+                                <Image 
+                                    src="/images/profile/avatar.png" 
+                                    alt="Darshan Dubey" 
+                                    fill 
+                                    className={`object-cover transition-opacity duration-500 pointer-events-none ${isProfileHovered ? "lg:opacity-0" : "opacity-100"}`}
+                                />
+                                <video
+                                    ref={profileVideoRef}
+                                    src="/videos/meself.mp4"
+                                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 hidden lg:block ${isProfileHovered ? "opacity-100" : "opacity-0"}`}
+                                    muted
+                                    loop
+                                    playsInline
+                                />
+                            </motion.div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -135,22 +168,39 @@ export default function AboutPage() {
                         </div>
                     </div>
 
-                    {/* Identity Card (Gender) - Compact & Sophisticated */}
-                    <div className={`flex flex-col group overflow-hidden rounded-[2.5rem] border shadow-layered transition-all duration-1000 ${
+                    {/* Identity Card (Gender) - Compact & Sophisticated with Background */}
+                    <div className={`flex flex-col group overflow-hidden rounded-[2.5rem] border shadow-layered transition-all duration-1000 relative ${
                         isEarth ? "bg-white border-zinc-200" : "bg-[#1e293b] border-white/10"
                     }`}>
-                        <div className="p-8 h-full flex flex-col justify-between">
+                        <Image 
+                            src="/images/widgets/Hetero.png" 
+                            alt="Identity" 
+                            fill 
+                            className="object-cover transition-transform duration-1000 group-hover:scale-110 opacity-40 dark:opacity-30" 
+                        />
+                        {/* Gradient overlay for text readability */}
+                        <div className={`absolute inset-0 bg-gradient-to-t transition-colors duration-1000 ${
+                            isEarth ? "from-white/80 via-white/20 to-transparent" : "from-[#1e293b]/90 via-[#1e293b]/40 to-transparent"
+                        }`} />
+                        
+                        <div className="p-8 h-full flex flex-col justify-between relative z-10">
                             <div className="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-900/20 flex items-center justify-center border border-amber-100 dark:border-amber-800/50 transition-transform duration-500 group-hover:rotate-12">
                                 <User className="w-6 h-6 text-amber-600 dark:text-amber-400" />
                             </div>
                             <div className="space-y-4">
                                 <div>
-                                    <p className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40 mb-1">Identity</p>
-                                    <p className="text-xl font-bold leading-tight">
+                                    <p className={`text-[10px] font-black uppercase tracking-[0.2em] mb-1 ${
+                                        isEarth ? "text-zinc-500" : "text-zinc-300"
+                                    }`}>Identity</p>
+                                    <p className={`text-xl font-bold leading-tight ${
+                                        isEarth ? "text-zinc-900" : "text-white"
+                                    }`}>
                                         Straight Male<br />Heterosexual
                                     </p>
                                 </div>
-                                <p className="text-xs text-zinc-500 font-medium leading-relaxed italic opacity-80">
+                                <p className={`text-xs font-bold leading-relaxed italic ${
+                                    isEarth ? "text-zinc-700" : "text-zinc-200"
+                                }`}>
                                     &ldquo;Sapiosexual by night, debugging clean code by day.&rdquo;
                                 </p>
                             </div>
@@ -285,42 +335,81 @@ export default function AboutPage() {
                     </div>
                 </section>
 
-                <section className="space-y-16">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
-                        <div className="space-y-12">
-                            <div className="flex items-center gap-4 text-xs font-black uppercase tracking-[0.4em] opacity-40">
-                                <Info className="w-4 h-4" />
-                                <span>Mental Framework</span>
-                            </div>
-                            <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-none">Strategic Mind.</h2>
-                            <div className="space-y-8">
-                                <p className="text-2xl md:text-4xl font-medium text-zinc-600 dark:text-zinc-400 leading-[1.3]">
-                                    For me, chess is more than just a game—it&apos;s a mental gym where every move demands foresight and precision. I spend my quiet hours analyzing positions and competing on the global stage.
-                                </p>
-                                <div className="flex flex-wrap gap-4">
-                                    <a 
-                                        href="https://www.chess.com/member/d4-darshan" 
-                                        target="_blank" 
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-2 px-6 py-3 rounded-full bg-[#81b64c] text-white font-bold hover:scale-105 transition-transform shadow-sm"
-                                    >
-                                        Chess.com <ExternalLink className="w-4 h-4" />
-                                    </a>
-                                    <a 
-                                        href="https://lichess.org/@/Aaron_Swartz" 
-                                        target="_blank" 
-                                        rel="noopener noreferrer"
-                                        className="flex items-center gap-2 px-6 py-3 rounded-full bg-zinc-800 text-white font-bold hover:scale-105 transition-transform shadow-sm"
-                                    >
-                                        Lichess <ExternalLink className="w-4 h-4" />
-                                    </a>
+                <section className="space-y-16 min-h-[600px] flex items-center justify-center">
+                    <AnimatePresence mode="wait">
+                        {!isMagnusPlaying ? (
+                            <motion.div 
+                                key="content"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center w-full"
+                            >
+                                <div className="space-y-12">
+                                    <div className="flex items-center gap-4 text-xs font-black uppercase tracking-[0.4em] opacity-40">
+                                        <Info className="w-4 h-4" />
+                                        <span>Mental Framework</span>
+                                    </div>
+                                    <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-none">Strategic Mind.</h2>
+                                    <div className="space-y-8">
+                                        <p className="text-2xl md:text-4xl font-medium text-zinc-600 dark:text-zinc-400 leading-[1.3]">
+                                            For me, chess is more than just a game—it&apos;s a mental gym where every move demands foresight and precision. I spend my quiet hours analyzing positions and competing on the global stage.
+                                        </p>
+                                        <div className="flex flex-wrap gap-4">
+                                            <a 
+                                                href="https://www.chess.com/member/d4-darshan" 
+                                                target="_blank" 
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-2 px-6 py-3 rounded-full bg-[#81b64c] text-white font-bold hover:scale-105 transition-transform shadow-sm"
+                                            >
+                                                Chess.com <ExternalLink className="w-4 h-4" />
+                                            </a>
+                                            <a 
+                                                href="https://lichess.org/@/Aaron_Swartz" 
+                                                target="_blank" 
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-2 px-6 py-3 rounded-full bg-zinc-800 text-white font-bold hover:scale-105 transition-transform shadow-sm"
+                                            >
+                                                Lichess <ExternalLink className="h-4 w-4" />
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div className="flex justify-center">
-                            <ChessWidget />
-                        </div>
-                    </div>
+                                <div className="flex flex-col items-center gap-12">
+                                    <ChessWidget />
+                                    <button 
+                                        onClick={playMagnusVideo}
+                                        className="hidden lg:block group"
+                                    >
+                                        <span className="text-[10px] font-black uppercase tracking-[0.6em] text-zinc-400 group-hover:text-amber-500 transition-all duration-300 border-b border-zinc-200 dark:border-zinc-800 pb-1 group-hover:border-amber-500/50 group-hover:tracking-[0.8em]">
+                                            play
+                                        </span>
+                                    </button>
+                                </div>
+                            </motion.div>
+                        ) : (
+                            <motion.div 
+                                key="video"
+                                initial={{ opacity: 0, scale: 1.05 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="w-full aspect-video lg:aspect-[21/9] rounded-[2.5rem] overflow-hidden bg-black shadow-2xl relative"
+                            >
+                                <video 
+                                    src="/videos/magnus.mp4" 
+                                    className="w-full h-full object-cover"
+                                    autoPlay
+                                    onEnded={() => setIsMagnusPlaying(false)}
+                                />
+                                <button 
+                                    onClick={() => setIsMagnusPlaying(false)}
+                                    className="absolute top-6 right-6 text-white/30 hover:text-white transition-colors"
+                                >
+                                    <Sparkles className="h-4 w-4" />
+                                </button>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
                 </section>
 
                 <section className="space-y-16">
@@ -352,7 +441,7 @@ export default function AboutPage() {
                         {/* Column 3: 2x2 Videos Right - Large and slightly shifted right */}
                         <div className="col-span-5 grid grid-cols-2 gap-6 scale-105 translate-x-12">
                             {CLIPS.map((clip, index) => (
-                                <VideoPlayer key={clip.id} src={clip.src} title={clip.title} index={index} />
+                                VideoPlayer key={clip.id} src={clip.src} title={clip.title} index={index} />
                             ))}
                         </div>
                     </div>
@@ -361,16 +450,27 @@ export default function AboutPage() {
                     <div className="lg:hidden grid grid-cols-1 gap-20 items-center">
                         <div className="space-y-12 text-2xl md:text-4xl font-medium leading-[1.3] text-zinc-600 dark:text-zinc-400">
                             <p>
-                                <strong className="text-red-600 underline decoration-4 underline-offset-8 decoration-red-600/30">One Piece</strong> is my daily motivation. Luffy&apos;s journey is the perfect metaphor for a startup founder—impossible goals, a ragtag crew, and absolute freedom.
+                                Music is the rhythm I code to. Whether it&apos;s deep house or a mellow chill-out playlist, the right beat transforms a simple session into a focused flow state where time just disappears.
                             </p>
                             <p>
-                                As for sitcoms, <strong>The Office (US)</strong> is my comfort zone. It&apos;s the only show that gets funnier the 100th time you watch it.
+                                When I&apos;m not grinding, <strong className="text-red-600 underline decoration-4 underline-offset-8 decoration-red-600/30">The Big Bang Theory</strong> is my ultimate escape. There&apos;s something incredibly relatable about Sheldon and the crew—it&apos;s the perfect mix of genius, awkwardness, and &quot;Bazinga!&quot; moments that never gets old.
                             </p>
                         </div>
                         <div className="flex flex-col gap-16">
                             <SpotifyWidget />
-                            <div className="flex justify-center">
-                                <SitcomWidget />
+                            
+                            <div className="space-y-8">
+                                <div className="flex items-center gap-4 text-zinc-900 dark:text-zinc-100 p-4 bg-zinc-100/50 dark:bg-white/5 rounded-2xl border border-zinc-200 dark:border-white/5 backdrop-blur-sm">
+                                    <div className="p-3 bg-red-100 dark:bg-red-500/20 rounded-xl shadow-sm">
+                                        <Clapperboard className="h-6 w-6 text-red-600 dark:text-red-400" /> 
+                                    </div>
+                                    <h3 className="text-2xl font-black uppercase tracking-tighter leading-none">
+                                        The Big Bang <span className="text-red-600 block text-sm tracking-[0.2em] mt-1">Theory</span>
+                                    </h3>
+                                </div>
+                                <div className="flex justify-center">
+                                    <SitcomWidget />
+                                </div>
                             </div>
                         </div>
                     </div>
