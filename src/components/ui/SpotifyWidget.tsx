@@ -5,6 +5,11 @@ import { Music } from "lucide-react";
 
 export const SpotifyWidget = () => {
     const { isEarth } = useTheme();
+    const [hasMounted, setHasMounted] = React.useState(false);
+
+    React.useEffect(() => {
+        setHasMounted(true);
+    }, []);
 
     return (
         <div className={`w-full max-w-md mx-auto overflow-hidden rounded-[2rem] border shadow-layered transition-all duration-1000 group hover:scale-[1.02] ${
@@ -34,7 +39,7 @@ export const SpotifyWidget = () => {
                                 className="w-1.5 bg-[#1DB954] rounded-full animate-bounce" 
                                 style={{ 
                                     animationDelay: `${delay}ms`,
-                                    height: `${Math.random() * 100 + 40}%`
+                                    height: hasMounted ? `${Math.random() * 60 + 40}%` : "60%"
                                 }} 
                             />
                         ))}
