@@ -6,9 +6,11 @@ import { Music } from "lucide-react";
 export const SpotifyWidget = () => {
     const { isEarth } = useTheme();
     const [hasMounted, setHasMounted] = React.useState(false);
+    const [barHeights, setBarHeights] = React.useState<string[]>([]);
 
     React.useEffect(() => {
         setHasMounted(true);
+        setBarHeights([...Array(5)].map(() => `${Math.random() * 60 + 40}%`));
     }, []);
 
     return (
@@ -39,7 +41,7 @@ export const SpotifyWidget = () => {
                                 className="w-1.5 bg-[#1DB954] rounded-full animate-bounce" 
                                 style={{ 
                                     animationDelay: `${delay}ms`,
-                                    height: hasMounted ? `${Math.random() * 60 + 40}%` : "60%"
+                                    height: hasMounted ? barHeights[i] : "60%"
                                 }} 
                             />
                         ))}

@@ -26,6 +26,7 @@ export const DsaTracker = () => {
             }
             data.push(week);
         }
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setHeatmap(data);
     }, []);
 

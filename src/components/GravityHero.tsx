@@ -209,7 +209,9 @@ export default function GravityHero() {
                 });
             });
 
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setHasStarted(true);
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setIsPhysicsEnabled(true);
             isEnabledRef.current = true;
 
@@ -314,6 +316,7 @@ export default function GravityHero() {
             }
 
             if (!isEnabledRef.current && theme === "earth") {
+               // eslint-disable-next-line react-hooks/set-state-in-effect
                togglePhysics();
             }
         } else {

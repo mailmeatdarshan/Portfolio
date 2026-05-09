@@ -1,7 +1,7 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Keyboard, RotateCcw, Trophy, Timer, CheckCircle2 } from "lucide-react";
+import { Keyboard, RotateCcw, Trophy } from "lucide-react";
 
 const SENTENCE = "I am a full stack developer who loves building creative web experiences that feel alive.";
 
@@ -9,30 +9,53 @@ export const MonkeyTypeWidget = () => {
     const [input, setInput] = useState("");
     const [startTime, setStartTime] = useState<number | null>(null);
     const [wpm, setWpm] = useState<number | null>(null);
+    const [accuracy, setAccuracy] = useState<number | null>(null);
     const [isFinished, setIsFinished] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
-
-    useEffect(() => {
-        if (input.length === 1 && !startTime) {
-            setStartTime(Date.now());
-        }
-
-        if (input === SENTENCE && startTime && !isFinished) {
-            const timeTakenInMinutes = (Date.now() - startTime) / 60000;
-            const words = SENTENCE.split(" ").length;
-            const calculatedWpm = Math.round(words / timeTakenInMinutes);
-            setWpm(calculatedWpm);
-            setIsFinished(true);
-        }
-    }, [input, startTime, isFinished]);
 
     const handleReset = () => {
         setInput("");
         setStartTime(null);
         setWpm(null);
+        setAccuracy(null);
         setIsFinished(false);
         if (inputRef.current) {
             inputRef.current.focus();
+        }
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (isFinished) return;
+
+        const val = e.target.value;
+        if (val.length <= SENTENCE.length) {
+            let currentStart = startTime;
+            
+            // Start the timer on first character
+            if (val.length === 1 && !startTime) {
+                currentStart = Date.now();
+                setStartTime(currentStart);
+            }
+            
+            setInput(val);
+
+            // Check if finished (when length reaches sentence length)
+            if (val.length === SENTENCE.length && currentStart) {
+                const timeTakenInMinutes = (Date.now() - currentStart) / 60000;
+                const words = SENTENCE.split(" ").length;
+                const calculatedWpm = Math.round(words / (timeTakenInMinutes || 0.01));
+                
+                // Calculate actual accuracy
+                let correctChars = 0;
+                for (let i = 0; i < val.length; i++) {
+                    if (val[i] === SENTENCE[i]) correctChars++;
+                }
+                const calculatedAccuracy = Math.round((correctChars / SENTENCE.length) * 100);
+                
+                setWpm(calculatedWpm);
+                setAccuracy(calculatedAccuracy);
+                setIsFinished(true);
+            }
         }
     };
 
@@ -67,27 +90,40 @@ export const MonkeyTypeWidget = () => {
                 </div>
             </div>
 
-            <div className="relative text-2xl md:text-4xl font-mono leading-[1.6] mb-16 tracking-tight min-h-[200px]" onClick={() => inputRef.current?.focus()}>
-                {/* Background sentence (ghost text) */}
-                <div className="absolute top-0 left-0 w-full text-zinc-300 dark:text-zinc-700 pointer-events-none whitespace-pre-wrap select-none transition-colors duration-1000">
-                    {SENTENCE}
-                </div>
-                
-                {/* Typed text */}
-                <div className="relative z-10 whitespace-pre-wrap select-none break-words cursor-text pointer-events-none">
-                    {input.split("").map((char, i) => {
-                        const isCorrect = char === SENTENCE[i];
+            <div className="relative text-2xl md:text-4xl font-mono leading-[1.6] mb-16 tracking-tight min-h-[200px] cursor-text" onClick={() => inputRef.current?.focus()}>
+                {/* Single container for both ghost and typed text to ensure perfect alignment */}
+                <div className="relative z-10 whitespace-pre-wrap select-none break-words transition-colors duration-1000">
+                    {SENTENCE.split("").map((char, i) => {
+                        let colorClass = "text-zinc-300 dark:text-zinc-700"; // Default ghost color
+                        const isCursor = i === input.length && !isFinished;
+
+                        if (i < input.length) {
+                            const isCorrect = input[i] === SENTENCE[i];
+                            colorClass = isCorrect 
+                                ? "text-zinc-900 dark:text-zinc-100" 
+                                : "text-red-500 bg-red-100 dark:bg-red-900/30";
+                        }
+
                         return (
-                            <span 
-                                key={i} 
-                                className={`transition-colors duration-200 ${isCorrect ? "text-zinc-900 dark:text-zinc-100" : "text-red-500 bg-red-100 dark:bg-red-900/30"}`}
-                            >
-                                {SENTENCE[i] === " " && !isCorrect ? "_" : char}
+                            <span key={i} className="relative">
+                                {isCursor && (
+                                    <motion.span 
+                                        layoutId="cursor"
+                                        className="absolute left-0 top-0 w-[3px] h-[1.2em] bg-amber-500 animate-pulse"
+                                    />
+                                )}
+                                <span className={`transition-colors duration-200 ${colorClass}`}>
+                                    {char}
+                                </span>
                             </span>
                         );
                     })}
-                    {!isFinished && (
-                        <span className="inline-block w-[3px] h-8 bg-amber-500 ml-[1px] align-middle -mt-1 animate-pulse" />
+                    {/* End of sentence cursor */}
+                    {input.length === SENTENCE.length && !isFinished && (
+                        <motion.span 
+                            layoutId="cursor"
+                            className="inline-block w-[3px] h-[1.2em] bg-amber-500 animate-pulse align-middle"
+                        />
                     )}
                 </div>
 
@@ -119,7 +155,7 @@ export const MonkeyTypeWidget = () => {
                                         <p className="text-[10px] uppercase font-black tracking-widest mt-2 opacity-50 text-zinc-900 dark:text-zinc-100">WPM</p>
                                     </div>
                                     <div className="text-center">
-                                        <p className="text-5xl font-black text-zinc-900 dark:text-zinc-100 leading-none">100%</p>
+                                        <p className="text-5xl font-black text-zinc-900 dark:text-zinc-100 leading-none">{accuracy}%</p>
                                         <p className="text-[10px] uppercase font-black tracking-widest mt-2 opacity-50 text-zinc-900 dark:text-zinc-100">Accuracy</p>
                                     </div>
                                 </div>
@@ -139,11 +175,7 @@ export const MonkeyTypeWidget = () => {
                     ref={inputRef}
                     type="text"
                     value={input}
-                    onChange={(e) => {
-                        if (!isFinished && e.target.value.length <= SENTENCE.length) {
-                            setInput(e.target.value);
-                        }
-                    }}
+                    onChange={handleInputChange}
                     className="absolute inset-0 opacity-0 cursor-text outline-none"
                     autoComplete="off"
                     autoCorrect="off"

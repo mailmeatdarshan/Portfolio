@@ -24,10 +24,21 @@ const CustomRocket = () => (
 const SplashScreen: React.FC = () => {
   const [progress, setProgress] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const [meteors, setMeteors] = useState<{ duration: number; delay: number; top: string; left: string }[]>([]);
   const requestRef = useRef<number | null>(null);
   const startTimeRef = useRef<number | null>(null);
 
   useEffect(() => {
+    // Initialize meteors with random values on client side only
+    const initialMeteors = [...Array(5)].map(() => ({
+      duration: 1.5 + Math.random(),
+      delay: Math.random() * 5,
+      top: `${Math.random() * 50}%`,
+      left: `${Math.random() * 100}%`
+    }));
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMeteors(initialMeteors);
+
     const hasSeenSplash = sessionStorage.getItem("hasSeenSplash");
     if (!hasSeenSplash) {
       setIsVisible(true);
@@ -89,7 +100,7 @@ const SplashScreen: React.FC = () => {
         >
           {/* Minimalist Meteor Shower */}
           <div className="absolute inset-0 pointer-events-none overflow-hidden">
-            {[...Array(5)].map((_, i) => (
+            {meteors.map((meteor, i) => (
               <motion.div
                 key={i}
                 initial={{ x: "120%", y: "-20%", opacity: 0 }}
@@ -99,13 +110,13 @@ const SplashScreen: React.FC = () => {
                   opacity: [0, 1, 0] 
                 }}
                 transition={{ 
-                  duration: 1.5 + Math.random(), 
+                  duration: meteor.duration, 
                   repeat: Infinity, 
-                  delay: Math.random() * 5,
+                  delay: meteor.delay,
                   ease: "linear"
                 }}
                 className="absolute h-[1px] w-[150px] bg-gradient-to-l from-white/40 to-transparent rotate-[45deg]"
-                style={{ top: `${Math.random() * 50}%`, left: `${Math.random() * 100}%` }}
+                style={{ top: meteor.top, left: meteor.left }}
               />
             ))}
           </div>

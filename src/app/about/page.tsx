@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Sparkles, MapPin, Heart, Share2, Headphones, Github, Star, Coffee, Code, User, Info, ExternalLink, Tv, Clapperboard } from "lucide-react";
+import { ArrowLeft, Sparkles, MapPin, Heart, Share2, Headphones, Github, Star, Coffee, Code, User, Info, ExternalLink, Tv, Clapperboard, ChevronRight, Play, Pause, Languages, BookOpen } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { AudioPronunciation } from "@/components/ui/AudioPronunciation";
@@ -20,12 +20,19 @@ import { SitcomWidget, VideoPlayer, CLIPS } from "@/components/ui/SitcomWidget";
 import { CloudDivider } from "@/components/ui/CloudDivider";
 import { BentoCard } from "@/components/ui/BentoCard";
 import { WavingFlag } from "@/components/ui/WavingFlag";
+import { BookStack } from "@/components/ui/BookStack";
 import { useTheme } from "@/contexts/ThemeProvider";
+import { aboutTranslations } from "@/data/aboutTranslations";
+
+const FOOTER_VIDEOS = ["/videos/Idontlose.mp4", "/videos/tyson.mp4"];
 
 export default function AboutPage() {
     const { isEarth } = useTheme();
+    const [lang, setLang] = React.useState<"en" | "hi">("en");
+    const t = aboutTranslations[lang];
     const [isCm, setIsCm] = React.useState(false);
     const [isPlaying, setIsPlaying] = React.useState(false);
+    const [footerVideoIndex, setFooterVideoIndex] = React.useState(0);
     const [isProfileHovered, setIsProfileHovered] = React.useState(false);
     const [isMagnusPlaying, setIsMagnusPlaying] = React.useState(false);
     const videoRef = React.useRef<HTMLVideoElement>(null);
@@ -41,6 +48,18 @@ export default function AboutPage() {
             setIsPlaying(!isPlaying);
         }
     };
+
+    const nextVideo = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        const nextIndex = (footerVideoIndex + 1) % FOOTER_VIDEOS.length;
+        setFooterVideoIndex(nextIndex);
+    };
+
+    React.useEffect(() => {
+        if (isPlaying && videoRef.current) {
+            videoRef.current.play();
+        }
+    }, [footerVideoIndex, isPlaying]);
 
     const handleProfileHover = (hovering: boolean) => {
         if (typeof window !== "undefined" && window.innerWidth < 1024) return;
@@ -85,13 +104,26 @@ export default function AboutPage() {
                     }`}>
                         DUBEY<span className={isEarth ? "text-amber-600" : "text-blue-500"}>.</span>G
                     </Link>
-                    <div className="hidden md:flex items-center gap-8 font-bold text-xs uppercase tracking-[0.2em]">
-                        <Link href="/" className="hover:text-amber-600 transition-colors">Portfolio</Link>
-                        <span className="opacity-40">About Me</span>
+                    <div className="flex items-center gap-6">
+                        <button 
+                            onClick={() => setLang(lang === "en" ? "hi" : "en")}
+                            className={`flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 ${
+                                isEarth 
+                                    ? "bg-zinc-100 hover:bg-zinc-200 text-zinc-900" 
+                                    : "bg-white/5 hover:bg-white/10 text-white border border-white/10"
+                            }`}
+                            title={lang === "en" ? "Switch to Hinglish" : "Switch to English"}
+                        >
+                            <Languages className="w-5 h-5" />
+                        </button>
+                        <div className="hidden md:flex items-center gap-8 font-bold text-xs uppercase tracking-[0.2em]">
+                            <Link href="/" className="hover:text-amber-600 transition-colors">{t.nav.portfolio}</Link>
+                            <span className="opacity-40">{t.nav.aboutMe}</span>
+                        </div>
+                        <Link href="/" className="md:hidden flex items-center gap-2 text-xs font-bold uppercase tracking-widest">
+                            <ArrowLeft className="h-4 w-4" /> {t.nav.back}
+                        </Link>
                     </div>
-                    <Link href="/" className="md:hidden flex items-center gap-2 text-xs font-bold uppercase tracking-widest">
-                        <ArrowLeft className="h-4 w-4" /> Back
-                    </Link>
                 </div>
             </nav>
 
@@ -109,16 +141,16 @@ export default function AboutPage() {
                                 isEarth ? "text-[#1e293b]" : "text-white"
                             }`}
                         >
-                            Hi there!<br /> I&apos;m Darshan.
+                            {t.hero.hi}<br /> {t.hero.im}
                         </motion.h1>
                         <div className={`space-y-8 text-2xl md:text-3xl font-medium leading-relaxed max-w-xl mx-auto lg:mx-0 ${
                             isEarth ? "text-[#334155]" : "text-zinc-400"
                         }`}>
                             <p>
-                                I started building on the web in 2021 and never stopped.
+                                {t.hero.subtitle1}
                             </p>
                             <p>
-                                I&apos;m a CS student focused on building digital products that feel more like companions than tools.
+                                {t.hero.subtitle2}
                             </p>
                         </div>
                     </div>
@@ -170,8 +202,8 @@ export default function AboutPage() {
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-[#0b0e14]/80 via-transparent to-transparent" />
                             <div className="absolute bottom-10 left-10 text-white">
-                                <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-60 mb-2">Base of Operations</p>
-                                <h3 className="text-5xl font-black tracking-tighter uppercase italic">Mumbai, India</h3>
+                                <p className="text-[10px] font-black uppercase tracking-[0.4em] opacity-60 mb-2">{t.bento.location.label}</p>
+                                <h3 className="text-5xl font-black tracking-tighter uppercase italic">{t.bento.location.value}</h3>
                             </div>
                         </div>
                     </div>
@@ -196,17 +228,17 @@ export default function AboutPage() {
                                 <div>
                                     <p className={`text-[10px] font-black uppercase tracking-[0.2em] mb-1 ${
                                         isEarth ? "text-zinc-500" : "text-zinc-300"
-                                    }`}>Identity</p>
+                                    }`}>{t.bento.identity.label}</p>
                                     <p className={`text-xl font-bold leading-tight ${
                                         isEarth ? "text-zinc-900" : "text-white"
                                     }`}>
-                                        Straight Male <span className="text-sm font-medium opacity-40 ml-1">he/him</span>
+                                        {t.bento.identity.value} <span className="text-sm font-medium opacity-40 ml-1">{t.bento.identity.pronouns}</span>
                                     </p>
                                 </div>
                                 <p className={`text-xs font-bold leading-relaxed italic ${
                                     isEarth ? "text-zinc-700" : "text-zinc-200"
                                 }`}>
-                                    &ldquo;mostly heterosexual, selectively sapiosexual&rdquo;
+                                    &ldquo;{t.bento.identity.quote}&rdquo;
                                 </p>
                             </div>
                         </div>
@@ -225,7 +257,7 @@ export default function AboutPage() {
                                 <div className="w-10 h-10 rounded-full bg-zinc-50 dark:bg-zinc-800/50 flex items-center justify-center border border-zinc-100 dark:border-zinc-700/50">
                                     <ArrowLeft className="w-4 h-4 rotate-90 text-zinc-400" />
                                 </div>
-                                <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">Stat</span>
+                                <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">{t.bento.height.label}</span>
                             </div>
 
                             <div className="flex-1 flex items-center justify-center gap-10 px-4">
@@ -233,11 +265,11 @@ export default function AboutPage() {
                                     <h3 className="text-6xl md:text-7xl font-black tracking-tighter mb-1 transition-all duration-300">
                                         {isCm ? "188" : "6'2\""}
                                         <span className="text-base font-medium tracking-normal text-zinc-400 ml-2">
-                                            {isCm ? "cm" : "tall"}
+                                            {isCm ? "cm" : t.bento.height.value}
                                         </span>
                                     </h3>
                                     <p className="text-sm text-zinc-500 font-bold italic opacity-80 whitespace-nowrap">
-                                        Still down to earth.
+                                        {t.bento.height.quote}
                                     </p>
                                 </div>
 
@@ -288,10 +320,13 @@ export default function AboutPage() {
                         }`} />
                         
                         <div className="p-8 h-full flex flex-col justify-between relative z-10">
-                            <div className="flex items-center justify-between">
+                            <div className="flex justify-between items-start">
                                 <h3 className={`text-3xl font-black tracking-tighter uppercase italic ${
                                     isEarth ? "text-zinc-900" : "text-white"
                                 }`}>Darshan</h3>
+                                <span className={`text-[10px] font-black uppercase tracking-[0.2em] opacity-40 ${isEarth ? "text-zinc-900" : "text-white"}`}>{t.bento.pronunciation.label}</span>
+                            </div>
+                            <div className="flex items-center justify-between">
                                 <AudioPronunciation name="Darshan" phonetic="dər-shən" audioSrc={null} />
                             </div>
                             <div>
@@ -299,7 +334,7 @@ export default function AboutPage() {
                                 <p className={`text-xs font-bold leading-relaxed ${
                                     isEarth ? "text-zinc-700" : "text-zinc-200"
                                 }`}>
-                                    Sanskrit for <span className={`${isEarth ? "text-zinc-900" : "text-white"} font-bold`}>&quot;Vision&quot;</span> or <span className={`${isEarth ? "text-zinc-900" : "text-white"} font-bold`}>&quot;To See.&quot;</span>
+                                    {t.bento.pronunciation.meaning1} <span className={`${isEarth ? "text-zinc-900" : "text-white"} font-bold`}>&quot;{t.bento.pronunciation.meaning2}&quot;</span> {t.bento.pronunciation.meaning3} <span className={`${isEarth ? "text-zinc-900" : "text-white"} font-bold`}>&quot;{t.bento.pronunciation.meaning4}&quot;</span>
                                 </p>
                             </div>
                         </div>
@@ -318,9 +353,9 @@ export default function AboutPage() {
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                             <div className="absolute bottom-6 left-6 text-white text-left">
-                                <p className="text-[8px] font-black uppercase tracking-[0.3em] opacity-50 mb-1">Next Trip</p>
+                                <p className="text-[8px] font-black uppercase tracking-[0.3em] opacity-50 mb-1">{t.bento.adventures.label}</p>
                                 <h4 className="text-xl font-black tracking-tighter uppercase italic">Uttarakhand</h4>
-                                <p className="text-[10px] font-bold text-amber-500">Chandrashila Peak</p>
+                                <p className="text-[10px] font-bold text-amber-500">{t.bento.adventures.peak}</p>
                             </div>
                         </div>
                     </div>
@@ -341,12 +376,12 @@ export default function AboutPage() {
 
                         <div className="p-8 h-full flex flex-col justify-end relative z-10">
                             <div className="flex justify-between items-start absolute top-8 left-8 right-8">
-                                <span className={`text-[10px] font-black uppercase tracking-[0.2em] opacity-40 text-right w-full ${isEarth ? "text-zinc-900" : "text-white"}`}>Zodiac</span>
+                                <span className={`text-[10px] font-black uppercase tracking-[0.2em] opacity-40 text-right w-full ${isEarth ? "text-zinc-900" : "text-white"}`}>{t.bento.zodiac.label}</span>
                             </div>
                             <div>
-                                <h3 className={`text-3xl font-black tracking-tighter uppercase mb-1 italic ${isEarth ? "text-zinc-900" : "text-white"}`}>Sagittarius</h3>
+                                <h3 className={`text-3xl font-black tracking-tighter uppercase mb-1 italic ${isEarth ? "text-zinc-900" : "text-white"}`}>{t.bento.zodiac.value}</h3>
                                 <p className={`text-xs font-bold leading-relaxed ${isEarth ? "text-zinc-700" : "text-zinc-200"}`}>
-                                    Adventurous, optimistic, and eternally curious.
+                                    {t.bento.zodiac.description}
                                 </p>
                             </div>
                         </div>
@@ -358,11 +393,11 @@ export default function AboutPage() {
                     }`}>
                         <div className="p-8 h-full flex flex-col justify-between">
                             <div className="flex justify-between items-center mb-6">
-                                <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">Personality</span>
+                                <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-40">{t.bento.personality.label}</span>
                                 <div className="flex gap-2">
-                                    <span className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest">Intro</span>
+                                    <span className="text-[10px] font-bold text-emerald-500 uppercase tracking-widest">{t.bento.personality.intro}</span>
                                     <span className="text-[10px] font-bold text-zinc-300 dark:text-zinc-700">/</span>
-                                    <span className="text-[10px] font-bold text-red-400 uppercase tracking-widest">Extro</span>
+                                    <span className="text-[10px] font-bold text-red-400 uppercase tracking-widest">{t.bento.personality.extro}</span>
                                 </div>
                             </div>
                             
@@ -387,13 +422,13 @@ export default function AboutPage() {
                             </div>
 
                             <p className="text-xs text-zinc-500 font-bold italic text-center mt-4 opacity-80">
-                                &ldquo;Not shy, just selective.&rdquo;
+                                &ldquo;{t.bento.personality.quote}&rdquo;
                             </p>
                         </div>
                     </div>
 
                     {/* Future City Card - Japan with Background */}
-                    <div className={`flex flex-col group overflow-hidden rounded-[2.5rem] border shadow-layered transition-all duration-1000 relative ${
+                    <div className={`flex flex-col group overflow-hidden rounded-[2.5rem] border shadow-layered transition-all duration-1000 relative min-h-[400px] ${
                         isEarth ? "bg-white border-zinc-200" : "bg-[#1e293b] border-white/10"
                     }`}>
                         <Image 
@@ -410,11 +445,11 @@ export default function AboutPage() {
                                 <div className="p-2 bg-white/10 backdrop-blur-md rounded-xl border border-white/10">
                                     <MapPin className="w-5 h-5 text-red-500 group-hover:animate-bounce" />
                                 </div>
-                                <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-60">Endgame</span>
+                                <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-60">{t.bento.futureCity.label}</span>
                             </div>
                             <div>
-                                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-red-500 mb-2">Future City</p>
-                                <h4 className="text-5xl font-black tracking-tighter uppercase italic leading-none drop-shadow-lg">Japan</h4>
+                                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-red-500 mb-2">{t.bento.futureCity.tag}</p>
+                                <h4 className="text-5xl font-black tracking-tighter uppercase italic leading-none drop-shadow-lg">{t.bento.futureCity.value}</h4>
                                 <p className="text-sm font-black opacity-90 mt-3 tracking-widest text-zinc-300">TOKYO / KYOTO / OSAKA</p>
                             </div>
                         </div>
@@ -429,18 +464,22 @@ export default function AboutPage() {
                 <section className="space-y-16">
                     <div className="flex items-center gap-4 text-xs font-black uppercase tracking-[0.4em] opacity-40">
                         <User className="w-4 h-4" />
-                        <span>Profile Narrative</span>
+                        <span>{t.story.label}</span>
                     </div>
-                    <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-none">The Story So Far.</h2>
+                    <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-none">{t.story.title}</h2>
                     <div className="text-2xl md:text-4xl font-medium leading-[1.3] space-y-12 text-zinc-600 dark:text-zinc-400">
                         <p>
-                            My relationship with computers started as a mystery. I wanted to know how a bunch of electronic components could create entire worlds.
+                            {t.story.p1}
                         </p>
                         <p>
-                            Today, I&apos;m a Computer Science student at <strong>Bhavan&apos;s College</strong>, where I translate that curiosity into lines of code. I believe the web is the ultimate canvas for creativity.
+                            {lang === "en" ? (
+                                <>Today, I&apos;m a Computer Science student at <strong>Bhavan&apos;s College</strong>, where I translate that curiosity into lines of code. I believe the web is the ultimate canvas for creativity.</>
+                            ) : (
+                                <>Aaj, main <strong>Bhavan&apos;s College</strong> mein Computer Science ka student hoon, jahan main us curiosity ko code mein badalta hoon. Mera maanna hai ki web creativity ka sabse bada canvas hai.</>
+                            )}
                         </p>
                         <p>
-                            When I build, I don&apos;t just think about logic. I think about <strong>motion</strong>, <strong>sound</strong>, and <strong>satisfaction</strong>. If a button doesn&apos;t feel good to click, it shouldn&apos;t exist.
+                            {t.story.p3}
                         </p>
                     </div>
                 </section>
@@ -448,15 +487,19 @@ export default function AboutPage() {
                 <section className="space-y-16">
                     <div className="flex items-center gap-4 text-xs font-black uppercase tracking-[0.4em] opacity-40">
                         <Code className="w-4 h-4" />
-                        <span>Development Flow</span>
+                        <span>{t.development.label}</span>
                     </div>
-                    <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-none">Deep in the Trenches.</h2>
+                    <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-none">{t.development.title}</h2>
                     <div className="text-2xl md:text-4xl font-medium leading-[1.3] space-y-10 text-zinc-600 dark:text-zinc-400">
                         <p>
-                            I live in the terminal. Whether it&apos;s pushing commits to <strong className={isEarth ? "text-amber-600" : "text-blue-500"}>Chitti-the-Robot</strong> or architecting <strong className={isEarth ? "text-amber-600" : "text-blue-500"}>HisabKitab</strong>, open source is where I find my tribe.
+                            {lang === "en" ? (
+                                <>I live in the terminal. Whether it&apos;s pushing commits to <strong className={isEarth ? "text-amber-600" : "text-blue-500"}>Chitti-the-Robot</strong> or architecting <strong className={isEarth ? "text-amber-600" : "text-blue-500"}>HisabKitab</strong>, open source is where I find my tribe.</>
+                            ) : (
+                                <>Main terminal mein rehta hoon. Chahe wo <strong className={isEarth ? "text-amber-600" : "text-blue-500"}>Chitti-the-Robot</strong> pe commits push karna ho ya <strong className={isEarth ? "text-amber-600" : "text-blue-500"}>HisabKitab</strong> design karna, open source hi meri asli jagah hai.</>
+                            )}
                         </p>
                         <p>
-                            I obsession over DX (Developer Experience). I build tools that I would want to use myself—fast, intuitive, and occasionally a bit magical.
+                            {t.development.p2}
                         </p>
                     </div>
                     <div className="pt-8">
@@ -467,11 +510,11 @@ export default function AboutPage() {
                 <section className="space-y-16 text-center md:text-left">
                     <div className="flex items-center justify-center md:justify-start gap-4 text-xs font-black uppercase tracking-[0.4em] opacity-40">
                         <Sparkles className="w-4 h-4" />
-                        <span>Performance Test</span>
+                        <span>{t.performance.label}</span>
                     </div>
-                    <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-none">Fast Hands.</h2>
+                    <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-none">{t.performance.title}</h2>
                     <p className="text-2xl md:text-4xl font-medium text-zinc-600 dark:text-zinc-400 max-w-3xl leading-snug">
-                        Code is a language, and like any language, fluency matters. I treat my keyboard as an instrument.
+                        {t.performance.p1}
                     </p>
                     <div className="pt-12">
                         <MonkeyTypeActivityLog />
@@ -494,12 +537,12 @@ export default function AboutPage() {
                                 <div className="space-y-12">
                                     <div className="flex items-center gap-4 text-xs font-black uppercase tracking-[0.4em] opacity-40">
                                         <Info className="w-4 h-4" />
-                                        <span>Mental Framework</span>
+                                        <span>{t.strategic.label}</span>
                                     </div>
-                                    <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-none">Strategic Mind.</h2>
+                                    <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-none">{t.strategic.title}</h2>
                                     <div className="space-y-8">
                                         <p className="text-2xl md:text-4xl font-medium text-zinc-600 dark:text-zinc-400 leading-[1.3]">
-                                            For me, chess is more than just a game—it&apos;s a mental gym where every move demands foresight and precision. I spend my quiet hours analyzing positions and competing on the global stage.
+                                            {t.strategic.p1}
                                         </p>
                                         <div className="flex flex-wrap gap-4">
                                             <a 
@@ -528,7 +571,7 @@ export default function AboutPage() {
                                         className="hidden lg:block group"
                                     >
                                         <span className="text-[10px] font-black uppercase tracking-[0.6em] text-zinc-400 group-hover:text-amber-500 transition-all duration-300 border-b border-zinc-200 dark:border-zinc-800 pb-1 group-hover:border-amber-500/50 group-hover:tracking-[0.8em]">
-                                            play
+                                            {lang === "en" ? "play" : "shuru"}
                                         </span>
                                     </button>
                                 </div>
@@ -560,10 +603,24 @@ export default function AboutPage() {
 
                 <section className="space-y-16">
                     <div className="flex items-center gap-4 text-xs font-black uppercase tracking-[0.4em] opacity-40">
-                        <Headphones className="w-4 h-4" />
-                        <span>Sensory Inputs</span>
+                        <BookOpen className="w-4 h-4" />
+                        <span>{t.literary.label}</span>
                     </div>
-                    <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-none">Culture & Beats.</h2>
+                    <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-none">{t.literary.title}</h2>
+                    <p className="text-2xl md:text-4xl font-medium text-zinc-600 dark:text-zinc-400 max-w-3xl leading-snug">
+                        {t.literary.p1}
+                    </p>
+                    <div className="pt-12">
+                        <BookStack isEarth={isEarth} lang={lang} />
+                    </div>
+                </section>
+
+                <section className="space-y-16">
+                    <div className="flex items-center gap-4 text-xs font-black uppercase tracking-[0.4em] opacity-40">
+                        <Headphones className="w-4 h-4" />
+                        <span>{t.culture.label}</span>
+                    </div>
+                    <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-none">{t.culture.title}</h2>
                     
                     {/* Wide Desktop Layout: Spotify Left | Text Center | 2x2 Videos Right */}
                     <div className="hidden lg:grid grid-cols-12 gap-12 items-center -mx-20 max-w-[1600px]">
@@ -577,10 +634,14 @@ export default function AboutPage() {
                         {/* Column 2: Original Text Style Centered - New Music & TBBT content */}
                         <div className="col-span-3 space-y-12 text-center">
                             <p className="text-2xl font-medium leading-[1.4] text-zinc-600 dark:text-zinc-400">
-                                Music is the rhythm I code to. Whether it&apos;s deep house or a mellow chill-out playlist, the right beat transforms a simple session into a focused flow state where time just disappears.
+                                {t.culture.p1}
                             </p>
                             <p className="text-2xl font-medium leading-[1.4] text-zinc-600 dark:text-zinc-400">
-                                When I&apos;m not grinding, <strong className="text-red-600 underline decoration-4 underline-offset-8 decoration-red-600/30">The Big Bang Theory</strong> is my ultimate escape. There&apos;s something incredibly relatable about Sheldon and the crew—it&apos;s the perfect mix of genius, awkwardness, and &quot;Bazinga!&quot; moments that never gets old.
+                                {lang === "en" ? (
+                                    <>When I&apos;m not grinding, <strong className="text-red-600 underline decoration-4 underline-offset-8 decoration-red-600/30">The Big Bang Theory</strong> is my ultimate escape. There&apos;s something incredibly relatable about Sheldon and the crew—it&apos;s the perfect mix of genius, awkwardness, and &quot;Bazinga!&quot; moments that never gets old.</>
+                                ) : (
+                                    <>Jab main kaam nahi kar raha hota, toh <strong className="text-red-600 underline decoration-4 underline-offset-8 decoration-red-600/30">The Big Bang Theory</strong> mera ultimate escape hai. Sheldon aur uski team mein kuch bahut hi relatable hai—genius, awkwardness aur wahi purane &quot;Bazinga!&quot; moments jo kabhi purane nahi hote.</>
+                                )}
                             </p>
                         </div>
 
@@ -596,10 +657,14 @@ export default function AboutPage() {
                     <div className="lg:hidden grid grid-cols-1 gap-20 items-center">
                         <div className="space-y-12 text-2xl md:text-4xl font-medium leading-[1.3] text-zinc-600 dark:text-zinc-400">
                             <p>
-                                Music is the rhythm I code to. Whether it&apos;s deep house or a mellow chill-out playlist, the right beat transforms a simple session into a focused flow state where time just disappears.
+                                {t.culture.p1}
                             </p>
                             <p>
-                                When I&apos;m not grinding, <strong className="text-red-600 underline decoration-4 underline-offset-8 decoration-red-600/30">The Big Bang Theory</strong> is my ultimate escape. There&apos;s something incredibly relatable about Sheldon and the crew—it&apos;s the perfect mix of genius, awkwardness, and &quot;Bazinga!&quot; moments that never gets old.
+                                {lang === "en" ? (
+                                    <>When I&apos;m not grinding, <strong className="text-red-600 underline decoration-4 underline-offset-8 decoration-red-600/30">The Big Bang Theory</strong> is my ultimate escape. There&apos;s something incredibly relatable about Sheldon and the crew—it&apos;s the perfect mix of genius, awkwardness, and &quot;Bazinga!&quot; moments that never gets old.</>
+                                ) : (
+                                    <>Jab main kaam nahi kar raha hota, toh <strong className="text-red-600 underline decoration-4 underline-offset-8 decoration-red-600/30">The Big Bang Theory</strong> mera ultimate escape hai. Sheldon aur uski team mein kuch bahut hi relatable hai—genius, awkwardness aur wahi purane &quot;Bazinga!&quot; moments jo kabhi purane nahi hote.</>
+                                )}
                             </p>
                         </div>
                         <div className="flex flex-col gap-16">
@@ -631,11 +696,23 @@ export default function AboutPage() {
                 {/* Background Video - Max Visibility */}
                 <video 
                     ref={videoRef}
-                    src="/videos/Idontlose.mp4"
-                    className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 z-0 ${isPlaying ? "opacity-100" : "opacity-0"}`}
+                    src={FOOTER_VIDEOS[footerVideoIndex]}
+                    className={`absolute inset-0 w-full h-full object-cover object-[center_30%] transition-opacity duration-1000 z-0 ${isPlaying ? "opacity-100" : "opacity-0"}`}
                     loop
                     playsInline
                 />
+
+                {isPlaying && (
+                    <motion.button 
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        onClick={nextVideo}
+                        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 p-2 md:p-4 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white transition-all hover:scale-110 group"
+                        title="Next Video"
+                    >
+                        <ChevronRight className="w-4 h-4 md:w-8 md:h-8 group-hover:translate-x-1 transition-transform" />
+                    </motion.button>
+                )}
 
                 <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
                     <AnimatePresence>
@@ -648,19 +725,19 @@ export default function AboutPage() {
                                 <h2 className={`text-6xl md:text-[11rem] font-black mb-20 tracking-tighter leading-[0.8] ${
                                     isEarth ? "text-[#1e293b]" : "text-white"
                                 }`}>
-                                    Have a<br /> wonderful day!
+                                    {t.footer.title1}<br /> {t.footer.title2}
                                 </h2>
                                 
                                 <div className="flex flex-wrap justify-center gap-8 mb-48">
-                                    <Link href="/#contact" className="px-14 py-7 bg-amber-600 hover:bg-amber-700 text-white font-black rounded-full transition-transform hover:scale-105 shadow-layered text-2xl tracking-wider uppercase">
-                                        Get in Touch
+                                    <Link href="/#contact" className="min-w-[320px] px-10 py-7 bg-amber-600 hover:bg-amber-700 text-white font-black rounded-full transition-transform hover:scale-105 shadow-layered text-2xl tracking-wider uppercase text-center">
+                                        {t.footer.getInTouch}
                                     </Link>
-                                    <a href="mailto:mailmeatdarshan@gmail.com" className={`px-14 py-7 font-black rounded-full transition-all border shadow-sm text-2xl tracking-wider uppercase ${
+                                    <a href="mailto:mailmeatdarshan@gmail.com" className={`min-w-[320px] px-10 py-7 font-black rounded-full transition-all border shadow-sm text-2xl tracking-wider uppercase text-center ${
                                         isEarth 
                                             ? "bg-white hover:bg-zinc-100 text-[#1e293b] border-zinc-200" 
                                             : "bg-[#1e293b] hover:bg-zinc-800 text-white border-white/10"
                                     }`}>
-                                        Send an Email
+                                        {t.footer.sendEmail}
                                     </a>
                                 </div>
                             </motion.div>
@@ -670,19 +747,26 @@ export default function AboutPage() {
                     <div className={`flex flex-col items-center gap-8 transition-all duration-1000 ${isPlaying ? "mt-0" : ""}`}>
                         {!isPlaying && (
                             <p className="text-xs font-black uppercase tracking-[0.3em] opacity-30">
-                                &copy; 2026 Darshan Dubey
+                                &copy; {t.footer.copyright}
                             </p>
                         )}
                         
                         <button 
                             onClick={togglePlay}
-                            className={`text-[10px] font-black uppercase tracking-[0.6em] transition-all duration-300 hover:tracking-[0.8em] py-3 px-8 rounded-full border ${
+                            className={`z-20 p-2.5 md:p-5 rounded-full backdrop-blur-md border transition-all duration-300 hover:scale-110 ${
                                 isPlaying 
-                                    ? "text-amber-500 border-amber-500/50 bg-black/40 backdrop-blur-md" 
-                                    : (isEarth ? "text-[#1e293b]/40 border-[#1e293b]/10" : "text-white/40 border-white/10")
+                                    ? "bg-white/10 border-white/20 text-white" 
+                                    : (isEarth 
+                                        ? "bg-white/10 border-zinc-200 text-zinc-900 shadow-sm" 
+                                        : "bg-white/5 border-white/10 text-white")
                             }`}
+                            title={isPlaying ? "Pause" : "Play"}
                         >
-                            {isPlaying ? "Pause" : "Play"}
+                            {isPlaying ? (
+                                <Pause className="w-4 h-4 md:w-6 md:h-6 fill-current" />
+                            ) : (
+                                <Play className="w-4 h-4 md:w-6 md:h-6 fill-current" />
+                            )}
                         </button>
                     </div>
                 </div>

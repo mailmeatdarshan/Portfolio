@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 declare module 'clippyjs/agents/clippy' {
     const ClippyLoaders: {
         agent: () => Promise<{ default: any }>;

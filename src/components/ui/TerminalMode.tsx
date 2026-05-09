@@ -238,7 +238,7 @@ export default function TerminalMode() {
                 <p><span className="text-[#5ec2ff] font-bold">Role:</span> {personalInfo.title}</p>
                 <p><span className="text-[#5ec2ff] font-bold">Status:</span> Seeking Summer 2026 Internship</p>
                 <p><span className="text-[#5ec2ff] font-bold">Focus Areas:</span> Web Development, Backend, Cloud Computing</p>
-                <p className="mt-4 text-[#f0db4f] mt-4 mb-2">Try 'cat about.txt' for more information about me.</p>
+                <p className="mt-4 text-[#f0db4f] mt-4 mb-2">Try &apos;cat about.txt&apos; for more information about me.</p>
             </div>
         );
     } else if (cmd === "help") {
@@ -336,10 +336,10 @@ export default function TerminalMode() {
               output = (
                   <div className="my-3 space-y-4 text-gray-300 border-l-[2px] border-[#89f0a2]/40 pl-4 py-1">
                       <h3 className="text-[#89f0a2] font-bold text-lg underline">About Me</h3>
-                      <p className="leading-relaxed">Hi there! I'm Darshan Dubey, a passionate Computer Science student at Bhavans College with a focus on web development, backend, and cloud computing.</p>
+                      <p className="leading-relaxed">Hi there! I&apos;m Darshan Dubey, a passionate Computer Science student at Bhavans College with a focus on web development, backend, and cloud computing.</p>
                       <p className="leading-relaxed">My journey in tech began at Divine Providence College in Mumbai where I pursued a Computer Science major. During my studies, I discovered a deeper passion for programming, leading me to transfer to Bhavans College to specialize in Computer Science.</p>
-                      <p className="leading-relaxed">As a student, I've always wanted to help others with what I love the most - computers and IT. I have built PracBuddy and a social media platform for my college.</p>
-                      <p className="leading-relaxed">Now I'm currently seeking a Summer 2026 internship to gain hands-on experience in web dev, cloud computing, or backend while collaborating with innovative teams to build a safer digital future.</p>
+                      <p className="leading-relaxed">As a student, I&apos;ve always wanted to help others with what I love the most - computers and IT. I have built PracBuddy and a social media platform for my college.</p>
+                      <p className="leading-relaxed">Now I&apos;m currently seeking a Summer 2026 internship to gain hands-on experience in web dev, cloud computing, or backend while collaborating with innovative teams to build a safer digital future.</p>
                   </div>
               );
           } else if (fileName === "skills.txt") {
@@ -408,7 +408,7 @@ export default function TerminalMode() {
                           })}
                       </div>
                       <p className="mt-4 pt-2 text-[#f0db4f] opacity-90 border-t border-[#89f0a2]/20">
-                          Feel free to reach out if you have any questions about web development, backend engineering, or if you're interested in collaborating on projects!
+                          Feel free to reach out if you have any questions about web development, backend engineering, or if you&apos;re interested in collaborating on projects!
                       </p>
                   </div>
               );
@@ -513,7 +513,7 @@ export default function TerminalMode() {
           id: cid,
           command: cmdStr,
           path: currentPath,
-          output: <div className="text-red-500">Command not recognized. Type 'start' to boot portfolio.</div>
+          output: <div className="text-red-500">Command not recognized. Type &apos;start&apos; to boot portfolio.</div>
         }]);
       }
       return;
@@ -633,7 +633,7 @@ export default function TerminalMode() {
                   {bootPhase === "ready" && (
                       <div className="mb-6">
                           <p className="text-[#89f0a2]">Welcome to DarshanDubey.exe (v2.0.5) - Portfolio Terminal</p>
-                          <p className="text-[#f0db4f] mt-1">Explore my portfolio using CLI commands. Type 'help' for available commands.</p>
+                          <p className="text-[#f0db4f] mt-1">Explore my portfolio using CLI commands. Type &apos;help&apos; for available commands.</p>
                           <div className="w-full h-[1px] bg-[#89f0a2]/30 my-6" />
                           
                           <div className="text-white space-y-4 mb-10">

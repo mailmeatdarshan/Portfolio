@@ -41,7 +41,6 @@ const Starfield: React.FC = () => {
 
     let animationFrameId: number;
     let stars: Star[] = [];
-    let meteors: Meteor[] = [];
     const starCount = 200;
 
     const resizeCanvas = () => {
@@ -64,6 +63,7 @@ const Starfield: React.FC = () => {
       }
     };
 
+    const meteors: Meteor[] = [];
     const createMeteor = () => {
       const side = Math.random() > 0.5;
       meteors.push({

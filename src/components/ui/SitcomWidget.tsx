@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Play, Tv } from "lucide-react";
+import { Play } from "lucide-react";
 
 export const CLIPS = [
     { id: 1, src: "/videos/sitcom/opt/tbbtclip1.mp4", title: "Bazinga!" },
@@ -34,18 +34,35 @@ export const VideoPlayer = ({ src, title, index }: { src: string, title: string,
         }
     }, [isHovered]);
 
+    const handleToggle = () => {
+        // Toggle behavior only for touch devices
+        if (typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches) {
+            setIsHovered(prev => !prev);
+        }
+    };
+
     return (
         <motion.div 
             className="flex flex-col bg-white dark:bg-zinc-800 p-2 pb-4 rounded-xl shadow-2xl border border-zinc-200 dark:border-white/10 cursor-pointer relative group w-full"
             initial={{ rotate: index % 2 === 0 ? -1 : 1 }}
+            animate={isHovered ? { rotate: 0, scale: 1.05, zIndex: 10 } : { rotate: index % 2 === 0 ? -1 : 1, scale: 1, zIndex: 1 }}
             whileHover={{ 
                 rotate: 0, 
                 scale: 1.1,
                 zIndex: 50,
                 transition: { duration: 0.3 }
             }}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
+            onMouseEnter={() => {
+                if (!window.matchMedia("(pointer: coarse)").matches) {
+                    setIsHovered(true);
+                }
+            }}
+            onMouseLeave={() => {
+                if (!window.matchMedia("(pointer: coarse)").matches) {
+                    setIsHovered(false);
+                }
+            }}
+            onClick={handleToggle}
         >
             {/* TV Screen Container - Maximize the screen size */}
             <div className="relative w-full aspect-video bg-black rounded-lg overflow-hidden border-[4px] border-[#1a1a1a] group-hover:border-[#333] transition-colors duration-500">
