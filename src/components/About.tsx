@@ -17,7 +17,7 @@ export default function About() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
             >
-                <h2 className={`text-4xl md:text-5xl font-bold text-center mb-10 transition-colors duration-1000`}
+                <h2 id="my-world" className={`text-4xl md:text-5xl font-bold text-center mb-10 transition-colors duration-1000`}
                     style={{ color: "var(--theme-text-heading)" }}
                 >
                     My World
@@ -48,7 +48,7 @@ export default function About() {
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
                     {/* What I Love Section */}
-                    <div className="space-y-8">
+                    <div id="what-i-love" className="space-y-8">
                         <h3 className="text-3xl font-bold mb-8 bg-clip-text text-transparent transition-all duration-1000"
                             style={{
                                 backgroundImage: `linear-gradient(to right, var(--theme-gradient-text-from), var(--theme-gradient-text-to))`,
@@ -82,7 +82,7 @@ export default function About() {
                     </div>
 
                     {/* Masterplan Section */}
-                    <div className="space-y-8 relative">
+                    <div id="masterplan" className="space-y-8 relative">
                         <h3 className="text-3xl font-bold mb-8 bg-clip-text text-transparent transition-all duration-1000"
                             style={{
                                 backgroundImage: `linear-gradient(to right, var(--theme-gradient-text-alt-from), var(--theme-gradient-text-alt-to))`,

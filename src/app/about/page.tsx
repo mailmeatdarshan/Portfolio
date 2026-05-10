@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Sparkles, MapPin, Heart, Share2, Headphones, Github, Star, Coffee, Code, User, Info, ExternalLink, Tv, Clapperboard, ChevronRight, Play, Pause, Languages, BookOpen } from "lucide-react";
+import { ArrowLeft, Sparkles, MapPin, Headphones, Code, User, Info, ExternalLink, Clapperboard, ChevronRight, Play, Pause, Languages, BookOpen } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { AudioPronunciation } from "@/components/ui/AudioPronunciation";

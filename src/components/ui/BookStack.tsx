@@ -10,6 +10,7 @@ import { aboutTranslations } from "@/data/aboutTranslations";
 const HTMLFlipBook = dynamic(() => import("react-pageflip"), { 
     ssr: false,
     loading: () => <div className="w-full aspect-[4/3] bg-zinc-100 animate-pulse rounded-lg" />
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 }) as any;
 
 interface Book {

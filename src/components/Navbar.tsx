@@ -15,7 +15,7 @@ export default function Navbar() {
     const [lastScrollY, setLastScrollY] = useState(0);
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
     const [isPhysicsEnabled, setIsPhysicsEnabled] = useState(false);
-    const { isEarth, setZenMode, setTerminalMode, theme } = useTheme();
+    const { isEarth, setZenMode, setTerminalMode } = useTheme();
 
     useEffect(() => {
         const handleGravityState = (e: any) => {

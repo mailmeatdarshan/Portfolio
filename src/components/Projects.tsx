@@ -42,6 +42,13 @@ export default function Projects() {
         projects.find(p => p.title === title)
     ).filter(Boolean) as Project[];
 
+    const handleProjectClick = (project: Project) => {
+        setSelectedProject(project);
+        window.dispatchEvent(new CustomEvent('clippy-project-click', { 
+            detail: { title: project.title } 
+        }));
+    };
+
     return (
         <div className="py-20 px-4 relative">
             <div className="max-w-7xl mx-auto mb-16">
@@ -77,7 +84,7 @@ export default function Projects() {
                         <BentoGridItem
                             key={project.id}
                             layoutId={`project-${project.id}`}
-                            onClick={() => setSelectedProject(project)}
+                            onClick={() => handleProjectClick(project)}
                             title={<span className="text-xl font-bold">{project.title}</span>}
                             description={project.description}
                             header={

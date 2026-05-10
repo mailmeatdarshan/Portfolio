@@ -65,8 +65,35 @@ const satoshi = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://darshandubey.site"),
   title: "Darshan Dubey | Full Stack Developer",
   description: "Explore the portfolio of Darshan Dubey, a passionate Full Stack Developer specializing in modern web technologies. Experience premium designs and interactive digital solutions.",
+  keywords: ["Darshan Dubey", "Full Stack Developer", "Software Engineer", "React", "Next.js", "Portfolio"],
+  authors: [{ name: "Darshan Dubey" }],
+  creator: "Darshan Dubey",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://darshandubey.site",
+    title: "Darshan Dubey | Full Stack Developer",
+    description: "Explore the portfolio of Darshan Dubey, a passionate Full Stack Developer specializing in modern web technologies.",
+    siteName: "Darshan Dubey Portfolio",
+    images: [
+      {
+        url: "/images/profile/avatar.png",
+        width: 1200,
+        height: 630,
+        alt: "Darshan Dubey",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Darshan Dubey | Full Stack Developer",
+    description: "Explore the portfolio of Darshan Dubey, a passionate Full Stack Developer specializing in modern web technologies.",
+    images: ["/images/profile/avatar.png"],
+    creator: "@mailmeatdarshan",
+  },
   icons: {
     icon: [
       { url: "/icon.png", sizes: "32x32", type: "image/png" },

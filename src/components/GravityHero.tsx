@@ -31,7 +31,7 @@ export default function GravityHero() {
     const requestRef = useRef<number | null>(null);
     const [isPhysicsEnabled, setIsPhysicsEnabled] = useState(false);
     const [hasStarted, setHasStarted] = useState(false);
-    const { theme, isEarth, isSpace } = useTheme();
+    const { theme, isEarth } = useTheme();
     
     const isEnabledRef = useRef(false);
     const hasInitializedRef = useRef(false);
