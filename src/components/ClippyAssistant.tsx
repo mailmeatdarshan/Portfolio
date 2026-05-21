@@ -75,6 +75,18 @@ const RETURN_MESSAGES = [
     "The Terminal was too much for you, wasn't it? 😏"
 ];
 
+const INTERACTIVE_MESSAGES = [
+    "Hey! Stop poking me! 😂",
+    "Did you just click me? I'm busy being cool. 😎",
+    "At your service! What's on your mind? 📎",
+    "Darshan is the real deal, I'm just the stylish assistant.",
+    "Ouch! Careful with that cursor! 🖱️",
+    "Can I help you find something? Or are you just here for my charm? 😉",
+    "I've been in portfolios since '97. I'm a legend! 🏆",
+    "Stop clicking! I'm trying to look important. 🧐",
+    "You click, I speak. That's the deal. 🤝"
+];
+
 const MESSAGE_COOLDOWN_MS = 2500;
 const WELCOME_DELAY_MS = 800;
 const ANIMATION_INTERVAL_MS = 15000;
@@ -148,6 +160,12 @@ const ClippyAssistant = () => {
                         el.style.top = 'auto';
                         el.style.zIndex = '9999';
                         el.style.imageRendering = 'pixelated';
+                        el.style.cursor = 'pointer';
+
+                        el.addEventListener('click', () => {
+                            safeSpeak(getRandomMessage(INTERACTIVE_MESSAGES), true);
+                            agent.animate();
+                        });
                     }
                 }, 50);
 

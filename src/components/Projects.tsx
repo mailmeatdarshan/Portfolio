@@ -30,6 +30,7 @@ export default function Projects() {
 
     // Precise ordering as requested
     const orderedTitles = [
+        "Trie",
         "MyBhavans", 
         "HisabKitab", 
         "BhavansPracbuddy", 
@@ -70,7 +71,9 @@ export default function Projects() {
                 {orderedProjects.map((project, i) => {
                     let layoutClass = "md:col-span-1 md:row-span-1";
                     
-                    if (project.title === "MyBhavans") {
+                    if (project.title === "Trie") {
+                        layoutClass = "md:col-span-4 md:row-span-1";
+                    } else if (project.title === "MyBhavans") {
                         layoutClass = "md:col-span-2 md:row-span-2";
                     } else if (project.title === "HisabKitab") {
                         layoutClass = "md:col-span-2 md:row-span-1";
@@ -98,7 +101,10 @@ export default function Projects() {
                                         alt={project.title}
                                         fill
                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                        className="object-contain transition-all duration-700"
+                                        className={cn(
+                                            "transition-all duration-700",
+                                            project.title === "Trie" ? "object-cover" : "object-contain"
+                                        )}
                                     />
                                     <div className={cn(
                                         "absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center gap-4 p-6",
@@ -256,7 +262,7 @@ export default function Projects() {
                                             </div>
                                             <div className="flex flex-col">
                                                 <span className="text-[10px] uppercase tracking-wider font-bold" style={{ color: "var(--theme-text-subtle)" }}>Year</span>
-                                                <span className="text-xs md:text-sm" style={{ color: "var(--theme-text-body)" }}>2024</span>
+                                                <span className="text-xs md:text-sm" style={{ color: "var(--theme-text-body)" }}>2026</span>
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-3" style={{ color: "var(--theme-text-muted)" }}>

@@ -51,14 +51,14 @@ const SplashScreen: React.FC = () => {
         // Non-linear progress simulation
         // Slows down at 40%, 75%, and 90%
         let simulatedProgress = 0;
-        if (elapsed < 800) {
-            simulatedProgress = (elapsed / 800) * 40;
-        } else if (elapsed < 1800) {
-            simulatedProgress = 40 + ((elapsed - 800) / 1000) * 35;
+        if (elapsed < 600) {
+            simulatedProgress = (elapsed / 600) * 40;
+        } else if (elapsed < 1400) {
+            simulatedProgress = 40 + ((elapsed - 600) / 800) * 35;
+        } else if (elapsed < 2200) {
+            simulatedProgress = 75 + ((elapsed - 1400) / 800) * 15;
         } else if (elapsed < 2800) {
-            simulatedProgress = 75 + ((elapsed - 1800) / 1000) * 15;
-        } else if (elapsed < 3500) {
-            simulatedProgress = 90 + ((elapsed - 2800) / 700) * 10;
+            simulatedProgress = 90 + ((elapsed - 2200) / 600) * 10;
         } else {
             simulatedProgress = 100;
         }
@@ -72,7 +72,7 @@ const SplashScreen: React.FC = () => {
             setIsVisible(false);
             sessionStorage.setItem("hasSeenSplash", "true");
             window.dispatchEvent(new CustomEvent("splash-finished"));
-          }, 800);
+          }, 500);
         }
       };
 

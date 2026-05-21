@@ -118,6 +118,16 @@ export const technicalArsenal: Skill[] = [
 
 export const projects: Project[] = [
     {
+        id: 18,
+        title: "Trie",
+        description: "A high-performance competitive programming platform featuring a real-time code execution engine, visualized statistics, and multi-language support. Designed to replicate and enhance the LeetCode experience.",
+        tech: ["Next.js", "PostgreSQL", "Prisma", "Clerk", "Judge0", "Docker"],
+        image: "/images/projects/trie.png",
+        featured: true,
+        liveUrl: "https://drive.google.com/file/d/1ZFap4sR0R7mgQbZR4NNZn3htM459sHvZ/view?usp=sharing",
+        githubUrl: "https://github.com/mailmeatdarshan/Trie"
+    },
+    {
         id: 17,
         title: "ShriHariEnterprises",
         description: "A professional business platform for Shri Hari Enterprises, currently under development to streamline their operations and digital presence.",
