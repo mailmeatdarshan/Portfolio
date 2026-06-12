@@ -12,6 +12,7 @@ import { DistanceTracker } from "@/components/ui/DistanceTracker";
 import { PetWidget } from "@/components/ui/PetWidget";
 import { SpotifyWidget } from "@/components/ui/SpotifyWidget";
 import { GithubActivityLog } from "@/components/ui/GithubActivityLog";
+import { LeetcodeActivityLog } from "@/components/ui/LeetcodeActivityLog";
 import { ChessWidget } from "@/components/ui/ChessWidget";
 import { MonkeyTypeWidget } from "@/components/ui/MonkeyTypeWidget";
 import { MonkeyTypeActivityLog } from "@/components/ui/MonkeyTypeActivityLog";
@@ -472,11 +473,7 @@ export default function AboutPage() {
                             {t.story.p1}
                         </p>
                         <p>
-                            {lang === "en" ? (
-                                <>Today, I&apos;m a Computer Science student at <strong>Bhavan&apos;s College</strong>, where I translate that curiosity into lines of code. I believe the web is the ultimate canvas for creativity.</>
-                            ) : (
-                                <>Aaj, main <strong>Bhavan&apos;s College</strong> mein Computer Science ka student hoon, jahan main us curiosity ko code mein badalta hoon. Mera maanna hai ki web creativity ka sabse bada canvas hai.</>
-                            )}
+                            {t.story.p2}
                         </p>
                         <p>
                             {t.story.p3}
@@ -492,11 +489,7 @@ export default function AboutPage() {
                     <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-none">{t.development.title}</h2>
                     <div className="text-2xl md:text-4xl font-medium leading-[1.3] space-y-10 text-zinc-600 dark:text-zinc-400">
                         <p>
-                            {lang === "en" ? (
-                                <>I live in the terminal. Whether it&apos;s pushing commits to <strong className={isEarth ? "text-amber-600" : "text-blue-500"}>Chitti-the-Robot</strong> or architecting <strong className={isEarth ? "text-amber-600" : "text-blue-500"}>HisabKitab</strong>, open source is where I find my tribe.</>
-                            ) : (
-                                <>Main terminal mein rehta hoon. Chahe wo <strong className={isEarth ? "text-amber-600" : "text-blue-500"}>Chitti-the-Robot</strong> pe commits push karna ho ya <strong className={isEarth ? "text-amber-600" : "text-blue-500"}>HisabKitab</strong> design karna, open source hi meri asli jagah hai.</>
-                            )}
+                            {t.development.p1}
                         </p>
                         <p>
                             {t.development.p2}
@@ -504,6 +497,9 @@ export default function AboutPage() {
                     </div>
                     <div className="pt-8">
                         <GithubActivityLog />
+                    </div>
+                    <div className="pt-4">
+                        <LeetcodeActivityLog />
                     </div>
                 </section>
 

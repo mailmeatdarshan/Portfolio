@@ -63,15 +63,15 @@ export const aboutTranslations = {
         story: {
             label: "Profile Narrative",
             title: "The Story So Far.",
-            p1: "My relationship with computers started as a mystery. I wanted to know how a bunch of electronic components could create entire worlds.",
-            p2: "Today, I'm a Computer Science student at Bhavan's College, where I translate that curiosity into lines of code. I believe the web is the ultimate canvas for creativity.",
-            p3: "When I build, I don't just think about logic. I think about motion, sound, and satisfaction. If a button doesn't feel good to click, it shouldn't exist."
+            p1: "I've always been that person who had to know how everything worked. Growing up, I was the unofficial \"tech guy\" for family and friends — the one who fixed the Wi-Fi, set up the printer, and ended up going down rabbit holes at 2 AM just because a piece of software did something interesting.",
+            p2: "After 10th grade, I set out to crack JEE — the kind of exam that humbles you. It didn't go as planned, but that chapter taught me something no syllabus could: resilience, and the art of pivoting when the path disappears. Rather than letting that define me, I turned toward what I'd always loved — building things.",
+            p3: "Today, I'm a Computer Science student at Bhavan's College, channeling that same curiosity into code. I started with small projects, kept iterating, kept shipping, and somewhere along the way, realized that growth doesn't just come from wins — it comes from the hard detours that shape how you think."
         },
         development: {
             label: "Development Flow",
             title: "Deep in the Trenches.",
-            p1: "I live in the terminal. Whether it's pushing commits to Chitti-the-Robot or architecting HisabKitab, open source is where I find my tribe.",
-            p2: "I obsession over DX (Developer Experience). I build tools that I would want to use myself—fast, intuitive, and occasionally a bit magical."
+            p1: "I live where problems get solved — whether that's debugging a gnarly edge case at midnight, grinding LeetCode to sharpen my algorithmic thinking, or architecting a feature from scratch. Every commit is a step forward, every failing test is a clue.",
+            p2: "I care deeply about writing code that's not just functional, but readable and maintainable. Clean abstractions, thoughtful naming, and systems that a future-me wouldn't curse at — that's the standard I hold myself to."
         },
         performance: {
             label: "Performance Test",
@@ -168,15 +168,15 @@ export const aboutTranslations = {
         story: {
             label: "Kahaani",
             title: "Abhi Tak Ki Kahani.",
-            p1: "Computers ke saath mera rishta ek raaz se shuru hua tha. Mujhe jaanna tha ki kaise kuch electronic components puri duniya bana sakte hain.",
-            p2: "Aaj, main Bhavan's College mein Computer Science ka student hoon, jahan main us curiosity ko code mein badalta hoon. Mera maanna hai ki web creativity ka sabse bada canvas hai.",
-            p3: "Jab main kuch banata hoon, toh sirf logic ke baare mein nahi sochta. Main motion, sound aur satisfaction ke baare mein bhi sochta hoon. Agar ek button click karne mein maza na aaye, toh wo hona hi nahi chahiye."
+            p1: "Main hamesha wo banda raha hoon jise jaanna hai ki cheezein kaise kaam karti hain. Bachpan se hi ghar aur doston ke bich 'tech wala' tha — Wi-Fi theek karo, printer setup karo, aur raat 2 baje kisi software ke kisi interesting kaam mein kho jao.",
+            p2: "10th ke baad JEE ki taiyari ki — woh exam jo aapko humble kar deta hai. Plan ke mutabik nahi hua, lekin us safar ne mujhe kuch aise sikhaya jo koi syllabus nahi sikhata: uthna, aur apni raah khud banana. Us setback ko apni pehchaan banane ki bajay, main wapas apni sachchi pasand ki taraf muda — kuch banana.",
+            p3: "Aaj main Bhavan's College mein Computer Science ka student hoon, aur usi curiosity ko code mein dhaal raha hoon. Chote projects se shuru kiya, iterate karta raha, ship karta raha — aur kahin na kahin samajh aaya ki growth sirf jeet se nahi aati, un mushkil moddon se bhi aati hai jo sochne ka andaz badal dete hain."
         },
         development: {
             label: "Kaam",
             title: "Kaam Mein Mashgool.",
-            p1: "Main terminal mein rehta hoon. Chahe wo Chitti-the-Robot pe commits push karna ho ya HisabKitab design karna, open source hi meri asli jagah hai.",
-            p2: "Mujhe DX (Developer Experience) ka junoon hai. Main aise tools banata hoon jo main khud use karna chahunga—fast, intuitive aur thoda sa magical."
+            p1: "Main wahan rehta hoon jahan problems solve hoti hain — chahe wo raat ko kisi tricky bug ko debug karna ho, LeetCode grind karna ho apni algorithmic thinking sharpen karne ke liye, ya scratch se koi feature architect karna. Har commit ek kadam aage hai, har failing test ek hint.",
+            p2: "Mera yahi standard hai: aisaa code likhna jo sirf kaam kare nahi, balki readable aur maintainable bhi ho. Clean abstractions, thoughtful naming, aur aisi systems jinhe future-me dekh ke galiyaan na de."
         },
         performance: {
             label: "Speed",
