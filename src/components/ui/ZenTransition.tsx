@@ -4,6 +4,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@/contexts/ThemeProvider";
 import { usePathname } from "next/navigation";
+import { LottieAnimation } from "@/components/ui/LottieAnimation";
 
 export default function ZenTransition() {
   const pathname = usePathname();
@@ -22,7 +23,7 @@ export default function ZenTransition() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.45, ease: "easeOut" }}
+          transition={{ duration: 0.5, ease: "easeInOut" }}
           className="fixed inset-0 z-[999] flex items-center justify-center overflow-hidden"
           style={{ background: "#030508" }}
         >
@@ -31,8 +32,8 @@ export default function ZenTransition() {
             <motion.div
               key={i}
               className="absolute rounded-full"
-              style={{ border: "1px solid rgba(255,255,255,0.12)" }}
-              initial={{ width: 0, height: 0, opacity: 0.7 }}
+              style={{ border: "1px solid rgba(255,255,255,0.06)" }}
+              initial={{ width: 0, height: 0, opacity: 0.6 }}
               animate={{ width: "220vmax", height: "220vmax", opacity: 0 }}
               transition={{
                 duration: 2.8,
@@ -44,86 +45,57 @@ export default function ZenTransition() {
           ))}
 
           {/* ── Center content ─────────────────────────────────────────────── */}
-          <div className="relative z-10 flex flex-col items-center gap-5">
-
-            {/* Breathing dot */}
+          <div className="relative z-10 flex flex-col items-center gap-6 text-center">
+            
+            {/* Lottie Loading Animation */}
             <motion.div
-              className="w-[6px] h-[6px] rounded-full bg-white"
-              animate={{ opacity: [0.3, 1, 0.3], scale: [0.8, 1.5, 0.8] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            />
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="relative"
+            >
+              {/* Subtle back-glow */}
+              <div className="absolute inset-0 bg-blue-500/10 blur-[40px] rounded-full -z-10" />
+              <LottieAnimation 
+                animationPath="/ZenLoading.json" 
+                className="w-48 h-48 md:w-64 md:h-64" 
+              />
+            </motion.div>
 
             {/* Top hairline — extends outward */}
             <motion.div
               className="h-px"
               style={{
                 background:
-                  "linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent)",
+                  "linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent)",
               }}
               initial={{ width: 0, opacity: 0 }}
               animate={{ width: "180px", opacity: 1 }}
-              transition={{ duration: 0.7, delay: 0.25, ease: "easeOut" }}
+              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
             />
 
-            {/* Letter-by-letter text reveal */}
-            <div
-              className="flex overflow-hidden"
-              style={{
-                fontFamily: "var(--font-orbitron, monospace)",
-                fontSize: "clamp(13px, 2.5vw, 18px)",
-                letterSpacing: "0.45em",
-                color: "rgba(255,255,255,0.9)",
-                fontWeight: 700,
-              }}
+            {/* Modern clean text label */}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 0.9, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.35, ease: "easeOut" }}
+              className="text-white font-black tracking-[0.55em] text-xs md:text-sm uppercase"
+              style={{ fontFamily: "var(--font-orbitron, monospace)" }}
             >
-              {label.split("").map((char, i) => (
-                <motion.span
-                  key={i}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: [0, 1, 1, 0], y: [12, 0, 0, -6] }}
-                  transition={{
-                    duration: 2.3,
-                    delay: 0.3 + i * 0.045,
-                    times: [0, 0.12, 0.72, 1],
-                    ease: "easeOut",
-                  }}
-                >
-                  {char === " " ? "\u00A0" : char}
-                </motion.span>
-              ))}
-            </div>
+              {label}
+            </motion.div>
 
             {/* Bottom hairline — shorter */}
             <motion.div
               className="h-px"
               style={{
                 background:
-                  "linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent)",
+                  "linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)",
               }}
               initial={{ width: 0, opacity: 0 }}
               animate={{ width: "90px", opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.45, ease: "easeOut" }}
             />
-
-            {/* Thin progress line */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: [0, 0.6, 0.6, 0] }}
-              transition={{ duration: 2.3, times: [0, 0.1, 0.75, 1] }}
-              className="relative w-24 md:w-40 h-px overflow-hidden rounded-full"
-              style={{ background: "rgba(255,255,255,0.08)" }}
-            >
-              <motion.div
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 2.1, delay: 0.15, ease: "linear" }}
-                className="absolute inset-0 origin-left"
-                style={{
-                  background:
-                    "linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0.6), rgba(255,255,255,0.1))",
-                }}
-              />
-            </motion.div>
           </div>
         </motion.div>
       )}
