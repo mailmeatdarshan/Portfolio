@@ -22,6 +22,7 @@ import { CloudDivider } from "@/components/ui/CloudDivider";
 import { BentoCard } from "@/components/ui/BentoCard";
 import { WavingFlag } from "@/components/ui/WavingFlag";
 import { BookStack } from "@/components/ui/BookStack";
+import { LottieAnimation } from "@/components/ui/LottieAnimation";
 import { useTheme } from "@/contexts/ThemeProvider";
 import { aboutTranslations } from "@/data/aboutTranslations";
 
@@ -37,14 +38,21 @@ export default function AboutPage() {
     const [isProfileHovered, setIsProfileHovered] = React.useState(false);
     const [isMagnusPlaying, setIsMagnusPlaying] = React.useState(false);
     const videoRef = React.useRef<HTMLVideoElement>(null);
+    const ambientVideoRef = React.useRef<HTMLVideoElement>(null);
     const profileVideoRef = React.useRef<HTMLVideoElement>(null);
 
     const togglePlay = () => {
         if (videoRef.current) {
             if (isPlaying) {
                 videoRef.current.pause();
+                if (ambientVideoRef.current) {
+                    ambientVideoRef.current.pause();
+                }
             } else {
                 videoRef.current.play();
+                if (ambientVideoRef.current) {
+                    ambientVideoRef.current.play();
+                }
             }
             setIsPlaying(!isPlaying);
         }
@@ -57,8 +65,20 @@ export default function AboutPage() {
     };
 
     React.useEffect(() => {
-        if (isPlaying && videoRef.current) {
-            videoRef.current.play();
+        if (isPlaying) {
+            if (videoRef.current) {
+                videoRef.current.play();
+            }
+            if (ambientVideoRef.current) {
+                ambientVideoRef.current.play();
+            }
+        } else {
+            if (videoRef.current) {
+                videoRef.current.pause();
+            }
+            if (ambientVideoRef.current) {
+                ambientVideoRef.current.pause();
+            }
         }
     }, [footerVideoIndex, isPlaying]);
 
@@ -138,11 +158,23 @@ export default function AboutPage() {
                         <motion.h1 
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className={`text-7xl md:text-[10rem] font-black tracking-tighter mb-12 leading-[0.8] ${
+                            className={`text-7xl md:text-[10rem] font-black tracking-tighter mb-12 leading-[0.8] relative z-10 ${
                                 isEarth ? "text-[#1e293b]" : "text-white"
                             }`}
                         >
-                            {t.hero.hi}<br /> {t.hero.im}
+                            <span className="relative inline-block overflow-visible">
+                                <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 opacity-30 dark:opacity-20 pointer-events-none">
+                                    <LottieAnimation 
+                                        animationPath="/hand wave.json" 
+                                        className="w-[360px] h-[360px] md:w-[750px] md:h-[750px]" 
+                                    />
+                                </span>
+                                <span className="relative z-10">
+                                    {t.hero.hi}
+                                    <br />
+                                    {t.hero.im}
+                                </span>
+                            </span>
                         </motion.h1>
                         <div className={`space-y-8 text-2xl md:text-3xl font-medium leading-relaxed max-w-xl mx-auto lg:mx-0 ${
                             isEarth ? "text-[#334155]" : "text-zinc-400"
@@ -467,7 +499,16 @@ export default function AboutPage() {
                         <User className="w-4 h-4" />
                         <span>{t.story.label}</span>
                     </div>
-                    <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-none">{t.story.title}</h2>
+                    <div className="flex items-center justify-center md:justify-start overflow-visible w-full">
+                        <div className="relative inline-flex items-center justify-center overflow-visible">
+                            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 opacity-30 dark:opacity-20 pointer-events-none md:left-full md:-translate-x-24 md:top-1/2 md:-translate-y-1/2">
+                                <LottieAnimation animationPath="/story.json" className="w-72 h-72 md:w-[450px] md:h-[450px]" />
+                            </div>
+                            <h2 className="relative z-10 text-6xl md:text-8xl font-black tracking-tighter leading-none">
+                                {t.story.title}
+                            </h2>
+                        </div>
+                    </div>
                     <div className="text-2xl md:text-4xl font-medium leading-[1.3] space-y-12 text-zinc-600 dark:text-zinc-400">
                         <p>
                             {t.story.p1}
@@ -486,7 +527,16 @@ export default function AboutPage() {
                         <Code className="w-4 h-4" />
                         <span>{t.development.label}</span>
                     </div>
-                    <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-none">{t.development.title}</h2>
+                    <div className="flex items-center justify-center md:justify-start overflow-visible w-full">
+                        <div className="relative inline-flex items-center justify-center overflow-visible">
+                            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 opacity-30 dark:opacity-20 pointer-events-none md:left-full md:-translate-x-24 md:top-1/2 md:-translate-y-1/2">
+                                <LottieAnimation animationPath="/deepinthetrenches.json" className="w-72 h-72 md:w-[450px] md:h-[450px]" />
+                            </div>
+                            <h2 className="relative z-10 text-6xl md:text-8xl font-black tracking-tighter leading-none">
+                                {t.development.title}
+                            </h2>
+                        </div>
+                    </div>
                     <div className="text-2xl md:text-4xl font-medium leading-[1.3] space-y-10 text-zinc-600 dark:text-zinc-400">
                         <p>
                             {t.development.p1}
@@ -508,7 +558,16 @@ export default function AboutPage() {
                         <Sparkles className="w-4 h-4" />
                         <span>{t.performance.label}</span>
                     </div>
-                    <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-none">{t.performance.title}</h2>
+                    <div className="flex items-center justify-center md:justify-start overflow-visible w-full">
+                        <div className="relative inline-flex items-center justify-center overflow-visible">
+                            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 opacity-35 dark:opacity-25 pointer-events-none md:left-full md:-translate-x-8 md:top-1/2 md:-translate-y-[58%]">
+                                <LottieAnimation animationPath="/Typing.json" className="w-72 h-72 md:w-[450px] md:h-[450px]" />
+                            </div>
+                            <h2 className="relative z-10 text-6xl md:text-8xl font-black tracking-tighter leading-none">
+                                {t.performance.title}
+                            </h2>
+                        </div>
+                    </div>
                     <p className="text-2xl md:text-4xl font-medium text-zinc-600 dark:text-zinc-400 max-w-3xl leading-snug">
                         {t.performance.p1}
                     </p>
@@ -535,7 +594,16 @@ export default function AboutPage() {
                                         <Info className="w-4 h-4" />
                                         <span>{t.strategic.label}</span>
                                     </div>
-                                    <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-none">{t.strategic.title}</h2>
+                                    <div className="flex items-center justify-center md:justify-start overflow-visible w-full">
+                                        <div className="relative inline-flex items-center justify-center overflow-visible">
+                                            <div className="absolute left-1/2 top-1/2 -translate-x-[25%] -translate-y-1/2 z-0 opacity-30 dark:opacity-20 pointer-events-none md:left-full md:-translate-x-128 md:top-1/2 md:-translate-y-1/2">
+                                                <LottieAnimation animationPath="/Chess.json" className="w-[420px] h-[420px] md:w-[900px] md:h-[900px]" />
+                                            </div>
+                                            <h2 className="relative z-10 text-6xl md:text-8xl font-black tracking-tighter leading-none">
+                                                {t.strategic.title}
+                                            </h2>
+                                        </div>
+                                    </div>
                                     <div className="space-y-8">
                                         <p className="text-2xl md:text-4xl font-medium text-zinc-600 dark:text-zinc-400 leading-[1.3]">
                                             {t.strategic.p1}
@@ -602,7 +670,16 @@ export default function AboutPage() {
                         <BookOpen className="w-4 h-4" />
                         <span>{t.literary.label}</span>
                     </div>
-                    <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-none">{t.literary.title}</h2>
+                    <div className="flex items-center justify-center md:justify-start overflow-visible w-full">
+                        <div className="relative inline-flex items-center justify-center overflow-visible">
+                            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 opacity-30 dark:opacity-20 pointer-events-none md:left-full md:-translate-x-20 md:top-1/2 md:-translate-y-[45%]">
+                                <LottieAnimation animationPath="/Books.json" className="w-72 h-72 md:w-[450px] md:h-[450px]" />
+                            </div>
+                            <h2 className="relative z-10 text-6xl md:text-8xl font-black tracking-tighter leading-none">
+                                {t.literary.title}
+                            </h2>
+                        </div>
+                    </div>
                     <p className="text-2xl md:text-4xl font-medium text-zinc-600 dark:text-zinc-400 max-w-3xl leading-snug">
                         {t.literary.p1}
                     </p>
@@ -616,7 +693,16 @@ export default function AboutPage() {
                         <Headphones className="w-4 h-4" />
                         <span>{t.culture.label}</span>
                     </div>
-                    <h2 className="text-6xl md:text-8xl font-black tracking-tighter leading-none">{t.culture.title}</h2>
+                    <div className="flex items-center justify-center md:justify-start overflow-visible w-full">
+                        <div className="relative inline-flex items-center justify-center overflow-visible">
+                            <div className="absolute left-1/2 top-1/2 -translate-x-[25%] -translate-y-1/2 z-0 opacity-30 dark:opacity-20 pointer-events-none md:left-full md:-translate-x-11 md:top-1/2 md:-translate-y-[64%]">
+                                <LottieAnimation animationPath="/music.json" className="w-72 h-72 md:w-[450px] md:h-[450px]" />
+                            </div>
+                            <h2 className="relative z-10 text-6xl md:text-8xl font-black tracking-tighter leading-none">
+                                {t.culture.title}
+                            </h2>
+                        </div>
+                    </div>
                     
                     {/* Wide Desktop Layout: Spotify Left | Text Center | 2x2 Videos Right */}
                     <div className="hidden lg:grid grid-cols-12 gap-12 items-center -mx-20 max-w-[1600px]">
@@ -686,28 +772,76 @@ export default function AboutPage() {
             </div>
 
             {/* ═══ FOOTER ═══ */}
-            <footer className={`relative pt-64 pb-32 transition-all duration-1000 overflow-hidden flex flex-col justify-center ${
+            <footer className={`relative py-24 md:py-36 transition-all duration-1000 overflow-hidden flex flex-col justify-center ${
                 isEarth ? "bg-[#e3f2fd]" : "bg-[#0b0e14]"
             } ${isPlaying ? "min-h-screen" : "min-h-[600px]"}`}>
-                {/* Background Video - Max Visibility */}
-                <video 
-                    ref={videoRef}
-                    src={FOOTER_VIDEOS[footerVideoIndex]}
-                    className={`absolute inset-0 w-full h-full object-cover object-[center_30%] transition-opacity duration-1000 z-0 ${isPlaying ? "opacity-100" : "opacity-0"}`}
-                    loop
-                    playsInline
-                />
+                {/* Video Container (Ambient background on desktop, sharp container centered on desktop, full screen on mobile) */}
+                <div className={`absolute inset-0 transition-opacity duration-1000 z-0 ${isPlaying ? "opacity-100" : "opacity-0 pointer-events-none"} flex items-center justify-center`}>
+                    {/* On Desktop: Blurred ambient background video to fill the screen */}
+                    <div className="hidden md:block absolute inset-0 w-full h-full bg-black/60 z-0" />
+                    <video 
+                        ref={ambientVideoRef}
+                        src={FOOTER_VIDEOS[footerVideoIndex]}
+                        className="hidden md:block absolute inset-0 w-full h-full object-cover blur-3xl opacity-45 scale-105 z-0"
+                        muted
+                        loop
+                        playsInline
+                    />
 
-                {isPlaying && (
-                    <motion.button 
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        onClick={nextVideo}
-                        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-20 p-2 md:p-4 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white transition-all hover:scale-110 group"
-                        title="Next Video"
-                    >
-                        <ChevronRight className="w-4 h-4 md:w-8 md:h-8 group-hover:translate-x-1 transition-transform" />
-                    </motion.button>
+                    {/* Sharp Video Player Frame (Full screen on mobile, styled vertical frame on desktop) */}
+                    <div className="relative w-full h-full md:w-auto md:h-[70vh] md:max-h-[640px] md:aspect-[9/16] z-10 flex items-center justify-center group/player">
+                        <div className="relative w-full h-full md:rounded-[2rem] md:border-[6px] md:border-zinc-800/80 md:shadow-[0_20px_50px_rgba(0,0,0,0.8)] overflow-hidden bg-black flex items-center justify-center">
+                            <video 
+                                ref={videoRef}
+                                src={FOOTER_VIDEOS[footerVideoIndex]}
+                                className="w-full h-full object-cover cursor-pointer"
+                                onClick={togglePlay}
+                                loop
+                                playsInline
+                            />
+                            
+                            {/* Control Bar Overlay at the bottom-left of the video card (Desktop only, shown on hover) */}
+                            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover/player:opacity-100 transition-all duration-300 z-20 flex items-center justify-start gap-4 pointer-events-none">
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        togglePlay();
+                                    }}
+                                    className="pointer-events-auto p-2 rounded-xl bg-white/10 hover:bg-white/20 border border-white/15 text-white transition-all hover:scale-105 active:scale-95 shadow-md flex items-center justify-center"
+                                    title={isPlaying ? "Pause" : "Play"}
+                                >
+                                    {isPlaying ? (
+                                        <Pause className="w-4 h-4 fill-current" />
+                                    ) : (
+                                        <Play className="w-4 h-4 fill-current" />
+                                    )}
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Next Video button right next to the video on desktop, or inside on mobile */}
+                        {isPlaying && (
+                            <motion.button 
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                onClick={nextVideo}
+                                className="absolute right-4 md:-right-24 top-1/2 -translate-y-1/2 z-20 p-3.5 md:p-5 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white transition-all hover:scale-110 group/btn shadow-lg"
+                                title="Next Video"
+                            >
+                                <ChevronRight className="w-5 h-5 md:w-8 md:h-8 group-hover/btn:translate-x-1 transition-transform" />
+                            </motion.button>
+                        )}
+                    </div>
+                </div>
+
+                {/* Ground-level waving hands at the absolute edge of the screen */}
+                {!isPlaying && (
+                    <div className="absolute bottom-0 left-0 right-0 z-0 flex justify-center pointer-events-none overflow-hidden h-72 md:h-[480px]">
+                        <LottieAnimation 
+                            animationPath="/bye.json" 
+                            className="w-[300px] h-[300px] md:w-[500px] md:h-[500px] -translate-y-4 md:-translate-y-8 flex-shrink-0" 
+                        />
+                    </div>
                 )}
 
                 <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
@@ -740,32 +874,32 @@ export default function AboutPage() {
                         )}
                     </AnimatePresence>
 
-                    <div className={`flex flex-col items-center gap-8 transition-all duration-1000 ${isPlaying ? "mt-0" : ""}`}>
-                        {!isPlaying && (
+                    {!isPlaying && (
+                        <div className="flex flex-col items-center gap-8 mt-12">
                             <p className="text-xs font-black uppercase tracking-[0.3em] opacity-30">
                                 &copy; {t.footer.copyright}
                             </p>
-                        )}
-                        
-                        <button 
-                            onClick={togglePlay}
-                            className={`z-20 p-2.5 md:p-5 rounded-full backdrop-blur-md border transition-all duration-300 hover:scale-110 ${
-                                isPlaying 
-                                    ? "bg-white/10 border-white/20 text-white" 
-                                    : (isEarth 
-                                        ? "bg-white/10 border-zinc-200 text-zinc-900 shadow-sm" 
-                                        : "bg-white/5 border-white/10 text-white")
-                            }`}
-                            title={isPlaying ? "Pause" : "Play"}
-                        >
-                            {isPlaying ? (
-                                <Pause className="w-4 h-4 md:w-6 md:h-6 fill-current" />
-                            ) : (
-                                <Play className="w-4 h-4 md:w-6 md:h-6 fill-current" />
-                            )}
-                        </button>
-                    </div>
+                        </div>
+                    )}
                 </div>
+
+                <button 
+                    onClick={togglePlay}
+                    className={`z-20 p-2.5 md:p-5 rounded-full backdrop-blur-md border transition-all duration-300 hover:scale-110 ${
+                        isPlaying 
+                            ? "absolute bottom-8 left-1/2 -translate-x-1/2 bg-white/10 border-white/20 text-white" 
+                            : (isEarth 
+                                ? "mx-auto mt-8 block bg-white/10 border-zinc-200 text-zinc-900 shadow-sm" 
+                                : "mx-auto mt-8 block bg-white/5 border-white/10 text-white")
+                    }`}
+                    title={isPlaying ? "Pause" : "Play"}
+                >
+                    {isPlaying ? (
+                        <Pause className="w-4 h-4 md:w-6 md:h-6 fill-current" />
+                    ) : (
+                        <Play className="w-4 h-4 md:w-6 md:h-6 fill-current" />
+                    )}
+                </button>
             </footer>
         </div>
     );
