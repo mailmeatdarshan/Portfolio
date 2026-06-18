@@ -63,36 +63,42 @@ export const personalInfo = {
         whatILove: [
             {
                 title: "Anime is my escape",
-                description: "Especially One Piece. The story, the philosophy, the madness."
+                description: "Especially One Piece. The story, the philosophy, the madness.",
+                emoji: "⚔️"
             },
             {
                 title: "Japanese culture and language",
-                description: "Currently learning Japanese step by step. From Hiragana to full sentences someday."
+                description: "Currently learning Japanese step by step. From Hiragana to full sentences someday.",
+                emoji: "⛩️"
             },
             {
                 title: "Night coding sessions",
-                description: "When the world sleeps, I build things that make sense to me."
+                description: "When the world sleeps, I build things that make sense to me.",
+                emoji: "💻"
             },
             {
                 title: "Designing UI with feel",
-                description: "Not just pretty, but responsive, interactive, and reactive to touch, drag, motion, and mood."
+                description: "Not just pretty, but responsive, interactive, and reactive to touch, drag, motion, and mood.",
+                emoji: "🎨"
             },
             {
                 title: "Shitposting",
-                description: "Therapeutic. Kinda my spiritual outlet tbh."
+                description: "Therapeutic. Kinda my spiritual outlet tbh.",
+                emoji: "💀"
             },
             {
                 title: "Reading Masterpieces",
-                description: "Life’s a maze. Read Books And Chill"
+                description: "Life’s a maze. Read Books And Chill",
+                emoji: "📚"
             }
         ],
         masterplan: [
-            "Own a piece of land in Japan. No matter how small, it's my portal to peace.",
-            "If I’m not a millionaire before 30, I'm officially gay. Signed, stamped, sealed.",
-            "Launch a product people can’t stop using. Not viral, just vital.",
-            "Build a system or tool that gets referenced on Reddit without my name on it.",
-            "Design UIs that breathe. Motion, feel, personality.",
-            "Make enough passive income to disappear and code in the mountains."
+            { text: "Own a piece of land in Japan. No matter how small, it's my portal to peace.", emoji: "🏡" },
+            { text: "If I’m not a millionaire before 30, I'm officially gay. Signed, stamped, sealed.", emoji: "💰" },
+            { text: "Launch a product people can’t stop using. Not viral, just vital.", emoji: "🚀" },
+            { text: "Build a system or tool that gets referenced on Reddit without my name on it.", emoji: "🔧" },
+            { text: "Design UIs that breathe. Motion, feel, personality.", emoji: "✨" },
+            { text: "Make enough passive income to disappear and code in the mountains.", emoji: "🏔️" }
         ]
     }
 };

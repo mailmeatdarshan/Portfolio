@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import { useTheme } from "@/contexts/ThemeProvider";
 
 import { RoughCard } from "./ui/rough-card";
+import { WhatILove } from "./ui/WhatILove";
+import { MasterplanTimeline } from "./ui/MasterplanTimeline";
 
 export default function About() {
     const { isEarth } = useTheme();
@@ -46,91 +48,14 @@ export default function About() {
                     </p>
                 </RoughCard>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-                    {/* What I Love Section */}
-                    <div id="what-i-love" className="space-y-8">
-                        <h3 className="text-3xl font-bold mb-8 bg-clip-text text-transparent transition-all duration-1000"
-                            style={{
-                                backgroundImage: `linear-gradient(to right, var(--theme-gradient-text-from), var(--theme-gradient-text-to))`,
-                            }}
-                        >
-                            What I Love
-                        </h3>
-                        <div className="space-y-6">
-                            {personalInfo.about.whatILove.map((item, idx) => (
-                                <motion.div
-                                    key={idx}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: idx * 0.1 }}
-                                    className="group"
-                                >
-                                    <h4 className="text-xl font-bold mb-1 transition-colors duration-1000"
-                                        style={{ color: "var(--theme-text-heading)" }}
-                                    >
-                                        {item.title}
-                                    </h4>
-                                    <p className="transition-colors duration-1000"
-                                        style={{ color: "var(--theme-text-muted)" }}
-                                    >
-                                        {item.description}
-                                    </p>
-                                </motion.div>
-                            ))}
-                        </div>
-                    </div>
+                {/* What I Love — Full-width immersive section */}
+                <div id="what-i-love" className="mb-20">
+                    <WhatILove />
+                </div>
 
-                    {/* Masterplan Section */}
-                    <div id="masterplan" className="space-y-8 relative">
-                        <h3 className="text-3xl font-bold mb-8 bg-clip-text text-transparent transition-all duration-1000"
-                            style={{
-                                backgroundImage: `linear-gradient(to right, var(--theme-gradient-text-alt-from), var(--theme-gradient-text-alt-to))`,
-                            }}
-                        >
-                            Masterplan Before 30
-                        </h3>
-                        
-                        <div className="relative space-y-0 pl-8">
-                            {/* Vertical Line */}
-                            <div className="absolute left-[11px] top-4 bottom-4 w-[2px] opacity-20 transition-colors duration-1000" 
-                                 style={{ backgroundColor: "var(--theme-text-heading)" }}
-                            />
-
-                            {personalInfo.about.masterplan.map((item, idx) => (
-                                <motion.div
-                                    key={idx}
-                                    initial={{ opacity: 0, x: 20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: idx * 0.1 }}
-                                    className="relative pb-10 last:pb-0"
-                                >
-                                    {/* Timeline Dot */}
-                                    <div className={`absolute -left-[30px] top-1.5 w-4 h-4 rounded-full border-2 transition-all duration-1000 ${
-                                        isEarth ? "bg-amber-100 border-amber-600" : "bg-neutral-900 border-yellow-500"
-                                    }`} />
-                                    
-                                    <div className="group">
-                                        <p style={{ color: "var(--theme-text-body)" }} 
-                                           className="text-lg md:text-xl font-medium leading-relaxed transition-all duration-500 group-hover:pl-2">
-                                            {item}
-                                        </p>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </div>
-
-                        <div className={`mt-10 p-6 rounded-2xl border-l-4 transition-all duration-1000 ${
-                            isEarth
-                                ? "bg-amber-50/50 border-amber-500 shadow-sm"
-                                : "bg-neutral-900/50 border-yellow-500 shadow-lg"
-                        }`}>
-                            <p className={`font-mono text-sm md:text-base tracking-tight transition-colors duration-1000 ${isEarth ? "text-amber-700" : "text-yellow-500"}`}>
-                                Status: Manifesting on full throttle. All or nothing.
-                            </p>
-                        </div>
-                    </div>
+                {/* Masterplan Before 30 — Full-width immersive section */}
+                <div id="masterplan">
+                    <MasterplanTimeline />
                 </div>
             </motion.div>
         </div>

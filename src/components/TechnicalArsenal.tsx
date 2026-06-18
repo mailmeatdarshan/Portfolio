@@ -15,18 +15,14 @@ export default function TechnicalArsenal() {
         .flatMap(cat => cat.items.map(item => ({ name: item, category: cat.category })));
 
     return (
-        <div className="py-20 w-full overflow-hidden">
+        <div className="py-20 w-full overflow-hidden relative z-10">
             <div className="max-w-7xl mx-auto px-4 mb-16">
-                <motion.h2 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5 }}
+                <h2 
                     className="text-4xl md:text-5xl font-bold text-center transition-colors duration-1000"
                     style={{ color: "var(--theme-text-heading)" }}
                 >
                     Technical Arsenal
-                </motion.h2>
+                </h2>
                 <motion.p 
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}

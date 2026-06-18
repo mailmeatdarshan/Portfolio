@@ -244,7 +244,7 @@ html.lenis body {
 
   /* Typography: earth mode uses Satoshi for headings */
   .theme-earth h1, .theme-earth h2, .theme-earth h3, .theme-earth .use-satoshi {
-    font-family: var(--font-satoshi), sans-serif;
+    font-family: var(--font-handwriting), sans-serif;
   }
 
   /* Smooth theme transitions on key properties */
