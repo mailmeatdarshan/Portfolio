@@ -15,6 +15,8 @@ import ModeToggle from "@/components/ui/ModeToggle";
 import ZenMode from "@/components/ui/ZenMode";
 import ZenTransition from "@/components/ui/ZenTransition";
 import TerminalMode from "@/components/ui/TerminalMode";
+import { Analytics } from "@vercel/analytics/react";
+
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -131,6 +133,7 @@ export default function RootLayout({
             <BackToTop />
             <ClientClippy />
           </SmoothScroll>
+          <Analytics />
         </ThemeProvider>
       </body>
     </html>
