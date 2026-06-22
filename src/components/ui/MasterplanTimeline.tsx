@@ -153,7 +153,7 @@ export const MasterplanTimeline: React.FC = () => {
                                     }}
                                 >
                                     <div className="flex flex-col items-center justify-center h-full px-4 py-6 text-center">
-                                        <div className="w-16 h-16 mb-2 flex items-center justify-center">
+                                        <div className="w-16 h-16 mb-2 mx-auto">
                                             {LOTTIE_MAP[tc.item.emoji] ? (
                                                 <LottieAnimation
                                                     animationPath={LOTTIE_MAP[tc.item.emoji]}
@@ -178,7 +178,7 @@ export const MasterplanTimeline: React.FC = () => {
                                     animate={{ opacity: 1, scale: 1 }}
                                     className="absolute inset-0 flex flex-col items-center justify-center gap-4 rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm"
                                 >
-                                    <div className="w-24 h-24 flex items-center justify-center">
+                                    <div className="w-24 h-24 mx-auto mb-4">
                                         <LottieAnimation
                                             animationPath="/rocket.json"
                                             className="w-full h-full"
@@ -220,7 +220,7 @@ export const MasterplanTimeline: React.FC = () => {
                                                 >
                                                     <div className="flex flex-col items-center justify-center h-full px-8 md:px-12 py-10 text-center">
                                                         <motion.div
-                                                            className="w-28 h-28 md:w-32 md:h-32 mb-5 flex items-center justify-center"
+                                                            className="w-28 h-28 md:w-32 md:h-32 mb-5 mx-auto"
                                                             animate={isTop ? { y: [0, -5, 0] } : {}}
                                                             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
                                                         >
@@ -329,7 +329,7 @@ export const MasterplanTimeline: React.FC = () => {
                                     }}
                                 />
                                 <div className="flex flex-col items-center justify-center h-full px-4 py-6 text-center">
-                                    <div className="w-16 h-16 mb-2 flex items-center justify-center">
+                                    <div className="w-16 h-16 mb-2 mx-auto">
                                         {LOTTIE_MAP[tc.item.emoji] ? (
                                             <LottieAnimation
                                                 animationPath={LOTTIE_MAP[tc.item.emoji]}
@@ -359,7 +359,7 @@ export const MasterplanTimeline: React.FC = () => {
                                 animate={{ opacity: 1, scale: 1 }}
                                 className="absolute inset-0 flex flex-col items-center justify-center gap-4 rounded-2xl bg-white/70 border border-amber-200/40 shadow-md"
                             >
-                                <div className="w-24 h-24 flex items-center justify-center">
+                                <div className="w-24 h-24 mx-auto mb-4">
                                     <LottieAnimation
                                         animationPath="/mountain.json"
                                         className="w-full h-full"
@@ -412,7 +412,7 @@ export const MasterplanTimeline: React.FC = () => {
                                                     }}
                                                 />
                                                 <div className="flex flex-col items-center justify-center h-full px-8 md:px-12 py-10 text-center relative">
-                                                    <div className="w-28 h-28 md:w-32 md:h-32 mb-5 flex items-center justify-center">
+                                                    <div className="w-28 h-28 md:w-32 md:h-32 mb-5 mx-auto">
                                                         {LOTTIE_MAP[item.emoji] ? (
                                                             <LottieAnimation
                                                                 animationPath={LOTTIE_MAP[item.emoji]}

@@ -17,6 +17,12 @@ export const LottieAnimation: React.FC<LottieAnimationProps> = ({
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const animRef = useRef<any>(null);
+    const autoplayRef = useRef(autoplay);
+
+    // Keep autoplayRef in sync with the prop
+    useEffect(() => {
+        autoplayRef.current = autoplay;
+    }, [autoplay]);
 
     useEffect(() => {
         let isMounted = true;
@@ -32,15 +38,10 @@ export const LottieAnimation: React.FC<LottieAnimationProps> = ({
                     container: containerRef.current,
                     renderer: "svg",
                     loop,
-                    autoplay,
+                    autoplay: autoplayRef.current,
                     path: animationPath,
                 });
                 animRef.current = anim;
-
-                // Stop if autoplay is initially false
-                if (!autoplay) {
-                    anim.goToAndStop(0, true);
-                }
             }
         });
 
@@ -59,7 +60,7 @@ export const LottieAnimation: React.FC<LottieAnimationProps> = ({
             if (autoplay) {
                 animRef.current.play();
             } else {
-                animRef.current.goToAndStop(0, true);
+                animRef.current.pause();
             }
         }
     }, [autoplay]);

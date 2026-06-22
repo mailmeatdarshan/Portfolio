@@ -105,7 +105,7 @@ export const WhatILove: React.FC = () => {
 
                                 <div className="relative z-10">
                                     <motion.div
-                                        className="w-16 h-16 md:w-20 md:h-20 mb-3 flex items-center justify-start"
+                                        className="w-16 h-16 md:w-20 md:h-20 mb-3"
                                         animate={isHovered ? { scale: [1, 1.15, 1] } : {}}
                                         transition={{ duration: 0.4 }}
                                     >
@@ -171,7 +171,7 @@ export const WhatILove: React.FC = () => {
                             onHoverEnd={() => setHoveredIdx(null)}
                             className={`relative rounded-2xl p-5 md:p-6 bg-white/70 border ${EARTH_ACCENTS[idx]} shadow-sm hover:shadow-md transition-shadow duration-300 backdrop-blur-sm cursor-default`}
                         >
-                            <div className="w-16 h-16 md:w-20 md:h-20 mb-3 flex items-center justify-start">
+                            <div className="w-16 h-16 md:w-20 md:h-20 mb-3">
                                 {LOTTIE_MAP[item.title] ? (
                                     <LottieAnimation
                                         animationPath={LOTTIE_MAP[item.title]}

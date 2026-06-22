@@ -328,6 +328,24 @@ export default function GravityHero() {
             if (earthFloor) {
                 Matter.World.remove(engineRef.current.world, earthFloor);
             }
+
+            if (isEnabledRef.current) {
+                setIsPhysicsEnabled(false);
+                isEnabledRef.current = false;
+                
+                bodiesRef.current.forEach(({ element }) => {
+                    element.style.transition = 'transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    element.style.transform = 'translate3d(0, 0, 0) rotate(0rad)';
+                });
+
+                window.dispatchEvent(new CustomEvent('clippy-reset-gravity'));
+
+                setTimeout(() => {
+                    bodiesRef.current.forEach(({ element }) => {
+                        element.style.transition = '';
+                    });
+                }, 1200);
+            }
         }
     }, [theme]);
 
