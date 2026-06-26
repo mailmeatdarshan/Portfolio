@@ -9,6 +9,7 @@ import { BentoGrid, BentoGridItem } from "./ui/bento-grid";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@/contexts/ThemeProvider";
+import { BlurReveal } from '@/components/BlurReveal';
 
 export default function Projects() {
     const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -53,18 +54,22 @@ export default function Projects() {
     return (
         <div className="py-20 px-4 relative">
             <div className="max-w-7xl mx-auto mb-16">
+                <BlurReveal>
                 <h2
                     className="text-4xl md:text-5xl font-bold text-center transition-colors duration-1000"
                     style={{ color: "var(--theme-text-heading)" }}
                 >
                     Featured Work
                 </h2>
+                </BlurReveal>
+                <BlurReveal delay={0.1}>
                 <p
                     className="text-center mt-4 max-w-2xl mx-auto transition-colors duration-1000"
                     style={{ color: "var(--theme-text-muted)" }}
                 >
                     A selection of my best projects, combining design thinking with robust engineering.
                 </p>
+                </BlurReveal>
             </div>
 
             <BentoGrid className="max-w-7xl mx-auto">
@@ -353,6 +358,7 @@ export default function Projects() {
                 )}
             </AnimatePresence>
 
+            <BlurReveal>
             <div className="mt-20 flex justify-center">
                 <Link 
                     href={githubLink} 
@@ -373,6 +379,7 @@ export default function Projects() {
                     )} />
                 </Link>
             </div>
+            </BlurReveal>
         </div>
     );
 }

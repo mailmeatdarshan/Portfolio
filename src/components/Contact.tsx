@@ -8,6 +8,7 @@ import { Github, Linkedin, Mail, Send } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/contexts/ThemeProvider";
+import { BlurReveal } from '@/components/BlurReveal';
 
 import { RoughCard } from "./ui/rough-card";
 
@@ -47,13 +48,16 @@ export default function Contact() {
 
     return (
         <div className="py-20 px-4 max-w-7xl mx-auto">
+            <BlurReveal>
             <h2
                 className="text-4xl md:text-5xl font-bold text-center mb-10 transition-colors duration-1000"
                 style={{ color: "var(--theme-text-heading)" }}
             >
                 Get in Touch
             </h2>
+            </BlurReveal>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 relative">
+                <BlurReveal delay={0.1}>
                 <div className="flex flex-col justify-center space-y-8 relative z-10">
                     <div>
                         <h3
@@ -88,7 +92,9 @@ export default function Contact() {
                         ))}
                     </div>
                 </div>
+                </BlurReveal>
 
+                <BlurReveal delay={0.15}>
                 <RoughCard
                     className="p-8 rounded-2xl relative z-10 shadow-none"
                     fillColor={isEarth ? "rgba(255,255,255,0.4)" : "rgba(23,23,23,0.3)"}
@@ -198,6 +204,7 @@ export default function Contact() {
                         )}
                     </form>
                 </RoughCard>
+                </BlurReveal>
             </div>
         </div>
     );

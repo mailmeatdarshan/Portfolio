@@ -16,6 +16,8 @@ import ZenMode from "@/components/ui/ZenMode";
 import ZenTransition from "@/components/ui/ZenTransition";
 import TerminalMode from "@/components/ui/TerminalMode";
 import { Analytics } from "@vercel/analytics/react";
+import { BottomEdgeBlur } from "@/components/BottomEdgeBlur";
+import { PageEntryBlur } from "@/components/PageEntryBlur";
 
 
 const outfit = Outfit({
@@ -131,6 +133,8 @@ export default function RootLayout({
             {children}
             <ModeToggle />
             <BackToTop />
+            <BottomEdgeBlur />
+            <PageEntryBlur />
             <ClientClippy />
           </SmoothScroll>
           <Analytics />

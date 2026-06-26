@@ -43,7 +43,7 @@ const SECTION_MESSAGES: Record<string, string[]> = {
     contact: [
         "Wanna hire Darshan? Go on, send a message! 📧",
         "Thinking of emailing? I'll make sure he sees it. Maybe. 😈",
-        "Want to know more about this dev? Click 'Explore more' below! 👇"
+        "Want to know more about this dev? Click 'Know me better' in the About Me section above! 📖"
     ],
 };
 

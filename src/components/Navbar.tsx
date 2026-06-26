@@ -83,6 +83,66 @@ export default function Navbar() {
                 )}
             </AnimatePresence>
 
+            {/* Mobile Drawer Backdrop */}
+            <div 
+                className={`fixed inset-0 h-screen w-screen z-[80] pointer-events-auto transition-opacity duration-500 ease-out md:hidden ${
+                    isOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+                }`}
+                style={{
+                    backgroundColor: "rgba(0, 0, 0, 0.6)",
+                    backdropFilter: "blur(8px)",
+                    WebkitBackdropFilter: "blur(8px)"
+                }}
+                onClick={() => setIsOpen(false)}
+            />
+
+            {/* Mobile Drawer Panel */}
+            <div
+                className={`fixed inset-0 h-screen w-screen z-[90] pointer-events-auto flex flex-col justify-between p-8 md:hidden transition-transform duration-700`}
+                style={{
+                    transform: isOpen ? "translateX(0)" : "translateX(100%)",
+                    transitionTimingFunction: "cubic-bezier(0.77, 0, 0.18, 1)",
+                    fontFamily: isEarth ? "var(--font-handwriting)" : "var(--font-satoshi), sans-serif",
+                    backgroundImage: isEarth ? "repeating-linear-gradient(transparent, transparent 39px, rgba(59,130,246,0.06) 39px, rgba(59,130,246,0.06) 40px)" : "none",
+                    backgroundPosition: "0 24px",
+                    backgroundColor: isEarth ? "#fefcf3" : "#000000",
+                }}
+            >
+                {/* Red notebook margin line for Earth mode */}
+                {isEarth && (
+                    <div 
+                        className="absolute left-10 top-0 bottom-0 w-[1px] pointer-events-none"
+                        style={{
+                            backgroundColor: "rgba(239, 68, 68, 0.25)"
+                        }}
+                    />
+                )}
+
+                {/* Staggered Links */}
+                <div className="flex flex-col items-center justify-center gap-8 my-auto w-full z-10">
+                    {navLinks.map((link, index) => (
+                        <Link
+                            key={link.name}
+                            href={link.href}
+                            onClick={() => setIsOpen(false)}
+                            className={`transition-all duration-300 block text-center select-none ${
+                                isEarth 
+                                    ? "text-3xl md:text-4xl font-medium text-stone-700 hover:text-amber-900 active:scale-95" 
+                                    : "text-2xl md:text-3xl font-bold uppercase tracking-[0.2em] text-zinc-400 hover:text-white hover:tracking-[0.25em] active:scale-95"
+                            }`}
+                            style={{
+                                transform: isOpen ? "translateY(0)" : "translateY(25px)",
+                                opacity: isOpen ? 1 : 0,
+                                transition: "transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1)",
+                                transitionDelay: isOpen ? `${index * 60 + 150}ms` : "0ms"
+                            }}
+                        >
+                            {link.name}
+                        </Link>
+                    ))}
+                </div>
+            </div>
+
             <motion.nav
                 initial={{ y: -100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -93,21 +153,23 @@ export default function Navbar() {
                     relative flex items-center justify-between 
                     px-8 h-14 md:h-16 rounded-full 
                     transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]
-                    liquid-glass
+                    ${isOpen ? "" : "liquid-glass"}
                     ${isScrolled 
                         ? "w-full max-w-4xl translate-y-2" 
                         : "w-full max-w-5xl"
                     }
-                    ${isScrollingUp 
-                        ? isEarth
-                            ? "bg-white/90 border-stone-300/40 shadow-[0_0_30px_rgba(0,0,0,0.1)] scale-[1.01] z-50 backdrop-blur-none"
-                            : "bg-black/95 border-white/40 shadow-[0_0_30px_rgba(0,0,0,0.8)] scale-[1.01] z-50 backdrop-blur-none"
-                        : "z-10"
+                    ${isOpen 
+                        ? "z-[100] !bg-transparent !border-transparent !shadow-none" 
+                        : isScrollingUp 
+                            ? isEarth
+                                ? "bg-white/90 border-stone-300/40 shadow-[0_0_30px_rgba(0,0,0,0.1)] scale-[1.01] z-50 backdrop-blur-none"
+                                : "bg-black/95 border-white/40 shadow-[0_0_30px_rgba(0,0,0,0.8)] scale-[1.01] z-50 backdrop-blur-none"
+                            : "z-10"
                     }
                 `}
             >
                 {/* Logo */}
-                <div className="flex-shrink-0 relative z-20">
+                <div className={`flex-shrink-0 relative z-20 transition-opacity duration-300 ${isOpen ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
                     <Link
                         href="/"
                         className={`font-bold text-lg md:text-xl tracking-tighter hover:opacity-80 transition-all duration-1000 ${
@@ -189,7 +251,7 @@ export default function Navbar() {
                             isEarth
                                 ? "text-stone-500 hover:text-green-600 hover:bg-stone-800/10"
                                 : "text-gray-300 hover:text-green-400 hover:bg-white/10"
-                        }`}
+                        } ${isOpen ? "opacity-0 pointer-events-none" : "opacity-100"}`}
                         aria-label="Terminal Mode"
                     >
                         <Terminal className="h-5 w-5" />
@@ -200,7 +262,7 @@ export default function Navbar() {
                             isEarth
                                 ? "text-stone-500 hover:text-stone-800 hover:bg-stone-800/10"
                                 : "text-gray-300 hover:text-white hover:bg-white/10"
-                        }`}
+                        } ${isOpen ? "opacity-0 pointer-events-none" : "opacity-100"}`}
                         aria-label="Zen Mode"
                     >
                         <Sparkles className="h-5 w-5" />
@@ -211,7 +273,7 @@ export default function Navbar() {
                             isEarth
                                 ? "text-stone-500 hover:text-stone-800 hover:bg-stone-800/10"
                                 : "text-gray-300 hover:text-white hover:bg-white/10"
-                        }`}
+                        } ${isOpen ? "opacity-0 pointer-events-none" : "opacity-100"}`}
                         aria-label={isPhysicsEnabled ? "Reset Layout" : "Start Floating"}
                     >
                         {isPhysicsEnabled ? (
@@ -222,48 +284,38 @@ export default function Navbar() {
                     </button>
                     <button
                         onClick={toggleMenu}
-                        className={`p-2 rounded-xl transition-all ${
-                            isEarth
-                                ? "text-stone-500 hover:text-stone-800 hover:bg-stone-800/10"
-                                : "text-gray-300 hover:text-white hover:bg-white/10"
-                        }`}
+                        className="relative z-[100] flex h-10 w-10 items-center justify-center focus:outline-none"
+                        aria-label="Toggle menu"
                     >
-                        {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                        <div className="relative h-[14px] w-5">
+                            <span 
+                                className={`absolute left-0 top-0 h-[2px] w-5 rounded-full transition-all duration-300 ease-[cubic-bezier(0.77,0,0.175,1)] ${
+                                    isEarth ? "bg-stone-800" : "bg-white"
+                                }`}
+                                style={{
+                                    transform: isOpen ? "translateY(6px) rotate(45deg)" : "none",
+                                }}
+                            />
+                            <span 
+                                className={`absolute left-0 top-[6px] h-[2px] w-5 rounded-full transition-all duration-300 ease-[cubic-bezier(0.77,0,0.175,1)] ${
+                                    isEarth ? "bg-stone-800" : "bg-white"
+                                }`}
+                                style={{
+                                    opacity: isOpen ? 0 : 1,
+                                    transform: isOpen ? "scale(0)" : "none",
+                                }}
+                            />
+                            <span 
+                                className={`absolute left-0 bottom-0 h-[2px] w-5 rounded-full transition-all duration-300 ease-[cubic-bezier(0.77,0,0.175,1)] ${
+                                    isEarth ? "bg-stone-800" : "bg-white"
+                                }`}
+                                style={{
+                                    transform: isOpen ? "translateY(-6px) rotate(-45deg)" : "none",
+                                }}
+                            />
+                        </div>
                     </button>
                 </div>
-
-                {/* Mobile Menu Dropdown */}
-                <AnimatePresence>
-                    {isOpen && (
-                        <motion.div
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            className={`absolute top-full left-0 right-0 mt-4 p-4 rounded-[2rem] md:hidden overflow-hidden z-30 backdrop-blur-3xl border transition-colors duration-1000 ${
-                                isEarth
-                                    ? "bg-white/90 border-stone-200 shadow-[0_20px_50px_rgba(0,0,0,0.15)]"
-                                    : "bg-black/90 border-white/20 shadow-[0_20px_50px_rgba(0,0,0,1)]"
-                            }`}
-                        >
-                            <div className="flex flex-col gap-1">
-                                {navLinks.map((link) => (
-                                    <Link
-                                        key={link.name}
-                                        href={link.href}
-                                        onClick={() => setIsOpen(false)}
-                                        className={`block px-6 py-4 rounded-2xl text-lg font-semibold transition-all border-b last:border-none ${
-                                            isEarth
-                                                ? "text-stone-800 hover:bg-stone-100 active:bg-stone-200 border-stone-100"
-                                                : "text-white hover:bg-white/10 active:bg-white/20 border-white/5"
-                                        }`}
-                                    >
-                                        {link.name}
-                                    </Link>
-                                ))}
-                            </div>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
             </motion.nav>
         </div>
     );

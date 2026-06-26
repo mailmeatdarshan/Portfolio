@@ -3,6 +3,7 @@ import React from "react";
 import { technicalArsenal } from "@/data/portfolio";
 import { motion } from "framer-motion";
 import { InfiniteMovingCards } from "./ui/infinite-moving-cards";
+import { BlurReveal } from '@/components/BlurReveal';
 
 export default function TechnicalArsenal() {
     // Flatten skills for the marquee
@@ -17,15 +18,17 @@ export default function TechnicalArsenal() {
     return (
         <div className="py-20 w-full overflow-hidden relative z-10">
             <div className="max-w-7xl mx-auto px-4 mb-16">
+                <BlurReveal>
                 <h2 
                     className="text-4xl md:text-5xl font-bold text-center transition-colors duration-1000"
                     style={{ color: "var(--theme-text-heading)" }}
                 >
                     Technical Arsenal
                 </h2>
+                </BlurReveal>
                 <motion.p 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
+                    whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.1 }}
                     className="text-center mt-4 max-w-2xl mx-auto transition-colors duration-1000"
@@ -35,6 +38,7 @@ export default function TechnicalArsenal() {
                 </motion.p>
             </div>
 
+            <BlurReveal delay={0.1}>
             <div className="flex flex-col gap-8 w-full">
                 <InfiniteMovingCards
                     items={row1}
@@ -49,6 +53,7 @@ export default function TechnicalArsenal() {
                     className="w-full"
                 />
             </div>
+            </BlurReveal>
         </div>
     );
 }

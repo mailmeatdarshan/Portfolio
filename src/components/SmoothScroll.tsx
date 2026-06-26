@@ -40,12 +40,12 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     <ReactLenis
       root
       options={{
-        duration: 1.4,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        duration: 1.2,
+        easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)), // expo ease-out
         smoothWheel: true,
-        wheelMultiplier: 1.1,
-        touchMultiplier: 1.5,
-        lerp: 0.08,
+        wheelMultiplier: 1.0,
+        touchMultiplier: 2.0, // compensate for halved touch delta on 120fps
+        infinite: false,
       }}
     >
       <LenisManager />

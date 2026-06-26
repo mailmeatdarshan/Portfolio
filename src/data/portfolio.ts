@@ -23,6 +23,7 @@ export interface ExperienceItem {
     location: string;
     duration: string;
     description: string[];
+    image?: string;
 }
 
 export interface EducationItem {
@@ -32,7 +33,9 @@ export interface EducationItem {
     degree: string;
     duration: string;
     grade?: string;
+    image?: string;
 }
+
 
 export interface SocialLink {
     name: string;
@@ -206,7 +209,8 @@ export const experience: ExperienceItem[] = [
         description: [
             "During this remote internship, I served as a Frontend Designer within the IT Department, contributing to the design and user experience of the Teachus App",
             "Collaborated with faculty to transform complex educational requirements into intuitive, user-friendly digital interfaces"
-        ]
+        ],
+        image: "/images/journey/teachus.png"
     },
     {
         id: 2,
@@ -217,7 +221,8 @@ export const experience: ExperienceItem[] = [
         description: [
             "Working as a Data Management Intern at Bhavans College, assisting in organizing, maintaining, and updating academic and administrative data",
             "Gained hands-on experience with data handling, record maintenance, digital management systems, and ERP operations."
-        ]
+        ],
+        image: "/images/journey/datamanagement_bhavans.png"
     }
 ];
 

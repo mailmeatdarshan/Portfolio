@@ -25,6 +25,7 @@ import { BookStack } from "@/components/ui/BookStack";
 import { LottieAnimation } from "@/components/ui/LottieAnimation";
 import { useTheme } from "@/contexts/ThemeProvider";
 import { aboutTranslations } from "@/data/aboutTranslations";
+import { BlurReveal } from "@/components/BlurReveal";
 
 const FOOTER_VIDEOS = ["/videos/Idontlose.mp4", "/videos/tyson.mp4"];
 
@@ -223,7 +224,7 @@ export default function AboutPage() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-auto">
                     
                     {/* Location Card - Large & Impactful */}
-                    <div className={`md:col-span-2 flex flex-col group overflow-hidden rounded-[2.5rem] border shadow-layered transition-all duration-1000 ${
+                    <BlurReveal className={`md:col-span-2 flex flex-col group overflow-hidden rounded-[2.5rem] border shadow-layered transition-all duration-1000 ${
                         isEarth ? "bg-white border-zinc-200" : "bg-[#1e293b] border-white/10"
                     }`}>
                         <div className="relative h-[350px] bg-[#0b0e14] overflow-hidden">
@@ -239,10 +240,10 @@ export default function AboutPage() {
                                 <h3 className="text-5xl font-black tracking-tighter uppercase italic">{t.bento.location.value}</h3>
                             </div>
                         </div>
-                    </div>
+                    </BlurReveal>
 
                     {/* Identity Card (Gender) - Compact & Sophisticated with Background */}
-                    <div className={`flex flex-col group overflow-hidden rounded-[2.5rem] border shadow-layered transition-all duration-1000 relative ${
+                    <BlurReveal delay={0.05} className={`flex flex-col group overflow-hidden rounded-[2.5rem] border shadow-layered transition-all duration-1000 relative ${
                         isEarth ? "bg-white border-zinc-200" : "bg-[#1e293b] border-white/10"
                     }`}>
                         <Image 
@@ -275,10 +276,10 @@ export default function AboutPage() {
                                 </p>
                             </div>
                         </div>
-                    </div>
+                    </BlurReveal>
 
                     {/* Tall Card (Height) - Compact with Toggle */}
-                    <div className={`flex flex-col group overflow-hidden rounded-[2.5rem] border shadow-layered transition-all duration-1000 ${
+                    <BlurReveal delay={0.1} className={`flex flex-col group overflow-hidden rounded-[2.5rem] border shadow-layered transition-all duration-1000 ${
                         isEarth ? "bg-white border-zinc-200" : "bg-[#1e293b] border-white/10"
                     }`}>
                         <div 
@@ -335,10 +336,10 @@ export default function AboutPage() {
                                 </motion.div>
                             </div>
                         </div>
-                    </div>
+                    </BlurReveal>
 
                     {/* Pronunciation Card - Clean & Functional with Background */}
-                    <div className={`flex flex-col group overflow-hidden rounded-[2.5rem] border shadow-layered transition-all duration-1000 relative ${
+                    <BlurReveal delay={0.05} className={`flex flex-col group overflow-hidden rounded-[2.5rem] border shadow-layered transition-all duration-1000 relative ${
                         isEarth ? "bg-white border-zinc-200" : "bg-[#1e293b] border-white/10"
                     }`}>
                         <Image 
@@ -371,10 +372,10 @@ export default function AboutPage() {
                                 </p>
                             </div>
                         </div>
-                    </div>
+                    </BlurReveal>
 
                     {/* Adventures Card - Cinematic Small */}
-                    <div className={`flex flex-col group overflow-hidden rounded-[2.5rem] border shadow-layered transition-all duration-1000 ${
+                    <BlurReveal delay={0.1} className={`flex flex-col group overflow-hidden rounded-[2.5rem] border shadow-layered transition-all duration-1000 ${
                         isEarth ? "bg-white border-zinc-200" : "bg-[#1e293b] border-white/10"
                     }`}>
                         <div className="relative h-full min-h-[220px] bg-[#0f172a] overflow-hidden">
@@ -391,10 +392,10 @@ export default function AboutPage() {
                                 <p className="text-[10px] font-bold text-amber-500">{t.bento.adventures.peak}</p>
                             </div>
                         </div>
-                    </div>
+                    </BlurReveal>
 
                     {/* Zodiac Card - Sagittarius with Background */}
-                    <div className={`flex flex-col group overflow-hidden rounded-[2.5rem] border shadow-layered transition-all duration-1000 relative ${
+                    <BlurReveal delay={0.15} className={`flex flex-col group overflow-hidden rounded-[2.5rem] border shadow-layered transition-all duration-1000 relative ${
                         isEarth ? "bg-white border-zinc-200" : "bg-[#1e293b] border-white/10"
                     }`}>
                         <Image 
@@ -418,10 +419,10 @@ export default function AboutPage() {
                                 </p>
                             </div>
                         </div>
-                    </div>
+                    </BlurReveal>
 
                     {/* Personality Card - Introvert/Extrovert Scale Widget */}
-                    <div className={`flex flex-col group overflow-hidden rounded-[2.5rem] border shadow-layered transition-all duration-1000 ${
+                    <BlurReveal delay={0.1} className={`flex flex-col group overflow-hidden rounded-[2.5rem] border shadow-layered transition-all duration-1000 ${
                         isEarth ? "bg-white border-zinc-200" : "bg-[#1e293b] border-white/10"
                     }`}>
                         <div className="p-8 h-full flex flex-col justify-between">
@@ -458,10 +459,10 @@ export default function AboutPage() {
                                 &ldquo;{t.bento.personality.quote}&rdquo;
                             </p>
                         </div>
-                    </div>
+                    </BlurReveal>
 
                     {/* Future City Card - Japan with Background */}
-                    <div className={`flex flex-col group overflow-hidden rounded-[2.5rem] border shadow-layered transition-all duration-1000 relative min-h-[400px] ${
+                    <BlurReveal delay={0.15} className={`flex flex-col group overflow-hidden rounded-[2.5rem] border shadow-layered transition-all duration-1000 relative min-h-[400px] ${
                         isEarth ? "bg-white border-zinc-200" : "bg-[#1e293b] border-white/10"
                     }`}>
                         <Image 
@@ -486,7 +487,7 @@ export default function AboutPage() {
                                 <p className="text-sm font-black opacity-90 mt-3 tracking-widest text-zinc-300">TOKYO / KYOTO / OSAKA</p>
                             </div>
                         </div>
-                    </div>
+                    </BlurReveal>
 
                 </div>
             </section>
@@ -495,10 +496,13 @@ export default function AboutPage() {
             <div className="max-w-7xl mx-auto px-6 pb-40 space-y-48 relative z-10">
                 
                 <section className="space-y-16">
+                    <BlurReveal>
                     <div className="flex items-center gap-4 text-xs font-black uppercase tracking-[0.4em] opacity-40">
                         <User className="w-4 h-4" />
                         <span>{t.story.label}</span>
                     </div>
+                    </BlurReveal>
+                    <BlurReveal delay={0.05}>
                     <div className="flex items-center justify-center md:justify-start overflow-visible w-full">
                         <div className="relative inline-flex items-center justify-center overflow-visible">
                             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 opacity-30 dark:opacity-20 pointer-events-none md:left-full md:-translate-x-24 md:top-1/2 md:-translate-y-1/2">
@@ -509,24 +513,34 @@ export default function AboutPage() {
                             </h2>
                         </div>
                     </div>
+                    </BlurReveal>
                     <div className="text-2xl md:text-4xl font-medium leading-[1.3] space-y-12 text-zinc-600 dark:text-zinc-400">
+                        <BlurReveal delay={0.1}>
                         <p>
                             {t.story.p1}
                         </p>
+                        </BlurReveal>
+                        <BlurReveal delay={0.15}>
                         <p>
                             {t.story.p2}
                         </p>
+                        </BlurReveal>
+                        <BlurReveal delay={0.2}>
                         <p>
                             {t.story.p3}
                         </p>
+                        </BlurReveal>
                     </div>
                 </section>
 
                 <section className="space-y-16">
+                    <BlurReveal>
                     <div className="flex items-center gap-4 text-xs font-black uppercase tracking-[0.4em] opacity-40">
                         <Code className="w-4 h-4" />
                         <span>{t.development.label}</span>
                     </div>
+                    </BlurReveal>
+                    <BlurReveal delay={0.05}>
                     <div className="flex items-center justify-center md:justify-start overflow-visible w-full">
                         <div className="relative inline-flex items-center justify-center overflow-visible">
                             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 opacity-30 dark:opacity-20 pointer-events-none md:left-full md:-translate-x-24 md:top-1/2 md:-translate-y-1/2">
@@ -537,27 +551,39 @@ export default function AboutPage() {
                             </h2>
                         </div>
                     </div>
+                    </BlurReveal>
                     <div className="text-2xl md:text-4xl font-medium leading-[1.3] space-y-10 text-zinc-600 dark:text-zinc-400">
+                        <BlurReveal delay={0.1}>
                         <p>
                             {t.development.p1}
                         </p>
+                        </BlurReveal>
+                        <BlurReveal delay={0.15}>
                         <p>
                             {t.development.p2}
                         </p>
+                        </BlurReveal>
                     </div>
+                    <BlurReveal delay={0.1}>
                     <div className="pt-8">
                         <GithubActivityLog />
                     </div>
+                    </BlurReveal>
+                    <BlurReveal delay={0.15}>
                     <div className="pt-4">
                         <LeetcodeActivityLog />
                     </div>
+                    </BlurReveal>
                 </section>
 
                 <section className="space-y-16 text-center md:text-left">
+                    <BlurReveal>
                     <div className="flex items-center justify-center md:justify-start gap-4 text-xs font-black uppercase tracking-[0.4em] opacity-40">
                         <Sparkles className="w-4 h-4" />
                         <span>{t.performance.label}</span>
                     </div>
+                    </BlurReveal>
+                    <BlurReveal delay={0.05}>
                     <div className="flex items-center justify-center md:justify-start overflow-visible w-full">
                         <div className="relative inline-flex items-center justify-center overflow-visible">
                             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 opacity-35 dark:opacity-25 pointer-events-none md:left-full md:-translate-x-8 md:top-1/2 md:-translate-y-[58%]">
@@ -568,15 +594,22 @@ export default function AboutPage() {
                             </h2>
                         </div>
                     </div>
+                    </BlurReveal>
+                    <BlurReveal delay={0.1}>
                     <p className="text-2xl md:text-4xl font-medium text-zinc-600 dark:text-zinc-400 max-w-3xl leading-snug">
                         {t.performance.p1}
                     </p>
+                    </BlurReveal>
+                    <BlurReveal delay={0.15}>
                     <div className="pt-12">
                         <MonkeyTypeActivityLog />
                     </div>
+                    </BlurReveal>
+                    <BlurReveal delay={0.2}>
                     <div className="pt-12">
                         <MonkeyTypeWidget />
                     </div>
+                    </BlurReveal>
                 </section>
 
                 <section className="space-y-16 min-h-[600px] flex items-center justify-center">
@@ -590,10 +623,13 @@ export default function AboutPage() {
                                 className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center w-full"
                             >
                                 <div className="space-y-12">
+                                    <BlurReveal>
                                     <div className="flex items-center gap-4 text-xs font-black uppercase tracking-[0.4em] opacity-40">
                                         <Info className="w-4 h-4" />
                                         <span>{t.strategic.label}</span>
                                     </div>
+                                    </BlurReveal>
+                                    <BlurReveal delay={0.05}>
                                     <div className="flex items-center justify-center md:justify-start overflow-visible w-full">
                                         <div className="relative inline-flex items-center justify-center overflow-visible">
                                             <div className="absolute left-1/2 top-1/2 -translate-x-[25%] -translate-y-1/2 z-0 opacity-30 dark:opacity-20 pointer-events-none md:left-full md:-translate-x-128 md:top-1/2 md:-translate-y-1/2">
@@ -604,10 +640,14 @@ export default function AboutPage() {
                                             </h2>
                                         </div>
                                     </div>
+                                    </BlurReveal>
                                     <div className="space-y-8">
+                                        <BlurReveal delay={0.1}>
                                         <p className="text-2xl md:text-4xl font-medium text-zinc-600 dark:text-zinc-400 leading-[1.3]">
                                             {t.strategic.p1}
                                         </p>
+                                        </BlurReveal>
+                                        <BlurReveal delay={0.15}>
                                         <div className="flex flex-wrap gap-4">
                                             <a 
                                                 href="https://www.chess.com/member/d4-darshan" 
@@ -626,9 +666,10 @@ export default function AboutPage() {
                                                 Lichess <ExternalLink className="h-4 w-4" />
                                             </a>
                                         </div>
+                                        </BlurReveal>
                                     </div>
                                 </div>
-                                <div className="flex flex-col items-center gap-12">
+                                <BlurReveal className="flex flex-col items-center gap-12" delay={0.15}>
                                     <ChessWidget />
                                     <button 
                                         onClick={playMagnusVideo}
@@ -638,7 +679,7 @@ export default function AboutPage() {
                                             {lang === "en" ? "play" : "shuru"}
                                         </span>
                                     </button>
-                                </div>
+                                </BlurReveal>
                             </motion.div>
                         ) : (
                             <motion.div 
@@ -666,10 +707,13 @@ export default function AboutPage() {
                 </section>
 
                 <section className="space-y-16">
+                    <BlurReveal>
                     <div className="flex items-center gap-4 text-xs font-black uppercase tracking-[0.4em] opacity-40">
                         <BookOpen className="w-4 h-4" />
                         <span>{t.literary.label}</span>
                     </div>
+                    </BlurReveal>
+                    <BlurReveal delay={0.05}>
                     <div className="flex items-center justify-center md:justify-start overflow-visible w-full">
                         <div className="relative inline-flex items-center justify-center overflow-visible">
                             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 opacity-30 dark:opacity-20 pointer-events-none md:left-full md:-translate-x-20 md:top-1/2 md:-translate-y-[45%]">
@@ -680,19 +724,27 @@ export default function AboutPage() {
                             </h2>
                         </div>
                     </div>
+                    </BlurReveal>
+                    <BlurReveal delay={0.1}>
                     <p className="text-2xl md:text-4xl font-medium text-zinc-600 dark:text-zinc-400 max-w-3xl leading-snug">
                         {t.literary.p1}
                     </p>
+                    </BlurReveal>
+                    <BlurReveal delay={0.15}>
                     <div className="pt-12">
                         <BookStack isEarth={isEarth} lang={lang} />
                     </div>
+                    </BlurReveal>
                 </section>
 
                 <section className="space-y-16">
+                    <BlurReveal>
                     <div className="flex items-center gap-4 text-xs font-black uppercase tracking-[0.4em] opacity-40">
                         <Headphones className="w-4 h-4" />
                         <span>{t.culture.label}</span>
                     </div>
+                    </BlurReveal>
+                    <BlurReveal delay={0.05}>
                     <div className="flex items-center justify-center md:justify-start overflow-visible w-full">
                         <div className="relative inline-flex items-center justify-center overflow-visible">
                             <div className="absolute left-1/2 top-1/2 -translate-x-[25%] -translate-y-1/2 z-0 opacity-30 dark:opacity-20 pointer-events-none md:left-full md:-translate-x-11 md:top-1/2 md:-translate-y-[64%]">
@@ -703,8 +755,10 @@ export default function AboutPage() {
                             </h2>
                         </div>
                     </div>
+                    </BlurReveal>
                     
                     {/* Wide Desktop Layout: Spotify Left | Text Center | 2x2 Videos Right */}
+                    <BlurReveal delay={0.1}>
                     <div className="hidden lg:grid grid-cols-12 gap-12 items-center -mx-20 max-w-[1600px]">
                         {/* Column 1: Spotify Left */}
                         <div className="col-span-4 flex justify-start">
@@ -734,8 +788,10 @@ export default function AboutPage() {
                             ))}
                         </div>
                     </div>
+                    </BlurReveal>
 
                     {/* Mobile/Tablet Layout: Original Stacked */}
+                    <BlurReveal delay={0.1}>
                     <div className="lg:hidden grid grid-cols-1 gap-20 items-center">
                         <div className="space-y-12 text-2xl md:text-4xl font-medium leading-[1.3] text-zinc-600 dark:text-zinc-400">
                             <p>
@@ -767,6 +823,7 @@ export default function AboutPage() {
                             </div>
                         </div>
                     </div>
+                    </BlurReveal>
                 </section>
 
             </div>

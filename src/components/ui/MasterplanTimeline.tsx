@@ -2,6 +2,9 @@
 
 import React, { useState, useEffect, useId } from "react";
 import { LottieAnimation } from "@/components/ui/LottieAnimation";
+import { motion, AnimatePresence, PanInfo, useMotionValue, useTransform } from "framer-motion";
+import { personalInfo } from "@/data/portfolio";
+import { useTheme } from "@/contexts/ThemeProvider";
 
 const LOTTIE_MAP: Record<string, string> = {
     "🏡": "/House.json",
@@ -11,25 +14,11 @@ const LOTTIE_MAP: Record<string, string> = {
     "✨": "/Design.json",
     "🏔️": "/mountain.json"
 };
-import { motion, AnimatePresence, PanInfo, useMotionValue, useTransform } from "framer-motion";
-import { personalInfo } from "@/data/portfolio";
-import { useTheme } from "@/contexts/ThemeProvider";
 
 const SWIPE_THRESHOLD = 40;
 const VELOCITY_THRESHOLD = 200;
 
 const EARTH_ROTATIONS = ["-1.5deg", "1deg", "-0.8deg", "1.2deg", "-0.5deg", "0.8deg"];
-
-interface ThrownCard {
-    item: { text: string; emoji: string };
-    globalIdx: number;
-    startX: number;
-    startY: number;
-    throwX: number;
-    throwY: number;
-    throwRotate: number;
-    uid: string;
-}
 
 export const MasterplanTimeline: React.FC = () => {
     const { isEarth } = useTheme();
@@ -39,8 +28,7 @@ export const MasterplanTimeline: React.FC = () => {
     const [isDragging, setIsDragging] = useState(false);
     const [isTopHovered, setIsTopHovered] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
-    const [thrownCards, setThrownCards] = useState<ThrownCard[]>([]);
-    const instanceId = useId();
+    const [dragDistance, setDragDistance] = useState(0);
 
     useEffect(() => {
         const checkMobile = () => {
@@ -63,50 +51,42 @@ export const MasterplanTimeline: React.FC = () => {
             const ox = info.offset.x;
             const oy = info.offset.y;
 
-            // Direction for the card exit (fast, out of frame)
-            const throwX = vx * 2 + ox * 3;
-            const throwY = vy * 2 + oy * 3;
-            const throwDist = Math.sqrt(throwX ** 2 + throwY ** 2);
-            const minDist = 800;
-            const exitScale = throwDist < minDist ? minDist / Math.max(throwDist, 1) : 1;
-            const exitX = throwX * exitScale;
-            const exitY = isEarth ? Math.abs(throwY * exitScale) + 600 : throwY * exitScale;
-            const throwRotate = vx / 8;
+            // Drift direction based on release velocity
+            const isRight = vx !== 0 ? vx > 0 : ox > 0;
+            const driftX = (vx * 0.3) + (isRight ? 300 : -300);
 
-            // Drift direction from release point
-            const driftX = (vx * 0.3) + (ox > 0 ? 120 : -120);
-            const driftY = isEarth ? 400 : (vy * 0.3) + (oy > 0 ? 100 : -100);
+            const isDown = vy !== 0 ? vy > 0 : oy > 0;
+            const driftY = isEarth ? 600 : (vy * 0.3) + (isDown ? 250 : -250);
 
-            const currentItem = items[currentIndex];
-            setThrownCards((prev) => [
-                ...prev,
-                {
-                    item: currentItem,
-                    globalIdx: currentIndex,
-                    startX: ox,
-                    startY: oy,
-                    throwX: ox + driftX,
-                    throwY: isEarth ? oy + driftY : oy + driftY,
-                    throwRotate: throwRotate * 0.5,
-                    uid: `${instanceId}-${currentIndex}-${Date.now()}`,
-                },
-            ]);
+            const throwRotate = (vx / 6) + (isRight ? 35 : -35);
 
-            // No exitPoint needed — ghost card handles visuals, stack card vanishes instantly
+            setExitPoint({
+                x: ox + driftX,
+                y: oy + driftY,
+                rotate: throwRotate,
+            });
+
             setIsDragging(false);
             setIsTopHovered(false);
             setCurrentIndex((prev) => Math.min(prev + 1, items.length));
+            setDragDistance(0);
+
+            // Reset exitPoint after the exit animation completes to resume Lottie playback on the new top card
+            setTimeout(() => {
+                setExitPoint(null);
+            }, isEarth ? 900 : 1200);
         } else {
             setIsDragging(false);
+            setDragDistance(0);
         }
     };
 
     const handleReset = () => {
-        setThrownCards([]);
         setCurrentIndex(0);
         setExitPoint(null);
         setIsDragging(false);
         setIsTopHovered(false);
+        setDragDistance(0);
     };
 
     // ─── Space Mode ───
@@ -125,52 +105,8 @@ export const MasterplanTimeline: React.FC = () => {
 
                 <div className="flex flex-col items-center gap-6">
                     {/* Outer wrapper — overflow visible for floating cards */}
-                    <div className="relative w-full max-w-md h-[280px] md:h-[300px]">
-                        {/* Floating thrown cards layer — NOT clipped */}
-                        <div className="absolute inset-0 pointer-events-none" style={{ overflow: "visible", zIndex: 1 }}>
-                            {thrownCards.map((tc) => (
-                                <motion.div
-                                    key={tc.uid}
-                                    className="absolute rounded-2xl border border-white/[0.06] bg-white/[0.03] backdrop-blur-[2px]"
-                                    style={{
-                                        width: "100%",
-                                        height: "100%",
-                                        left: 0,
-                                        top: 0,
-                                    }}
-                                    initial={{ x: tc.startX, y: tc.startY, rotate: tc.throwRotate, opacity: 0.75, scale: 1 }}
-                                    animate={{
-                                        x: [tc.startX, tc.throwX, tc.throwX * 1.6],
-                                        y: [tc.startY, tc.throwY, tc.throwY * 1.8],
-                                        rotate: [tc.throwRotate, tc.throwRotate + 25, tc.throwRotate + 60],
-                                        opacity: [0.7, 0.45, 0],
-                                        scale: [0.95, 0.75, 0.5],
-                                    }}
-                                    transition={{
-                                        duration: 5,
-                                        ease: "linear",
-                                        times: [0, 0.3, 1],
-                                    }}
-                                >
-                                    <div className="flex flex-col items-center justify-center h-full px-4 py-6 text-center">
-                                        <div className="w-16 h-16 mb-2 mx-auto">
-                                            {LOTTIE_MAP[tc.item.emoji] ? (
-                                                <LottieAnimation
-                                                    animationPath={LOTTIE_MAP[tc.item.emoji]}
-                                                    className="w-full h-full"
-                                                    autoplay={true}
-                                                />
-                                            ) : (
-                                                <span className="text-3xl">{tc.item.emoji}</span>
-                                            )}
-                                        </div>
-                                        <p className="text-xs text-white/40 max-w-[160px] line-clamp-2">{tc.item.text}</p>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </div>
-
-                        {/* Card Stack — clipped */}
+                    <div className="relative w-full max-w-md md:max-w-xl lg:max-w-2xl h-[280px] md:h-[380px] lg:h-[420px]" style={{ overflow: "visible" }}>
+                        {/* Card Stack */}
                         <div className="absolute inset-0" style={{ zIndex: 5 }}>
                             {currentIndex >= items.length ? (
                                 <motion.div
@@ -216,11 +152,13 @@ export const MasterplanTimeline: React.FC = () => {
                                                     onMouseEnter={isTop ? () => setIsTopHovered(true) : undefined}
                                                     onMouseLeave={isTop ? () => setIsTopHovered(false) : undefined}
                                                     cardClassName="rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-sm"
-                                                    hideContent={!isTop && !isDragging}
+                                                    dragDistance={dragDistance}
+                                                    setDragDistance={setDragDistance}
+                                                    isSpaceMode={true}
                                                 >
                                                     <div className="flex flex-col items-center justify-center h-full px-8 md:px-12 py-10 text-center">
                                                         <motion.div
-                                                            className="w-28 h-28 md:w-32 md:h-32 mb-5 mx-auto"
+                                                            className="w-28 h-28 md:w-40 md:h-40 lg:w-48 lg:h-48 mb-5 mx-auto"
                                                             animate={isTop ? { y: [0, -5, 0] } : {}}
                                                             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
                                                         >
@@ -228,13 +166,13 @@ export const MasterplanTimeline: React.FC = () => {
                                                                 <LottieAnimation
                                                                     animationPath={LOTTIE_MAP[item.emoji]}
                                                                     className="w-full h-full"
-                                                                    autoplay={isMobile || (isTop && isTopHovered)}
+                                                                    autoplay={isTop && !isDragging && !exitPoint && (isMobile || isTopHovered)}
                                                                 />
                                                             ) : (
                                                                 <span className="text-5xl md:text-6xl">{item.emoji}</span>
                                                             )}
                                                         </motion.div>
-                                                        <p className="text-lg md:text-xl text-white/90 font-semibold leading-relaxed max-w-xs">
+                                                        <p className="text-lg md:text-2xl lg:text-3xl text-white/90 font-bold leading-relaxed max-w-xl">
                                                             {item.text}
                                                         </p>
                                                         <span className="mt-5 font-mono text-[10px] text-zinc-600 tracking-[0.2em] uppercase">
@@ -292,65 +230,7 @@ export const MasterplanTimeline: React.FC = () => {
             </h3>
 
             <div className="flex flex-col items-center gap-6">
-                <div className="relative w-full max-w-md h-[280px] md:h-[300px]">
-                    {/* Fallen cards layer — NOT clipped, gravity fall */}
-                    <div className="absolute inset-0 pointer-events-none" style={{ overflow: "visible", zIndex: 1 }}>
-                        {thrownCards.map((tc) => (
-                            <motion.div
-                                key={tc.uid}
-                                className="absolute rounded-2xl bg-[#fefcf3] border border-amber-200/30 shadow-sm"
-                                style={{
-                                    width: "100%",
-                                    height: "100%",
-                                    left: 0,
-                                    top: 0,
-                                }}
-                                initial={{ x: tc.startX, y: tc.startY, rotate: tc.throwRotate, opacity: 0.8, scale: 1 }}
-                                animate={{
-                                    x: [tc.startX, tc.throwX * 0.6, tc.throwX],
-                                    y: [tc.startY, tc.startY + 200, tc.startY + 550],
-                                    rotate: [tc.throwRotate, tc.throwRotate + 18, tc.throwRotate + 40],
-                                    opacity: [0.75, 0.5, 0],
-                                    scale: [0.95, 0.8, 0.6],
-                                }}
-                                transition={{
-                                    duration: 2.2,
-                                    ease: [0.45, 0, 1, 0.5],
-                                    times: [0, 0.25, 1],
-                                    y: { ease: [0.12, 0, 0.9, 0], duration: 2.2 },
-                                }}
-                            >
-                                <div
-                                    className="absolute inset-0 pointer-events-none rounded-2xl overflow-hidden"
-                                    style={{
-                                        backgroundImage:
-                                            "repeating-linear-gradient(transparent, transparent 31px, rgba(59,130,246,0.04) 31px, rgba(59,130,246,0.04) 32px)",
-                                        backgroundPosition: "0 16px",
-                                    }}
-                                />
-                                <div className="flex flex-col items-center justify-center h-full px-4 py-6 text-center">
-                                    <div className="w-16 h-16 mb-2 mx-auto">
-                                        {LOTTIE_MAP[tc.item.emoji] ? (
-                                            <LottieAnimation
-                                                animationPath={LOTTIE_MAP[tc.item.emoji]}
-                                                className="w-full h-full"
-                                                autoplay={true}
-                                            />
-                                        ) : (
-                                            <span className="text-3xl">{tc.item.emoji}</span>
-                                        )}
-                                    </div>
-                                    <p
-                                        className="text-xs text-stone-500 max-w-[160px] line-clamp-2"
-                                        style={{ fontFamily: "var(--font-handwriting)" }}
-                                    >
-                                        {tc.item.text}
-                                    </p>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </div>
-
+                <div className="relative w-full max-w-md md:max-w-xl lg:max-w-2xl h-[280px] md:h-[380px] lg:h-[420px]" style={{ overflow: "visible" }}>
                     {/* Card Stack */}
                     <div className="absolute inset-0" style={{ zIndex: 5 }}>
                         {currentIndex >= items.length ? (
@@ -402,6 +282,9 @@ export const MasterplanTimeline: React.FC = () => {
                                                 onMouseLeave={isTop ? () => setIsTopHovered(false) : undefined}
                                                 cardClassName="rounded-2xl bg-[#fefcf3] border border-amber-200/40 shadow-md"
                                                 stackRotation={isTop ? 0 : parseFloat(EARTH_ROTATIONS[globalIdx % EARTH_ROTATIONS.length])}
+                                                dragDistance={dragDistance}
+                                                setDragDistance={setDragDistance}
+                                                isSpaceMode={false}
                                             >
                                                 <div
                                                     className="absolute inset-0 pointer-events-none rounded-2xl overflow-hidden"
@@ -412,19 +295,19 @@ export const MasterplanTimeline: React.FC = () => {
                                                     }}
                                                 />
                                                 <div className="flex flex-col items-center justify-center h-full px-8 md:px-12 py-10 text-center relative">
-                                                    <div className="w-28 h-28 md:w-32 md:h-32 mb-5 mx-auto">
+                                                    <div className="w-28 h-28 md:w-40 md:h-40 lg:w-48 lg:h-48 mb-5 mx-auto">
                                                         {LOTTIE_MAP[item.emoji] ? (
                                                             <LottieAnimation
                                                                 animationPath={LOTTIE_MAP[item.emoji]}
                                                                 className="w-full h-full"
-                                                                autoplay={isMobile || (isTop && isTopHovered)}
+                                                                autoplay={isTop && !isDragging && !exitPoint && (isMobile || isTopHovered)}
                                                             />
                                                         ) : (
                                                             <span className="text-5xl md:text-6xl">{item.emoji}</span>
                                                         )}
                                                     </div>
                                                     <p
-                                                        className="text-lg md:text-xl text-stone-700 leading-relaxed max-w-xs"
+                                                        className="text-lg md:text-2xl lg:text-3xl text-stone-700 leading-relaxed max-w-xl"
                                                         style={{ fontFamily: "var(--font-handwriting)" }}
                                                     >
                                                         {item.text}
@@ -486,7 +369,9 @@ function ThrowCard({
     onMouseLeave,
     cardClassName,
     stackRotation = 0,
-    hideContent = false,
+    dragDistance,
+    setDragDistance,
+    isSpaceMode,
 }: {
     children: React.ReactNode;
     stackIdx: number;
@@ -498,11 +383,42 @@ function ThrowCard({
     onMouseLeave?: () => void;
     cardClassName: string;
     stackRotation?: number;
-    hideContent?: boolean;
+    dragDistance: number;
+    setDragDistance?: (val: number) => void;
+    isSpaceMode: boolean;
 }) {
     const x = useMotionValue(0);
     const y = useMotionValue(0);
     const rotateZ = useTransform(x, [-200, 0, 200], [-16, 0, 16]);
+
+    // Drag progress from 0 to 1
+    const dragProgress = Math.min(dragDistance / 120, 1);
+
+    // Dynamic targets for state transition interpolation
+    const scaleTarget = isTop ? 1.0 : (1 - stackIdx * 0.05) + dragProgress * 0.05;
+    const yTarget = isTop ? 0 : (stackIdx * 14) - dragProgress * 14;
+    const blurTarget = isTop ? 0 : Math.max(0, (stackIdx * 8) - dragProgress * 8);
+
+    const opacityRange = isSpaceMode
+        ? [
+            stackIdx === 0 ? 1 : stackIdx === 1 ? 0.02 : 0.0,
+            stackIdx <= 1 ? 1 : 0.02
+          ]
+        : [
+            stackIdx === 0 ? 1 : stackIdx === 1 ? 0.85 : 0.7,
+            stackIdx <= 1 ? 1 : 0.85
+          ];
+
+    const opacityTarget = isTop
+        ? 1.0
+        : opacityRange[0] + dragProgress * (opacityRange[1] - opacityRange[0]);
+
+    const rotateTarget = isTop ? 0 : stackRotation - dragProgress * (stackRotation * 0.5);
+
+    // Exit values
+    const exitX = exitPoint ? exitPoint.x : 0;
+    const exitY = exitPoint ? exitPoint.y : 0;
+    const exitRotate = exitPoint ? exitPoint.rotate : 0;
 
     return (
         <motion.div
@@ -516,22 +432,35 @@ function ThrowCard({
             }}
             initial={false}
             animate={{
-                scale: 1 - stackIdx * 0.05,
-                y: stackIdx * 14,
-                rotateZ: stackRotation,
+                scale: scaleTarget,
+                y: isTop ? undefined : yTarget,
+                filter: `blur(${blurTarget}px)`,
+                opacity: opacityTarget,
+                rotateZ: isTop ? undefined : rotateTarget,
             }}
-            whileDrag={{ scale: 1.05, cursor: "grabbing" }}
-            exit={{ opacity: 0, transition: { duration: 0 } }}
-            transition={{ type: "spring", stiffness: 300, damping: 24 }}
+            whileDrag={isTop ? { scale: 1.05, cursor: "grabbing" } : undefined}
+            exit={{
+                x: exitX,
+                y: exitY,
+                rotateZ: exitRotate,
+                opacity: 0,
+                scale: isSpaceMode ? 0.5 : 0.6,
+                transition: { duration: isSpaceMode ? 1.2 : 0.9, ease: isSpaceMode ? "easeOut" : "easeIn" }
+            }}
+            transition={{ type: "spring", stiffness: 220, damping: 26 }}
             drag={isTop}
             dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
             dragElastic={1}
             onDragStart={onDragStart}
+            onDrag={isTop ? (_, info) => {
+                const dist = Math.sqrt(info.offset.x ** 2 + info.offset.y ** 2);
+                setDragDistance?.(dist);
+            } : undefined}
             onDragEnd={onDragEnd}
             onMouseEnter={onMouseEnter}
             onMouseLeave={onMouseLeave}
         >
-            {!hideContent && children}
+            {children}
         </motion.div>
     );
 }
