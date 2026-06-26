@@ -277,12 +277,11 @@ export default function ZenMode() {
                 <span className="text-xs md:text-base">Cosmos</span>
               </button>
               <Link 
-                href="https://github.com/mailmeatdarshan" 
-                target="_blank"
+                href="/about" 
                 className="flex items-center gap-2 md:gap-3 px-8 py-3 md:px-12 md:py-5 bg-white/5 border border-white/10 hover:bg-white/10 text-white rounded-full font-bold transition-all active:scale-95"
               >
-                <Github className="w-4 h-4 md:w-6 md:h-6" />
-                <span className="text-xs md:text-base">GitHub</span>
+                <BookOpen className="w-4 h-4 md:w-6 md:h-6" />
+                <span className="text-xs md:text-base">About</span>
               </Link>
             </motion.div>
           </div>
