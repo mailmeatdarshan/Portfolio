@@ -51,7 +51,7 @@ export default function Navbar() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, [lastScrollY]);
 
-    if (pathname === "/about") return null;
+    if (pathname === "/about" || pathname?.startsWith("/guestbook")) return null;
 
     const navLinks = [
         { name: "Home", href: "/" },
@@ -59,6 +59,7 @@ export default function Navbar() {
         { name: "Journey", href: "#experience" },
         { name: "Skills", href: "#skills" },
         { name: "Projects", href: "#projects" },
+        { name: "Guestbook", href: "/guestbook" },
         { name: "Contact", href: "#contact" },
     ];
 

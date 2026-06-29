@@ -4,6 +4,7 @@ import TechnicalArsenal from "@/components/TechnicalArsenal";
 import About from "@/components/About";
 import Experience from "@/components/Experience";
 import Contact from "@/components/Contact";
+import GuestbookPreview from "@/components/GuestbookPreview";
 import Link from "next/link";
 import { BlurReveal } from "@/components/BlurReveal";
 
@@ -33,6 +34,11 @@ export default function Home() {
       <BlurReveal>
         <div id="projects">
           <Projects />
+        </div>
+      </BlurReveal>
+      <BlurReveal>
+        <div id="guestbook">
+          <GuestbookPreview />
         </div>
       </BlurReveal>
       <BlurReveal>

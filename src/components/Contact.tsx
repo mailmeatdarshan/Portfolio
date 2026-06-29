@@ -9,6 +9,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useTheme } from "@/contexts/ThemeProvider";
 import { BlurReveal } from '@/components/BlurReveal';
+import VisitorCounter from "./ui/VisitorCounter";
 
 import { RoughCard } from "./ui/rough-card";
 
@@ -204,6 +205,7 @@ export default function Contact() {
                         )}
                     </form>
                 </RoughCard>
+                <VisitorCounter />
                 </BlurReveal>
             </div>
         </div>
