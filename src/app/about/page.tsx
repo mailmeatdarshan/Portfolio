@@ -166,6 +166,7 @@ export default function AboutPage() {
                             <span className="relative inline-block overflow-visible">
                                 <span className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 opacity-30 dark:opacity-20 pointer-events-none">
                                     <LottieAnimation 
+                                        key={lang}
                                         animationPath="/hand wave.json" 
                                         className="w-[360px] h-[360px] md:w-[750px] md:h-[750px]" 
                                     />
@@ -506,7 +507,7 @@ export default function AboutPage() {
                     <div className="flex items-center justify-center md:justify-start overflow-visible w-full">
                         <div className="relative inline-flex items-center justify-center overflow-visible">
                             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 opacity-30 dark:opacity-20 pointer-events-none md:left-full md:-translate-x-24 md:top-1/2 md:-translate-y-1/2">
-                                <LottieAnimation animationPath="/story.json" className="w-72 h-72 md:w-[450px] md:h-[450px]" />
+                                <LottieAnimation key={lang} animationPath="/story.json" className="w-72 h-72 md:w-[450px] md:h-[450px]" />
                             </div>
                             <h2 className="relative z-10 text-6xl md:text-8xl font-black tracking-tighter leading-none">
                                 {t.story.title}
@@ -544,7 +545,7 @@ export default function AboutPage() {
                     <div className="flex items-center justify-center md:justify-start overflow-visible w-full">
                         <div className="relative inline-flex items-center justify-center overflow-visible">
                             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 opacity-30 dark:opacity-20 pointer-events-none md:left-full md:-translate-x-24 md:top-1/2 md:-translate-y-1/2">
-                                <LottieAnimation animationPath="/deepinthetrenches.json" className="w-72 h-72 md:w-[450px] md:h-[450px]" />
+                                <LottieAnimation key={lang} animationPath="/deepinthetrenches.json" className="w-72 h-72 md:w-[450px] md:h-[450px]" />
                             </div>
                             <h2 className="relative z-10 text-6xl md:text-8xl font-black tracking-tighter leading-none">
                                 {t.development.title}
@@ -587,7 +588,7 @@ export default function AboutPage() {
                     <div className="flex items-center justify-center md:justify-start overflow-visible w-full">
                         <div className="relative inline-flex items-center justify-center overflow-visible">
                             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 opacity-35 dark:opacity-25 pointer-events-none md:left-full md:-translate-x-8 md:top-1/2 md:-translate-y-[58%]">
-                                <LottieAnimation animationPath="/Typing.json" className="w-72 h-72 md:w-[450px] md:h-[450px]" />
+                                <LottieAnimation key={lang} animationPath="/Typing.json" className="w-72 h-72 md:w-[450px] md:h-[450px]" />
                             </div>
                             <h2 className="relative z-10 text-6xl md:text-8xl font-black tracking-tighter leading-none">
                                 {t.performance.title}
@@ -633,7 +634,7 @@ export default function AboutPage() {
                                     <div className="flex items-center justify-center md:justify-start overflow-visible w-full">
                                         <div className="relative inline-flex items-center justify-center overflow-visible">
                                             <div className="absolute left-1/2 top-1/2 -translate-x-[25%] -translate-y-1/2 z-0 opacity-30 dark:opacity-20 pointer-events-none md:left-full md:-translate-x-128 md:top-1/2 md:-translate-y-1/2">
-                                                <LottieAnimation animationPath="/Chess.json" className="w-[420px] h-[420px] md:w-[900px] md:h-[900px]" />
+                                                <LottieAnimation key={lang} animationPath="/Chess.json" className="w-[420px] h-[420px] md:w-[900px] md:h-[900px]" />
                                             </div>
                                             <h2 className="relative z-10 text-6xl md:text-8xl font-black tracking-tighter leading-none">
                                                 {t.strategic.title}
@@ -717,7 +718,7 @@ export default function AboutPage() {
                     <div className="flex items-center justify-center md:justify-start overflow-visible w-full">
                         <div className="relative inline-flex items-center justify-center overflow-visible">
                             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 opacity-30 dark:opacity-20 pointer-events-none md:left-full md:-translate-x-20 md:top-1/2 md:-translate-y-[45%]">
-                                <LottieAnimation animationPath="/Books.json" className="w-72 h-72 md:w-[450px] md:h-[450px]" />
+                                <LottieAnimation key={lang} animationPath="/Books.json" className="w-72 h-72 md:w-[450px] md:h-[450px]" />
                             </div>
                             <h2 className="relative z-10 text-6xl md:text-8xl font-black tracking-tighter leading-none">
                                 {t.literary.title}
@@ -748,7 +749,7 @@ export default function AboutPage() {
                     <div className="flex items-center justify-center md:justify-start overflow-visible w-full">
                         <div className="relative inline-flex items-center justify-center overflow-visible">
                             <div className="absolute left-1/2 top-1/2 -translate-x-[25%] -translate-y-1/2 z-0 opacity-30 dark:opacity-20 pointer-events-none md:left-full md:-translate-x-11 md:top-1/2 md:-translate-y-[64%]">
-                                <LottieAnimation animationPath="/music.json" className="w-72 h-72 md:w-[450px] md:h-[450px]" />
+                                <LottieAnimation key={lang} animationPath="/music.json" className="w-72 h-72 md:w-[450px] md:h-[450px]" />
                             </div>
                             <h2 className="relative z-10 text-6xl md:text-8xl font-black tracking-tighter leading-none">
                                 {t.culture.title}
@@ -895,6 +896,7 @@ export default function AboutPage() {
                 {!isPlaying && (
                     <div className="absolute bottom-0 left-0 right-0 z-0 flex justify-center pointer-events-none overflow-hidden h-72 md:h-[480px]">
                         <LottieAnimation 
+                            key={lang}
                             animationPath="/bye.json" 
                             className="w-[300px] h-[300px] md:w-[500px] md:h-[500px] -translate-y-4 md:-translate-y-8 flex-shrink-0" 
                         />
@@ -918,6 +920,13 @@ export default function AboutPage() {
                                 <div className="flex flex-wrap justify-center gap-8 mb-48">
                                     <Link href="/#contact" className="min-w-[320px] px-10 py-7 bg-amber-600 hover:bg-amber-700 text-white font-black rounded-full transition-transform hover:scale-105 shadow-layered text-2xl tracking-wider uppercase text-center">
                                         {t.footer.getInTouch}
+                                    </Link>
+                                    <Link href="/guestbook" className={`min-w-[320px] px-10 py-7 font-black rounded-full transition-transform hover:scale-105 shadow-layered text-2xl tracking-wider uppercase text-center ${
+                                        isEarth 
+                                            ? "bg-emerald-600 hover:bg-emerald-700 text-white" 
+                                            : "bg-blue-600 hover:bg-blue-700 text-white"
+                                    }`}>
+                                        {t.footer.writeMessage}
                                     </Link>
                                     <a href="mailto:mailmeatdarshan@gmail.com" className={`min-w-[320px] px-10 py-7 font-black rounded-full transition-all border shadow-sm text-2xl tracking-wider uppercase text-center ${
                                         isEarth 

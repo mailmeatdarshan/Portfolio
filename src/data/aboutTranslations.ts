@@ -101,6 +101,7 @@ export const aboutTranslations = {
             title2: "wonderful day!",
             getInTouch: "Get in Touch",
             sendEmail: "Send an Email",
+            writeMessage: "Write a Message",
             copyright: "2026 Darshan Dubey"
         }
     },
@@ -206,6 +207,7 @@ export const aboutTranslations = {
             title2: "shubh ho!",
             getInTouch: "Baat Karte Hain",
             sendEmail: "Email Bhejo",
+            writeMessage: "Sandesh Likhein",
             copyright: "2026 Darshan Dubey"
         }
     }
