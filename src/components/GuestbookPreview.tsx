@@ -98,66 +98,70 @@ export default function GuestbookPreview() {
           </p>
         </div>
       ) : (
-        <div className="relative w-full">
-          {/* Fading Edge Masks for space mode */}
-          {!isEarth && (
-            <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-[#030508] to-transparent pointer-events-none z-10 hidden md:block" />
-          )}
-          {!isEarth && (
-            <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-[#030508] to-transparent pointer-events-none z-10 hidden md:block" />
-          )}
-
-          {/* Horizontally scrollable flex container */}
-          <div className="flex gap-6 overflow-x-auto pb-8 pt-4 px-2 scrollbar-none snap-x snap-mandatory justify-start md:justify-center">
+        <div className="relative w-full max-w-2xl mx-auto py-4">
+          {/* Vertical flex list container */}
+          <div className="flex flex-col gap-6 w-full">
             {entries.map((entry, idx) => {
-              // Alternate subtle rotations for earth mode
+              const isRight = idx % 2 === 1;
               const rotation = isEarth 
-                ? (idx % 2 === 0 ? "rotate-[1deg]" : "rotate-[-1deg]") 
+                ? (idx % 2 === 0 ? "rotate-[0.5deg]" : "rotate-[-0.5deg]") 
                 : "";
-                
+
               return (
                 <motion.div
                   key={entry.id}
-                  initial={{ opacity: 0, y: 15 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, x: isRight ? 20 : -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: idx * 0.08 }}
-                  className={`flex-shrink-0 w-[290px] md:w-[320px] p-5 rounded-[1.8rem] border snap-start relative overflow-hidden transition-all duration-350 hover:translate-y-[-4px] ${rotation} ${
-                    isEarth 
-                      ? "bg-yellow-50/95 border-amber-200/60 shadow-sm hover:shadow-md" 
-                      : "bg-white/[0.02] border-white/5 hover:border-white/10 backdrop-blur-md shadow-lg"
+                  transition={{ duration: 0.4, delay: idx * 0.05 }}
+                  className={`flex items-end gap-3 max-w-[85%] md:max-w-[75%] ${
+                    isRight ? "self-end flex-row-reverse" : "self-start flex-row"
                   }`}
                 >
-                  {isEarth && (
-                    <div className="absolute inset-x-0 top-0 h-[2px] bg-red-400/10" />
-                  )}
+                  {/* Initials Avatar */}
+                  <div 
+                    className="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold text-white shadow-inner flex-shrink-0 select-none"
+                    style={{ backgroundColor: getAvatarColor(entry.name) }}
+                  >
+                    {getInitials(entry.name)}
+                  </div>
 
-                  <div className="flex items-start gap-3">
-                    <div 
-                      className="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold text-white shadow-inner flex-shrink-0 select-none"
-                      style={{ backgroundColor: getAvatarColor(entry.name) }}
-                    >
-                      {getInitials(entry.name)}
-                    </div>
-                    
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-1 mb-1">
+                  {/* Bubble Container */}
+                  <div className={`p-4 rounded-2xl relative overflow-hidden transition-all duration-300 ${rotation} ${
+                    isRight 
+                      ? (isEarth ? "bg-amber-100/90 border border-amber-200/55 rounded-tr-none shadow-sm" : "bg-blue-600/[0.08] border border-blue-500/15 backdrop-blur-md rounded-tr-none shadow-lg")
+                      : (isEarth ? "bg-yellow-50/95 border border-amber-200/60 rounded-tl-none shadow-sm" : "bg-white/[0.02] border border-white/5 backdrop-blur-md rounded-tl-none shadow-lg")
+                  }`}>
+                    {/* Notebook line pattern for earth mode */}
+                    {isEarth && (
+                      <div className="absolute inset-x-0 top-0 h-[2px] bg-red-400/10" />
+                    )}
+
+                    <div className="flex flex-col gap-1 min-w-0">
+                      <div className={`flex items-center gap-2 flex-wrap ${isRight ? "justify-end" : "justify-start"}`}>
                         <span className={`text-xs font-bold truncate ${
                           isEarth ? "font-sans text-stone-850" : "text-white"
                         }`}>
                           {entry.name}
                         </span>
-                        <span className={`text-[9px] font-mono flex-shrink-0 ${
+                        {(entry as any).handle && (
+                          <span className={`text-[10px] truncate font-mono ${
+                            isEarth ? "text-stone-400" : "text-zinc-500"
+                          }`}>
+                            {(entry as any).handle}
+                          </span>
+                        )}
+                        <span className={`text-[9px] font-mono flex-shrink-0 opacity-70 ${
                           isEarth ? "text-stone-400" : "text-zinc-500"
                         }`}>
                           {timeAgo(entry.createdAt)}
                         </span>
                       </div>
 
-                      <p className={`text-xs leading-relaxed line-clamp-3 break-words ${
+                      <p className={`text-xs leading-relaxed break-words whitespace-pre-wrap ${
                         isEarth ? "font-handwriting text-sm text-stone-700" : "text-zinc-300"
                       }`}>
-                        &ldquo;{entry.message}&rdquo;
+                        {entry.message}
                       </p>
                     </div>
                   </div>

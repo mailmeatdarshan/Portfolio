@@ -24,6 +24,8 @@ const CATEGORY_BUTTONS = 0x0002;
 
 import { SketchyArrow, SketchyScribble } from "./ui/sketchy-doodles";
 
+let globalIsPhysicsEnabled: boolean | null = null;
+
 export default function GravityHero() {
     const sceneRef = useRef<HTMLDivElement>(null);
     const interactionRef = useRef<HTMLDivElement>(null);
@@ -35,6 +37,14 @@ export default function GravityHero() {
     
     const isEnabledRef = useRef(false);
     const hasInitializedRef = useRef(false);
+    const hasTriggeredInitialPhysicsRef = useRef(false);
+
+    useEffect(() => {
+        if (globalIsPhysicsEnabled !== null) {
+            setIsPhysicsEnabled(globalIsPhysicsEnabled);
+            isEnabledRef.current = globalIsPhysicsEnabled;
+        }
+    }, []);
 
     const nameFirstRef = useRef<HTMLSpanElement>(null);
     const nameLastRef = useRef<HTMLSpanElement>(null);
@@ -285,6 +295,7 @@ export default function GravityHero() {
     }, [togglePhysics]);
 
     useEffect(() => {
+        globalIsPhysicsEnabled = isPhysicsEnabled;
         window.dispatchEvent(new CustomEvent('clippy-gravity-state', { 
             detail: { isEnabled: isPhysicsEnabled } 
         }));
@@ -316,8 +327,17 @@ export default function GravityHero() {
             }
 
             if (!isEnabledRef.current && theme === "earth") {
-               // eslint-disable-next-line react-hooks/set-state-in-effect
-               togglePhysics();
+                if (!hasTriggeredInitialPhysicsRef.current) {
+                    if (globalIsPhysicsEnabled === null) {
+                        togglePhysics();
+                        globalIsPhysicsEnabled = true;
+                    } else if (globalIsPhysicsEnabled) {
+                        togglePhysics();
+                    }
+                    hasTriggeredInitialPhysicsRef.current = true;
+                } else {
+                    togglePhysics();
+                }
             }
         } else {
             engineRef.current.gravity.y = 0;
@@ -330,21 +350,35 @@ export default function GravityHero() {
             }
 
             if (isEnabledRef.current) {
-                setIsPhysicsEnabled(false);
-                isEnabledRef.current = false;
-                
-                bodiesRef.current.forEach(({ element }) => {
-                    element.style.transition = 'transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1)';
-                    element.style.transform = 'translate3d(0, 0, 0) rotate(0rad)';
-                });
-
-                window.dispatchEvent(new CustomEvent('clippy-reset-gravity'));
-
-                setTimeout(() => {
+                if (!hasTriggeredInitialPhysicsRef.current) {
+                    if (globalIsPhysicsEnabled === null) {
+                        globalIsPhysicsEnabled = false;
+                    }
+                    hasTriggeredInitialPhysicsRef.current = true;
+                } else {
+                    setIsPhysicsEnabled(false);
+                    isEnabledRef.current = false;
+                    
                     bodiesRef.current.forEach(({ element }) => {
-                        element.style.transition = '';
+                        element.style.transition = 'transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                        element.style.transform = 'translate3d(0, 0, 0) rotate(0rad)';
                     });
-                }, 1200);
+
+                    window.dispatchEvent(new CustomEvent('clippy-reset-gravity'));
+
+                    setTimeout(() => {
+                        bodiesRef.current.forEach(({ element }) => {
+                            element.style.transition = '';
+                        });
+                    }, 1200);
+                }
+            } else {
+                if (!hasTriggeredInitialPhysicsRef.current) {
+                    if (globalIsPhysicsEnabled === null) {
+                        globalIsPhysicsEnabled = false;
+                    }
+                    hasTriggeredInitialPhysicsRef.current = true;
+                }
             }
         }
     }, [theme]);

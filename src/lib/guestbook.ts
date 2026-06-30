@@ -101,5 +101,8 @@ export function subscribeToEntries(callback: (entries: GuestbookEntry[]) => void
       });
     });
     callback(entries);
+  }, (error) => {
+    console.error("Error subscribing to guestbook entries:", error);
+    callback([]);
   });
 }

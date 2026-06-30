@@ -14,6 +14,11 @@ export default function AdminClient({ initialEntries, adminKey }: AdminClientPro
   const [entries, setEntries] = useState<GuestbookEntry[]>(initialEntries);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleDelete = async (id: string, name: string) => {
     if (!window.confirm(`Are you sure you want to delete the message from "${name}"?`)) {
@@ -38,6 +43,7 @@ export default function AdminClient({ initialEntries, adminKey }: AdminClientPro
   };
 
   const formatDate = (timestamp: number) => {
+    if (!mounted) return "";
     return new Date(timestamp).toLocaleString();
   };
 

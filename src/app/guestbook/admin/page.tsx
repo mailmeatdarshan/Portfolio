@@ -11,6 +11,12 @@ export default async function AdminPage({ searchParams }: PageProps) {
   const key = typeof params.key === "string" ? params.key : "";
   const adminSecret = process.env.ADMIN_SECRET_KEY;
 
+  console.log("Guestbook Admin Key Validation:", {
+    receivedKey: key,
+    envSecretExists: !!adminSecret,
+    matches: key === adminSecret
+  });
+
   if (!adminSecret || key !== adminSecret) {
     redirect("/guestbook");
   }
@@ -19,7 +25,7 @@ export default async function AdminPage({ searchParams }: PageProps) {
   const entries = await getEntries(200);
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-white p-8">
+    <div className="min-h-screen bg-neutral-950 text-white p-8 relative z-10">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-8 border-b border-neutral-800 pb-4">
           <div>
