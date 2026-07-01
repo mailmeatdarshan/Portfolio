@@ -6,6 +6,7 @@ import { Menu, X, RotateCcw, Orbit, Sparkles, Terminal } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "@/contexts/ThemeProvider";
 import { usePathname } from "next/navigation";
+import { sciFiAudio } from "@/lib/audio";
 
 export default function Navbar() {
     const pathname = usePathname();
@@ -188,7 +189,11 @@ export default function Navbar() {
                             <Link
                                 key={link.name}
                                 href={link.href}
-                                onMouseEnter={() => setHoveredIndex(index)}
+                                onMouseEnter={() => {
+                                    setHoveredIndex(index);
+                                    sciFiAudio.playUIHover();
+                                }}
+                                onClick={() => sciFiAudio.playUIClick()}
                                 className={`relative px-5 py-2 rounded-full text-sm font-medium transition-all group ${
                                     isEarth
                                         ? "text-stone-500 hover:text-stone-800"
@@ -217,7 +222,11 @@ export default function Navbar() {
                         ))}
                         
                         <button
-                            onClick={setZenMode}
+                            onClick={() => {
+                                sciFiAudio.playUIClick();
+                                setZenMode();
+                            }}
+                            onMouseEnter={() => sciFiAudio.playUIHover()}
                             className={`ml-2 p-2 rounded-full transition-all group relative overflow-hidden ${
                                 isEarth
                                     ? "text-stone-500 hover:text-amber-600 bg-stone-800/5 hover:bg-amber-50"
@@ -230,7 +239,11 @@ export default function Navbar() {
                         </button>
                         
                         <button
-                            onClick={setTerminalMode}
+                            onClick={() => {
+                                sciFiAudio.playUIClick();
+                                setTerminalMode();
+                            }}
+                            onMouseEnter={() => sciFiAudio.playUIHover()}
                             className={`ml-1 p-2 rounded-full transition-all group relative overflow-hidden ${
                                 isEarth
                                     ? "text-stone-500 hover:text-green-600 bg-stone-800/5 hover:bg-green-50"
@@ -247,7 +260,10 @@ export default function Navbar() {
                 {/* Mobile Menu Button */}
                 <div className="md:hidden flex items-center gap-2 relative z-20">
                     <button
-                        onClick={setTerminalMode}
+                        onClick={() => {
+                            sciFiAudio.playUIClick();
+                            setTerminalMode();
+                        }}
                         className={`p-2 rounded-xl transition-all flex items-center justify-center ${
                             isEarth
                                 ? "text-stone-500 hover:text-green-600 hover:bg-stone-800/10"
@@ -258,7 +274,10 @@ export default function Navbar() {
                         <Terminal className="h-5 w-5" />
                     </button>
                     <button
-                        onClick={setZenMode}
+                        onClick={() => {
+                            sciFiAudio.playUIClick();
+                            setZenMode();
+                        }}
                         className={`p-2 rounded-xl transition-all flex items-center justify-center ${
                             isEarth
                                 ? "text-stone-500 hover:text-stone-800 hover:bg-stone-800/10"
@@ -269,7 +288,10 @@ export default function Navbar() {
                         <Sparkles className="h-5 w-5" />
                     </button>
                     <button
-                        onClick={togglePhysics}
+                        onClick={() => {
+                            sciFiAudio.playUIClick();
+                            togglePhysics();
+                        }}
                         className={`p-2 rounded-xl transition-all flex items-center justify-center ${
                             isEarth
                                 ? "text-stone-500 hover:text-stone-800 hover:bg-stone-800/10"
@@ -284,7 +306,10 @@ export default function Navbar() {
                         )}
                     </button>
                     <button
-                        onClick={toggleMenu}
+                        onClick={() => {
+                            sciFiAudio.playUIClick();
+                            toggleMenu();
+                        }}
                         className="relative z-[100] flex h-10 w-10 items-center justify-center focus:outline-none"
                         aria-label="Toggle menu"
                     >

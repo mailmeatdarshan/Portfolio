@@ -72,6 +72,7 @@ export default function Projects() {
                 </BlurReveal>
             </div>
 
+            <BlurReveal delay={0.2}>
             <BentoGrid className="max-w-7xl mx-auto">
                 {orderedProjects.map((project, i) => {
                     let layoutClass = "md:col-span-1 md:row-span-1";
@@ -162,6 +163,7 @@ export default function Projects() {
                     );
                 })}
             </BentoGrid>
+            </BlurReveal>
 
             {/* Expanded Project Modal */}
             <AnimatePresence>

@@ -12,6 +12,7 @@ import DotNav from "@/components/ui/dot-nav";
 import { ThemeProvider } from "@/contexts/ThemeProvider";
 import Atmosphere from "@/components/ui/Atmosphere";
 import ModeToggle from "@/components/ui/ModeToggle";
+import AudioToggle from "@/components/ui/AudioToggle";
 import ZenMode from "@/components/ui/ZenMode";
 import ZenTransition from "@/components/ui/ZenTransition";
 import TerminalMode from "@/components/ui/TerminalMode";
@@ -132,6 +133,7 @@ export default function RootLayout({
             <Navbar />
             {children}
             <ModeToggle />
+            <AudioToggle />
             <BackToTop />
             <BottomEdgeBlur />
             <PageEntryBlur />

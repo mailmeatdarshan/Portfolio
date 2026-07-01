@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { LottieAnimation } from "@/components/ui/LottieAnimation";
+import { sciFiAudio } from "@/lib/audio";
 
 const CustomRocket = () => (
   <svg 
@@ -85,6 +86,8 @@ const SplashScreen: React.FC = () => {
   }, []);
 
   const handleOpen = useCallback(() => {
+    sciFiAudio.playWarpWhoosh();
+    sciFiAudio.startAmbientHum();
     setIsVisible(false);
     sessionStorage.setItem("hasSeenSplash", "true");
     window.dispatchEvent(new CustomEvent("splash-finished"));

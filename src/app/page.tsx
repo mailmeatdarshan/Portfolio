@@ -31,11 +31,9 @@ export default function Home() {
           <TechnicalArsenal />
         </div>
       </BlurReveal>
-      <BlurReveal>
         <div id="projects">
           <Projects />
         </div>
-      </BlurReveal>
       <BlurReveal>
         <div id="guestbook">
           <GuestbookPreview />
